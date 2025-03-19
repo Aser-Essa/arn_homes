@@ -25,18 +25,24 @@ export default function SwitchCategoryBtn({
     setCategory(value);
     const params = new URLSearchParams();
     params.set("category", value);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   }
 
   return (
     <li
       className={cn(
-        "flex cursor-pointer items-center gap-2 rounded-xl border-[1.5px] border-amber-100 px-4 py-3 transition-all hover:border-amber-50 hover:bg-amber-50",
+        "flex w-full min-w-fit cursor-pointer items-center gap-2 rounded-xl border-[1.5px] border-amber-100 px-4 py-3 transition-all hover:border-amber-50 hover:bg-amber-50 md:w-fit",
         category === value && "border-amber-50 bg-amber-50",
       )}
       onClick={handleClick}
     >
-      <Image src={icon} width={18} height={18} alt={value} />
+      <Image
+        src={icon}
+        width={18}
+        height={18}
+        alt={value}
+        className="hidden lg:block"
+      />
       <p>{children}</p>
     </li>
   );

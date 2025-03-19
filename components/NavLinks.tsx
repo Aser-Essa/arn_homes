@@ -4,7 +4,7 @@ import NavLink from "./NavLink";
 export default function NavLinks() {
   return (
     <>
-      <ul className="flex h-[42px] items-center gap-6 px-4 py-2">
+      <ul className="hidden h-[42px] items-center gap-6 text-nowrap px-4 py-2 min-[820px]:flex">
         <NavLink href="/" icon="/icons/home.svg">
           Home
         </NavLink>

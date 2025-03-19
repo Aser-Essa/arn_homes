@@ -14,7 +14,7 @@ import {
 export default function FeaturedProperties() {
   return (
     <>
-      <Container className="mt-[14px] space-y-10 font-exo">
+      <Container className="mt-[14px] space-y-5 font-exo sm:space-y-10">
         <Title>Featured Properties</Title>
 
         <Carousel>

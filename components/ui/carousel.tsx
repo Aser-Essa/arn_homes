@@ -208,7 +208,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "h-14 w-14 rounded-xl border-[1.5px] border-amber-600 hover:bg-amber-50",
+        "h-12 w-12 rounded-xl border-[1.5px] border-amber-600 hover:bg-amber-50 sm:h-14 sm:w-14",
         className,
       )}
       disabled={!canScrollPrev}
@@ -237,7 +237,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "h-14 w-14 rounded-xl border-[1.5px] border-amber-600 hover:bg-amber-50",
+        "h-12 w-12 rounded-xl border-[1.5px] border-amber-600 hover:bg-amber-50 sm:h-14 sm:w-14",
         className,
       )}
       disabled={!canScrollNext}

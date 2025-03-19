@@ -6,7 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 export default function SupscripeNewsLetter() {
   return (
     <>
-      <div className="relative top-[-59px] mx-auto h-[82px] w-[710px] rounded-xl bg-shades-white p-4">
+      <div className="relative top-[-59px] mx-auto h-[82px] max-w-[710px] rounded-xl bg-shades-white p-4">
         <div className="flex h-full flex-1 items-center space-x-2 rounded-xl border border-amber-200 font-exo">
           <Input
             type="text"

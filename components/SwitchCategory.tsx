@@ -6,7 +6,7 @@ export default function SwitchCategory() {
   const [category, setCategory] = useState("sale");
 
   return (
-    <ul className="flex h-[50px] flex-1 items-center gap-2 text-nowrap font-medium text-[#0D0E0F]">
+    <ul className="flex w-full items-center gap-2 text-nowrap font-medium text-[#0D0E0F] md:w-fit lg:mx-0">
       <SwitchCategoryBtn
         value="sale"
         icon="/icons/store.svg"

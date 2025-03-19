@@ -13,7 +13,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <>
-      <Container className="relative h-[496px] pt-[18px] font-exo">
+      <Container className="relative pt-[18px] font-exo">
         <Image
           src={"/BuildingIllustration.png"}
           fill
@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="absolute left-0 top-0 z-[-1] h-full w-full bg-shades-black opacity-95"></div>
         <SupscripeNewsLetter />
         <div className="space-y-14">
-          <div className="flex items-start justify-between">
+          <div className="flex flex-wrap items-start justify-between gap-[43px]">
             <ul className="space-y-6 font-semibold text-shades-white">
               <li>
                 <Link href={"/"}>Sell your property</Link>

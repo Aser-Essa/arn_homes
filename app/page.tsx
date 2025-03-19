@@ -1,4 +1,4 @@
-import Achivements from "@/components/Achivements";
+import Stats from "@/components/Stats";
 import Blog from "@/components/Blog";
 import FeaturedProperties from "@/components/FeaturedProperties";
 import HeroSection from "@/components/HeroSection";
@@ -14,7 +14,7 @@ export default function Home() {
       <FeaturedProperties />
       <WhyUs />
       <Blog />
-      <Achivements />
+      <Stats />
       <Reviews />
     </>
   );

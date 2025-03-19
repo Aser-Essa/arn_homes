@@ -12,7 +12,7 @@ import {
 export default function Blog() {
   return (
     <>
-      <Container className="mt-14 space-y-10 font-exo">
+      <Container className="mt-14 space-y-5 font-exo sm:space-y-10">
         <Title>Blog</Title>
         <Carousel>
           <CarouselContent>
