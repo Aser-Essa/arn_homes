@@ -19,14 +19,14 @@ export default function Reviews() {
         <div className="space-y-2 sm:space-y-5">
           <div className="flex items-center justify-between">
             <Title>Customer Reviews</Title>
-            <Button className="hidden h-full bg-scooter-600 sm:block">
+            <Button className="hidden h-full bg-scooter-600 hover:bg-scooter-500 sm:block">
               See all reviews
             </Button>
           </div>
           <p className="text-lg font-medium">
             See what our client’s are saying
           </p>
-          <Button className="h-12 bg-scooter-600 sm:hidden">
+          <Button className="h-12 bg-scooter-600 hover:bg-scooter-500 sm:hidden">
             See all reviews
           </Button>
         </div>

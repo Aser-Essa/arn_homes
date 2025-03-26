@@ -1,7 +1,24 @@
+import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 
-export default function HomeCard() {
+type HomeCardType = {
+  title_address: string;
+  state_address: string;
+  image: string;
+  price: string;
+  bedNumber: number;
+  bathNumber: number;
+};
+
+export default function HomeCard({
+  title_address,
+  state_address,
+  image,
+  price,
+  bedNumber,
+  bathNumber,
+}: HomeCardType) {
   return (
     <>
       <div
@@ -21,15 +38,13 @@ export default function HomeCard() {
 
         <div className="space-y-4">
           <div className="relative h-[292px] w-full">
-            <Image src={"/card1.png"} fill alt="image" />
+            <Image src={image} fill alt="image" />
           </div>
           <div className="space-y-4 px-4 pb-4">
             <div className="space-y-1">
-              <p className="text-2xl font-semibold">£4,250</p>
-              <p className="font-semibold text-scooter-900">
-                Semi detached house
-              </p>
-              <p>Southfield Road, Oxford OX4</p>
+              <p className="text-2xl font-semibold">{formatPrice(price)}</p>
+              <p className="font-semibold text-scooter-900">{title_address}</p>
+              <p>{state_address}</p>
             </div>
             <div className="flex h-[56px] w-full items-center justify-between rounded-xl bg-shades-black p-4 text-shades-white">
               <div className="mx-1 flex items-center gap-2">
@@ -39,7 +54,7 @@ export default function HomeCard() {
                   height={14}
                   alt="bed"
                 />
-                <p>3</p>
+                <p>{bedNumber}</p>
               </div>
               <div className="mx-1 flex items-center gap-2">
                 <Image
@@ -48,7 +63,7 @@ export default function HomeCard() {
                   height={14}
                   alt="bed"
                 />
-                <p>2</p>
+                <p>{bathNumber}</p>
               </div>
 
               <div className="mx-1 flex items-center gap-2">

@@ -13,7 +13,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <>
-      <Container className="relative pt-[18px] font-exo">
+      <Container className="relative mt-[80px] pt-[18px] font-exo">
         <Image
           src={"/BuildingIllustration.png"}
           fill
