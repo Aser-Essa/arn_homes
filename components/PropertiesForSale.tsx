@@ -4,6 +4,7 @@ import Title from "./Title";
 import HomeCard from "./HomeCard";
 import { getHomesForSales } from "@/lib/data-service";
 import DateSort from "./DateSort";
+import { SearchParams } from "next/dist/server/request/search-params";
 
 type PropertiesForSaleType = {
   params: {
@@ -13,7 +14,7 @@ type PropertiesForSaleType = {
     max_Price: string;
     price_Duration: string;
     property_Type: string;
-  };
+  } & SearchParams;
 };
 
 export default async function PropertiesForSale({

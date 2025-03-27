@@ -42,7 +42,9 @@ export default function HomeCard({
           </div>
           <div className="space-y-4 px-4 pb-4">
             <div className="space-y-1">
-              <p className="text-2xl font-semibold">{formatPrice(price)}</p>
+              <p className="text-2xl font-semibold">
+                {formatPrice(Number(price))}
+              </p>
               <p className="font-semibold text-scooter-900">{title_address}</p>
               <p>{state_address}</p>
             </div>

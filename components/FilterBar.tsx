@@ -8,6 +8,7 @@ import CustomSelect from "./CustomSelect";
 import PriceSelect from "./PriceSelect";
 import { useRouter } from "next/navigation";
 import PropertySelect from "./PropertySelect";
+import { SearchParams } from "next/dist/server/request/search-params";
 
 type FilterBarType = {
   params: {
@@ -17,7 +18,7 @@ type FilterBarType = {
     max_Price: string;
     price_Duration: string;
     property_Type: string;
-  };
+  } & SearchParams;
 };
 
 export default function FilterBar({ params }: FilterBarType) {

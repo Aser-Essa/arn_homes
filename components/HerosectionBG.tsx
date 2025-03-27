@@ -24,14 +24,14 @@ export default function HerosectionBG() {
       });
     }, 8000);
     return () => clearInterval(interval);
-  }, [count]);
+  });
 
   return (
     <>
       <div className="absolute left-0 top-0 z-[50] h-full w-full bg-shades-black opacity-30"></div>
       <motion.div
         key={count + 100}
-        initial={{ opacity: 0.8 }}
+        initial={{ opacity: 0.86 }}
         animate={{ opacity: 1 }}
         transition={{
           duration: 1,

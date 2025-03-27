@@ -1,7 +1,13 @@
 import Image from "next/image";
 import React from "react";
 
-export default function Feature({ icon, title, description }) {
+type FeatureType = {
+  icon: string;
+  title: string;
+  description: string;
+};
+
+export default function Feature({ icon, title, description }: FeatureType) {
   return (
     <>
       <div
