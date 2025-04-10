@@ -18,8 +18,6 @@ export default function FilterBar({ params }: FilterBarType) {
   const { bed_N, bath_N, min_Price, max_Price, price_Duration, property_Type } =
     params;
 
-  console.log(typeof bed_N);
-
   const [bed, setBed] = useState(String(bed_N));
   const [bath, setBath] = useState(String(bath_N));
   const [minPrice, setMinPrice] = useState(String(min_Price));
