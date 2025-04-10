@@ -2,8 +2,8 @@ import React from "react";
 import CustomSelect from "./CustomSelect";
 
 type PriceRangeSelectType = {
-  min_Price: string;
-  max_Price: string;
+  min_Price: string | string[] | undefined;
+  max_Price: string | string[] | undefined;
   minPriceState: string;
   maxPriceState: string;
   setMinPrice: React.Dispatch<React.SetStateAction<string>>;
