@@ -13,7 +13,7 @@ import {
 import { getHomesForSales } from "@/lib/data-service";
 
 export default async function FeaturedProperties() {
-  const data = await getHomesForSales({});
+  const { data } = await getHomesForSales({});
 
   return (
     <>

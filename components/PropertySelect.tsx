@@ -13,10 +13,12 @@ import { Button } from "./ui/button";
 
 type PropertySelectType = {
   onValueChange: (formattedValue: string) => void;
-  defaultValue: string;
+  defaultValue: string | undefined;
+  className?: string;
 };
 
 export default function PropertySelect({
+  className,
   onValueChange,
   defaultValue,
 }: PropertySelectType) {
@@ -45,33 +47,32 @@ export default function PropertySelect({
   }
 
   return (
-    <>
-      <Select>
-        <SelectTrigger
-          className={cn(
-            "h-[50px] w-[218px] rounded-xl border-[1.5px] border-amber-100 font-exo text-lg text-shades-black ring-0 hover:border-amber-200 data-[placeholder]:text-shades-black data-[state=open]:ring-[2px] data-[state=open]:ring-[#FCEEC2]",
-          )}
-        >
-          <SelectValue placeholder={property_type} />
-        </SelectTrigger>
-        <SelectContent className="rounded-xl !p-0 font-exo">
-          <SelectGroup>
-            {propertyTypes.map(({ label, id, value }) => (
-              <CustomCheckBox
-                key={id}
-                label={label}
-                id={id}
-                value={value}
-                setState={setState}
-                state={state}
-              />
-            ))}
-            <Button className="m-4 h-[50px] w-[186px]" onClick={handleClick}>
-              Apply
-            </Button>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
+    <Select>
+      <SelectTrigger
+        className={cn(
+          "h-[50px] w-full rounded-xl border-[1.5px] border-amber-100 font-exo text-lg text-shades-black ring-0 hover:border-amber-200 data-[placeholder]:text-shades-black data-[state=open]:ring-[2px] data-[state=open]:ring-[#FCEEC2] sm:w-[218px]",
+          className,
+        )}
+      >
+        <SelectValue placeholder={property_type} />
+      </SelectTrigger>
+      <SelectContent className="rounded-xl !p-0 font-exo">
+        <SelectGroup>
+          {propertyTypes.map(({ label, id, value }) => (
+            <CustomCheckBox
+              key={id}
+              label={label}
+              id={id}
+              value={value}
+              setState={setState}
+              state={state}
+            />
+          ))}
+          <Button className="m-4 h-[50px] w-[186px]" onClick={handleClick}>
+            Apply
+          </Button>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }

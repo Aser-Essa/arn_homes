@@ -8,32 +8,25 @@ import CustomSelect from "./CustomSelect";
 import PriceSelect from "./PriceSelect";
 import { useRouter } from "next/navigation";
 import PropertySelect from "./PropertySelect";
-import { SearchParams } from "next/dist/server/request/search-params";
+import OverlayFilter from "./OverlayFilter";
 
 type FilterBarType = {
-  params: {
-    bed_N: string;
-    bath_N: string;
-    min_Price: string;
-    max_Price: string;
-    price_Duration: string;
-    property_Type: string;
-  } & SearchParams;
+  params: { [key: string]: string | string[] | undefined };
 };
 
 export default function FilterBar({ params }: FilterBarType) {
-  const [bed, setBed] = useState("");
-  const [bath, setBath] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [priceDuration, setPriceDuration] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const router = useRouter();
-
   const { bed_N, bath_N, min_Price, max_Price, price_Duration, property_Type } =
     params;
 
-  console.log(price_Duration);
+  console.log(typeof bed_N);
+
+  const [bed, setBed] = useState(String(bed_N));
+  const [bath, setBath] = useState(String(bath_N));
+  const [minPrice, setMinPrice] = useState(String(min_Price));
+  const [maxPrice, setMaxPrice] = useState(String(max_Price));
+  const [priceDuration, setPriceDuration] = useState(String(price_Duration));
+  const [propertyType, setPropertyType] = useState(String(property_Type));
+  const router = useRouter();
 
   const bedOptions = [
     { value: "Any", label: "Any" },
@@ -56,14 +49,14 @@ export default function FilterBar({ params }: FilterBarType) {
   ];
 
   function handleClick() {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
 
-    if (bed) params.append("bed_N", bed);
-    if (bath) params.append("bath_N", bath);
-    if (minPrice) params.append("min_Price", String(minPrice));
-    if (maxPrice) params.append("max_Price", String(maxPrice));
-    if (priceDuration) params.append("price_Duration", priceDuration);
-    if (propertyType) params.append("property_Type", propertyType);
+    if (bed) params.set("bed_N", bed);
+    if (bath) params.set("bath_N", bath);
+    if (minPrice) params.set("min_Price", String(minPrice));
+    if (maxPrice) params.set("max_Price", String(maxPrice));
+    if (priceDuration) params.set("price_Duration", priceDuration);
+    if (propertyType) params.set("property_Type", propertyType);
 
     router.push(`?${params.toString()}`);
   }
@@ -72,7 +65,8 @@ export default function FilterBar({ params }: FilterBarType) {
     <>
       <Container>
         <div
-          className="relative top-[-41px] z-[100000] flex flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4"
+          key={`${bed_N} ${bath_N} ${min_Price} ${max_Price} ${price_Duration} ${property_Type}`}
+          className="relative z-[100000] flex flex-wrap items-center justify-evenly gap-4 rounded-xl border-2 border-shades-off-white bg-white p-4 lg:top-[-41px]"
           style={{
             boxShadow: "0 20px 24px -4px #ffecb30a, 0 8px 11px -4px #2d36430a",
           }}
@@ -80,38 +74,50 @@ export default function FilterBar({ params }: FilterBarType) {
           <Input
             type="text"
             placeholder="Enter City, Zip, Address"
-            className="h-[50px] w-[230px] rounded-xl border-amber-100 px-4 py-3 !text-lg shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
+            className="h-[50px] w-full rounded-xl border-amber-100 px-4 py-3 !text-lg shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2] sm:w-[230px]"
           />
 
-          <PriceSelect
-            setMinPrice={setMinPrice}
-            setMaxPrice={setMaxPrice}
-            setPriceDuration={setPriceDuration}
-            defaultValues={{ min_Price, max_Price, price_Duration }}
-          />
+          <div className="hidden gap-4 md:flex">
+            <PriceSelect
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              setPriceDuration={setPriceDuration}
+              defaultValues={{
+                min_Price,
+                max_Price,
+                price_Duration,
+              }}
+            />
 
-          <CustomSelect
-            placeholder="Beds"
-            selectItems={bedOptions}
-            onValueChange={(value) => setBed(value)}
-            defaultValue={bed_N}
-          />
+            <CustomSelect
+              placeholder="Beds"
+              selectItems={bedOptions}
+              onValueChange={(value) => setBed(value)}
+              defaultValue={bed_N}
+            />
 
-          <CustomSelect
-            placeholder="Baths"
-            selectItems={bathOptions}
-            onValueChange={(value) => setBath(value)}
-            defaultValue={bath_N}
-          />
+            <CustomSelect
+              placeholder="Baths"
+              selectItems={bathOptions}
+              onValueChange={(value) => setBath(value)}
+              defaultValue={bath_N}
+            />
 
-          <PropertySelect
-            onValueChange={(value) => setPropertyType(value)}
-            defaultValue={property_Type}
+            <PropertySelect
+              onValueChange={(value) => setPropertyType(value)}
+              defaultValue={property_Type && String(property_Type)}
+            />
+          </div>
+
+          <OverlayFilter
+            params={params}
+            bedOptions={bedOptions}
+            bathOptions={bathOptions}
           />
 
           <Button type="submit" className="h-[50px]" onClick={handleClick}>
             <LuSearch className="!h-5 !w-5" />
-            <p className="hidden md:block">Search</p>
+            <p className="hidden sm:block">Search</p>
           </Button>
         </div>
       </Container>

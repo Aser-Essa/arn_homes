@@ -10,11 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "gap-2 font-exo rounded-xl bg-amber-600 md:text-md lg:text-lg font-medium flex items-center hover:bg-amber-500",
+          "gap-2 font-exo btn-shadow rounded-xl bg-amber-600 md:text-md lg:text-lg font-medium flex items-center hover:bg-amber-500",
         destructive:
           "bg-red-500 text-neutral-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90",
         outline:
-          "border border-neutral-200 bg-white shadow-sm hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
+          "gap-2 font-exo btn-shadow rounded-xl border-[1.5px] border-amber-600 bg-white md:text-md lg:text-lg font-medium flex items-center hover:bg-amber-50 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
         secondary:
           "bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80",
         ghost:

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Select,
@@ -15,19 +15,18 @@ type PriceSelectType = {
   setMaxPrice: React.Dispatch<React.SetStateAction<string>>;
   setPriceDuration: React.Dispatch<React.SetStateAction<string>>;
   defaultValues: {
-    min_Price: string;
-    max_Price: string;
-    price_Duration: string;
+    min_Price: string | string[] | undefined;
+    max_Price: string | string[] | undefined;
+    price_Duration: string | string[] | undefined;
   };
 };
 
 export default function PriceSelect({
   setMinPrice,
   setMaxPrice,
-  setPriceDuration,
   defaultValues,
 }: PriceSelectType) {
-  const minPrice = [
+  let minPrice = [
     {
       value: "Any",
       label: `No min`,
@@ -58,7 +57,7 @@ export default function PriceSelect({
     },
   ];
 
-  const maxPrice = [
+  let maxPrice = [
     {
       value: "Any",
       label: `No max`,
@@ -89,62 +88,82 @@ export default function PriceSelect({
     },
   ];
 
-  const priceDuration = [
-    {
-      label: "Month",
-      value: "month",
-    },
-    {
-      label: "Week",
-      value: "week",
-    },
-    {
-      label: "Year",
-      value: "year",
-    },
-  ];
-
   const { min_Price, max_Price, price_Duration } = defaultValues;
+
+  const [minPriceValue, setMinPriceValue] = useState(min_Price);
+  const [maxPriceValue, setMaxPriceValue] = useState(max_Price);
+
+  if (maxPriceValue && maxPriceValue != "Any") {
+    minPrice = minPrice.filter(
+      (el) => el.value <= maxPriceValue || el.value == "Any",
+    );
+  }
+
+  if (minPriceValue && minPriceValue != "Any") {
+    maxPrice = maxPrice.filter(
+      (el) => el.value >= minPriceValue || el.value == "Any",
+    );
+  }
 
   const formatedPrice =
     (min_Price || max_Price || price_Duration) &&
-    `${min_Price ? PriceAbbreviation(Number(min_Price)) : "No min"} - ${max_Price ? PriceAbbreviation(Number(max_Price)) : "No max"} - ${price_Duration || "Price Per Month"} `;
+    `${min_Price !== "Any" ? PriceAbbreviation(Number(min_Price)) : "No min"} - ${max_Price !== "Any" ? PriceAbbreviation(Number(max_Price)) : "No max"} - ${price_Duration || "Price Per Month"} `;
 
   return (
-    <>
-      <Select>
-        <SelectTrigger className="h-[50px] w-[142px] rounded-xl border border-amber-100 font-exo text-lg text-shades-black ring-0 data-[placeholder]:text-shades-black">
-          <SelectValue placeholder={formatedPrice || "Price"} />
-        </SelectTrigger>
-        <SelectContent className="rounded-xl font-exo">
-          <SelectGroup>
-            <div className="flex w-[594px] items-center gap-4 p-4">
-              <CustomSelect
-                placeholder={"Min price"}
-                selectItems={minPrice}
-                className="w-[170px]"
-                onValueChange={(value) => setMinPrice(value)}
-                defaultValue={min_Price}
-              />
+    <Select>
+      <SelectTrigger className="h-[50px] w-full rounded-xl border border-amber-100 font-exo text-lg text-shades-black ring-0 data-[placeholder]:text-shades-black sm:w-[142px]">
+        <SelectValue placeholder={formatedPrice || "Price"} />
+      </SelectTrigger>
+      <SelectContent className="rounded-xl font-exo">
+        <SelectGroup>
+          <div className="flex w-fit items-center gap-4 p-4">
+            <CustomSelect
+              placeholder={"Min price"}
+              selectItems={minPrice}
+              className="max-w-[170px]"
+              onValueChange={(value) => {
+                setMinPrice(value);
+                setMinPriceValue(value);
+              }}
+              defaultValue={min_Price}
+            />
 
-              <CustomSelect
-                placeholder={"Max price"}
-                selectItems={maxPrice}
-                className="w-[170px]"
-                onValueChange={(value) => setMaxPrice(value)}
-                defaultValue={max_Price}
-              />
-              <CustomSelect
-                placeholder={"Price per month"}
-                selectItems={priceDuration}
-                className="w-[190px]"
-                onValueChange={(value) => setPriceDuration(value)}
-                defaultValue={price_Duration}
-              />
-            </div>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
+            <CustomSelect
+              placeholder={"Max price"}
+              selectItems={maxPrice}
+              className="max-w-[170px]"
+              onValueChange={(value) => {
+                setMaxPrice(value);
+                setMaxPriceValue(value);
+              }}
+              defaultValue={max_Price}
+            />
+          </div>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }
+
+// const priceDuration = [
+//   {
+//     label: "Month",
+//     value: "month",
+//   },
+//   {
+//     label: "Week",
+//     value: "week",
+//   },
+//   {
+//     label: "Year",
+//     value: "year",
+//   },
+// ];
+
+//  <CustomSelect
+//    placeholder={"Price per month"}
+//    selectItems={priceDuration}
+//    className="w-[190px]"
+//    onValueChange={(value) => setPriceDuration(value)}
+//    defaultValue={price_Duration}
+//  />

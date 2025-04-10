@@ -25,5 +25,17 @@ export function formatPrice(price: number) {
   }).format(price);
 }
 
-// Example:
-console.log(formatPrice(1195000)); // "£1,195,000"
+export function formatTimeCounter(days: number): string {
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+
+  if (Number.isNaN(days)) return "Anytime";
+
+  if (months >= 1) {
+    return months == 1 ? "Last Month" : `Last ${months} Months`;
+  } else if (weeks >= 1) {
+    return weeks == 1 ? "Last Week" : `Last ${weeks} Weeks`;
+  } else {
+    return days == 1 ? "Last Day" : `Last ${days} Days`;
+  }
+}
