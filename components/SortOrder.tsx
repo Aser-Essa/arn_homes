@@ -9,6 +9,7 @@ type SortOrderType = {
 };
 
 export default function SortOrder({ time_sort, setTimeSort }: SortOrderType) {
+  console.log(time_sort);
   return (
     <>
       <div className="flex items-center justify-between gap-6 pb-[34px]">
@@ -17,11 +18,11 @@ export default function SortOrder({ time_sort, setTimeSort }: SortOrderType) {
 
           <RadioGroup
             className="grid grid-cols-2 gap-x-6"
-            defaultValue={String(time_sort)}
+            defaultValue={time_sort ? String(time_sort) : "Any"}
             onValueChange={setTimeSort}
           >
             <div className="flex h-[46px] items-center space-x-2.5 border-b border-shades-off-white p-2">
-              <RadioGroupItem value="defalut" defaultChecked={true} id="r1" />
+              <RadioGroupItem value="Any" defaultChecked={true} id="r1" />
               <Label htmlFor="r1" className="text-lg">
                 Anytime
               </Label>

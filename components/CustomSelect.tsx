@@ -34,7 +34,7 @@ export default function CustomSelect({
   return (
     <Select
       onValueChange={(value) => onValueChange(value)}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue && String(defaultValue)}
     >
       <SelectTrigger
         className={cn(

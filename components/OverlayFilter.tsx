@@ -120,7 +120,7 @@ export default function OverlayFilter({
             />
 
             <FurnishedSelect
-              furniture_Type={String(furniture_Type)}
+              furniture_Type={furniture_Type}
               setfurnitureType={setfurnitureType}
             />
 

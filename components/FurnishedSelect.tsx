@@ -2,7 +2,7 @@ import React from "react";
 import CustomSelect from "./CustomSelect";
 
 type FurnishedSelectType = {
-  furniture_Type: string;
+  furniture_Type: string | string[] | undefined;
   setfurnitureType: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -39,7 +39,7 @@ export default function FurnishedSelect({
             placeholder="Furnished options"
             selectItems={furnitureOptions}
             onValueChange={(value) => setfurnitureType(value)}
-            defaultValue={furniture_Type}
+            defaultValue={furniture_Type || "Any"}
           />
         </div>
       </div>
