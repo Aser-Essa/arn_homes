@@ -55,9 +55,12 @@ export default function OverlayFilter({
   const [maxPrice, setMaxPrice] = useState("");
   const [timeSort, setTimeSort] = useState("");
 
-  function handleClick() {
-    const params = new URLSearchParams(window.location.search);
+  function handleClickReset() {
+    router.push(`?`);
+  }
 
+  function handleClickSubmit() {
+    const params = new URLSearchParams(window.location.search);
     const filters = {
       bed_N: bed,
       bath_N: bath,
@@ -67,11 +70,9 @@ export default function OverlayFilter({
       furniture_Type: furnitureType,
       time_sort: timeSort,
     };
-
     Object.entries(filters).forEach(([key, value]) => {
       if (value) params.set(key, String(value));
     });
-
     router.push(`?${params.toString()}`);
   }
 
@@ -89,9 +90,9 @@ export default function OverlayFilter({
             <p className="hidden sm:block">Filters</p>
           </Button>
         </SheetTrigger>
-        <SheetContent className="z-[100000] w-[43%] overflow-y-auto px-12 pb-0 pt-10 font-exo sm:max-w-[43%]">
+        <SheetContent className="z-[100000] w-[87%] overflow-y-auto text-nowrap rounded-l-[20px] px-4 pb-0 pt-10 font-exo sm:max-w-[60%] sm:px-8 lg:max-w-[43%] lg:px-12">
           <SheetHeader className="mb-10">
-            <SheetTitle className="text-2xl font-semibold">
+            <SheetTitle className="text-start text-xl font-semibold sm:text-2xl">
               Filter your search results
             </SheetTitle>
           </SheetHeader>
@@ -129,12 +130,16 @@ export default function OverlayFilter({
           <SheetFooter>
             <div className="flex w-full items-center justify-between gap-6 py-10">
               <SheetClose asChild>
-                <Button variant={"outline"} className="h-[50px] w-full">
+                <Button
+                  variant={"outline"}
+                  className="h-[50px] w-full"
+                  onClick={handleClickReset}
+                >
                   Reset filters
                 </Button>
               </SheetClose>
               <SheetClose asChild>
-                <Button className="h-[50px] w-full" onClick={handleClick}>
+                <Button className="h-[50px] w-full" onClick={handleClickSubmit}>
                   Update results
                 </Button>
               </SheetClose>

@@ -18,12 +18,11 @@ export default function FilterBar({ params }: FilterBarType) {
   const { bed_N, bath_N, min_Price, max_Price, price_Duration, property_Type } =
     params;
 
-  const [bed, setBed] = useState(String(bed_N));
-  const [bath, setBath] = useState(String(bath_N));
-  const [minPrice, setMinPrice] = useState(String(min_Price));
-  const [maxPrice, setMaxPrice] = useState(String(max_Price));
-  const [priceDuration, setPriceDuration] = useState(String(price_Duration));
-  const [propertyType, setPropertyType] = useState(String(property_Type));
+  const [bed, setBed] = useState("");
+  const [bath, setBath] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [propertyType, setPropertyType] = useState("");
   const router = useRouter();
 
   const bedOptions = [
@@ -53,7 +52,6 @@ export default function FilterBar({ params }: FilterBarType) {
     if (bath) params.set("bath_N", bath);
     if (minPrice) params.set("min_Price", String(minPrice));
     if (maxPrice) params.set("max_Price", String(maxPrice));
-    if (priceDuration) params.set("price_Duration", priceDuration);
     if (propertyType) params.set("property_Type", propertyType);
 
     router.push(`?${params.toString()}`);
@@ -79,7 +77,6 @@ export default function FilterBar({ params }: FilterBarType) {
             <PriceSelect
               setMinPrice={setMinPrice}
               setMaxPrice={setMaxPrice}
-              setPriceDuration={setPriceDuration}
               defaultValues={{
                 min_Price,
                 max_Price,

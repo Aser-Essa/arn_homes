@@ -1,8 +1,11 @@
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
+import ToogleFavorite from "./ToogleFavorite";
+import Link from "next/link";
 
 type HomeCardType = {
+  id: number;
   title_address: string;
   state_address: string;
   image: string;
@@ -12,6 +15,7 @@ type HomeCardType = {
 };
 
 export default function HomeCard({
+  id,
   title_address,
   state_address,
   image,
@@ -20,7 +24,7 @@ export default function HomeCard({
   bathNumber,
 }: HomeCardType) {
   return (
-    <>
+    <Link href={`/property/${id}`}>
       <div
         className="relative overflow-hidden rounded-xl"
         style={{
@@ -32,9 +36,7 @@ export default function HomeCard({
           <p className="text-xs">For sale</p>
         </div>
 
-        <div className="absolute right-4 top-4 z-50 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-white">
-          <Image src={"/icons/heart.svg"} width={18} height={18} alt="heart" />
-        </div>
+        <ToogleFavorite className={"absolute right-4 top-4 z-50"} />
 
         <div className="space-y-4">
           <div className="relative h-[292px] w-full">
@@ -81,6 +83,6 @@ export default function HomeCard({
           </div>
         </div>
       </div>
-    </>
+    </Link>
   );
 }

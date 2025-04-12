@@ -13,7 +13,6 @@ type NavLinkType = {
 
 export default function NavLink({ href, icon, children }: NavLinkType) {
   const path = usePathname();
-
   const isActive = "rounded-xl bg-scooter-50 p-2";
   return (
     <>

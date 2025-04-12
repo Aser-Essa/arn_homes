@@ -39,3 +39,22 @@ export function formatTimeCounter(days: number): string {
     return days == 1 ? "Last Day" : `Last ${days} Days`;
   }
 }
+
+export function formatTimeAgo(dateString: string): string {
+  const inputDate = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - inputDate.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 1) {
+    return "Today";
+  } else if (diffDays < 7) {
+    return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+  } else if (diffDays < 30) {
+    const weeks = Math.floor(diffDays / 7);
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  } else {
+    const months = Math.floor(diffDays / 30);
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  }
+}

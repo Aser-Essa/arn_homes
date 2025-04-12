@@ -24,7 +24,7 @@ export default function HerosectionBG() {
       });
     }, 8000);
     return () => clearInterval(interval);
-  });
+  }, []);
 
   return (
     <>

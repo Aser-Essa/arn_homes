@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "ssl.cdn-redfin.com",
       },
+      {
+        protocol: "https",
+        hostname: "my.matterport.com",
+      },
     ],
   },
 };

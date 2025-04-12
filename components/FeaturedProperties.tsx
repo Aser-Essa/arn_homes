@@ -10,10 +10,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getHomesForSales } from "@/lib/data-service";
+import { getPropertiesForSales } from "@/lib/data-service";
 
 export default async function FeaturedProperties() {
-  const { data } = await getHomesForSales({});
+  const { data } = await getPropertiesForSales({});
 
   return (
     <>
@@ -24,6 +24,7 @@ export default async function FeaturedProperties() {
           <CarouselContent>
             {data.map(
               ({
+                id,
                 url,
                 title_address,
                 state_address,
@@ -34,6 +35,7 @@ export default async function FeaturedProperties() {
               }) => (
                 <CarouselItem key={url} className="sm:basis-1/2 lg:basis-1/3">
                   <HomeCard
+                    id={id}
                     title_address={title_address}
                     state_address={state_address}
                     image={images?.at(0)}

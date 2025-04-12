@@ -7,11 +7,12 @@ type PropertiesForSaleType = {
   max_Price?: string;
   price_Duration?: string;
   property_Type?: string;
+  furniture_Type?: string;
   time_sort?: string | undefined;
   page?: string | undefined;
 };
 
-export async function getHomesForSales(params: PropertiesForSaleType) {
+export async function getPropertiesForSales(params: PropertiesForSaleType) {
   const {
     bed_N,
     bath_N,
@@ -83,4 +84,16 @@ export async function getHomesForSales(params: PropertiesForSaleType) {
   if (error) throw new Error(error?.message);
 
   return { data, count };
+}
+
+export async function getProperty(id: string) {
+  const { data: property, error } = await supabase
+    .from("homes_for_sale")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw new Error(error?.message);
+
+  return { property };
 }

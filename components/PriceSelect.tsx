@@ -13,7 +13,6 @@ import { PriceAbbreviation } from "@/lib/utils";
 type PriceSelectType = {
   setMinPrice: React.Dispatch<React.SetStateAction<string>>;
   setMaxPrice: React.Dispatch<React.SetStateAction<string>>;
-  setPriceDuration: React.Dispatch<React.SetStateAction<string>>;
   defaultValues: {
     min_Price: string | string[] | undefined;
     max_Price: string | string[] | undefined;

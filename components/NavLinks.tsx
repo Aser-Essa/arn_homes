@@ -9,7 +9,7 @@ export default function NavLinks() {
           Home
         </NavLink>
 
-        <NavLink href="/sale?page=1" icon="/icons/store.svg">
+        <NavLink href="/sale" icon="/icons/store.svg">
           For sale
         </NavLink>
 

@@ -2,7 +2,7 @@ import React from "react";
 import Container from "./Container";
 import Title from "./Title";
 import HomeCard from "./HomeCard";
-import { getHomesForSales } from "@/lib/data-service";
+import { getPropertiesForSales } from "@/lib/data-service";
 import DateSort from "./DateSort";
 
 import Pagenation from "./Pagenation";
@@ -14,7 +14,7 @@ type PropertiesForSaleType = {
 export default async function PropertiesForSale({
   params,
 }: PropertiesForSaleType) {
-  const { data: PropertiesData, count } = await getHomesForSales(params);
+  const { data: PropertiesData, count } = await getPropertiesForSales(params);
 
   return (
     <>
@@ -26,6 +26,7 @@ export default async function PropertiesForSale({
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(340px,1fr))] gap-8">
           {PropertiesData.map(
             ({
+              id,
               url,
               title_address,
               state_address,
@@ -36,6 +37,7 @@ export default async function PropertiesForSale({
             }) => (
               <HomeCard
                 key={url}
+                id={id}
                 title_address={title_address}
                 state_address={state_address}
                 image={images?.at(0)}
