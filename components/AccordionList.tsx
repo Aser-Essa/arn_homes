@@ -10,7 +10,7 @@ type AccordionListType = {
 export default function AccordionList({ title, points }: AccordionListType) {
   const [isOpen, setIsOpen] = useState(false);
   const [height, setheight] = useState("0px");
-  const contentRef = useRef<HTMLLIElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   function handleClick() {
     const scrollHeight = contentRef.current?.scrollHeight || 70;
@@ -34,7 +34,7 @@ export default function AccordionList({ title, points }: AccordionListType) {
           <IoIosArrowDown className="ml-1 h-3 w-3" />
         )}
       </div>
-      <li
+      <div
         ref={contentRef}
         style={{ maxHeight: height }}
         className="overflow-hidden transition-all ease-linear"
@@ -46,7 +46,7 @@ export default function AccordionList({ title, points }: AccordionListType) {
             </li>
           ))}
         </ul>
-      </li>
+      </div>
     </li>
   );
 }

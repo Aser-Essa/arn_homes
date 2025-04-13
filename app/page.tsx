@@ -8,8 +8,6 @@ import WhyUs from "@/components/WhyUs";
 
 export const revalidate = 0;
 
-// const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(locationInput)}&format=json&limit=1`;
-
 export default function Home() {
   return (
     <>

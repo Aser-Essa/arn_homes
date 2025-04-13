@@ -3,6 +3,7 @@ import { Exo, League_Spartan } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 const exo = Exo({
   variable: "--font-exo",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${exo.variable} ${league_spartan.variable} overflow-x-hidden antialiased`}
       >
+        <Toaster position="top-center" reverseOrder={false} />
         <Header />
         {children}
         <Footer />

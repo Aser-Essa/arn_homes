@@ -22,3 +22,7 @@
     0px 3px 8px #3333480d,
     0px 0px 1px #0c1a4b3d;
 }
+
+.leaflet-bottom.leaflet-right {
+  display: none !important;
+}
