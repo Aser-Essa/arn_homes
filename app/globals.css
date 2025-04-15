@@ -19,10 +19,35 @@
 
 .box-shadow {
   box-shadow:
-    0px 3px 8px #3333480d,
-    0px 0px 1px #0c1a4b3d;
+    0px 0px 0px #3333480d,
+    0px 0px 0px #0c1a4b3d;
+}
+
+@media (min-width: 640px) {
+  .box-shadow {
+    box-shadow:
+      0px 3px 8px #3333480d,
+      0px 0px 1px #0c1a4b3d;
+  }
 }
 
 .leaflet-bottom.leaflet-right {
   display: none !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+[data-radix-popper-content-wrapper] {
+  width: calc(100% - 32px) !important;
+  max-width: 427px !important;
+  z-index: 1000000000000000000 !important;
 }

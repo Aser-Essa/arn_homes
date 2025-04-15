@@ -31,7 +31,7 @@ export default function Description({
   }
 
   return (
-    <div className="box-shadow mt-10 min-h-[403px] space-y-6 rounded-[20px] p-6 font-exo">
+    <div className="box-shadow min-h-[403px] space-y-6 rounded-[20px] font-exo sm:p-6">
       <div className="space-y-5">
         <p className="text-[36px] font-semibold">Description</p>
         <div className="space-y-2.5">
@@ -58,7 +58,7 @@ export default function Description({
 
       <div className="space-y-5">
         <p className="text-[36px] font-semibold">Property features</p>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2">
           <InteriorExteriorPreview
             data={exterior}
             title={"Exterior Features"}

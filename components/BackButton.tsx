@@ -12,7 +12,7 @@ export default function BackButton() {
   return (
     <>
       <button
-        className="flex h-12 w-fit cursor-pointer items-center justify-center rounded-xl border-l-[5px] border-amber-600 bg-gray-900 pl-[17px] pr-[22px] font-exo text-xl text-shades-white transition-all hover:text-scooter-600"
+        className="!mt-10 flex h-12 w-fit cursor-pointer items-center justify-center rounded-xl border-l-[5px] border-amber-600 bg-gray-900 pl-[17px] pr-[22px] font-exo text-xl text-shades-white transition-all hover:text-scooter-600"
         onClick={handleClick}
       >
         <div className="flex items-center gap-2">

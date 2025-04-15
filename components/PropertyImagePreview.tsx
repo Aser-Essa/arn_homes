@@ -1,7 +1,8 @@
 "use client";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import ScrollImagesSelector from "./ScrollImagesSelector";
+import { BsCardImage } from "react-icons/bs";
 
 type PropertyImagePreviewType = {
   images: string[];
@@ -11,39 +12,32 @@ export default function PropertyImagePreview({
   images,
 }: PropertyImagePreviewType) {
   const [selectedImage, setSelectedImage] = useState(0);
-
-  function handleClick(idx: number) {
-    setSelectedImage(idx);
-  }
+  const mainImageRef = useRef<HTMLDivElement>(null);
 
   return (
-    <>
-      <div className="relative min-h-full w-[600px]">
+    <div className="flex h-full max-w-full flex-1 flex-wrap gap-5 lg:flex-nowrap">
+      <div
+        className="relative aspect-video w-full flex-1 sm:min-h-[403px] lg:max-h-[450px]"
+        ref={mainImageRef}
+      >
         <Image
           src={images?.at(selectedImage) ?? "/HerosectionBG2.jpg"}
           fill
           alt="image"
           className="rounded-[20px]"
         />
+        <div className="absolute bottom-4 right-4 z-[1000] flex h-[32px] items-center justify-center gap-1 rounded-xl bg-shades-white px-2 py-1 text-sm">
+          <BsCardImage />
+          {selectedImage + 1}/{images?.length}
+        </div>
       </div>
-      <div className="max-h-[403px] space-y-5 overflow-y-scroll">
-        {images.map((image, idx) => (
-          <div
-            key={`${image} ${idx}`}
-            className={cn(
-              "relative h-[70px] w-20 cursor-pointer overflow-hidden rounded-lg transition-all",
-              `${idx == selectedImage && "border border-shades-black"}`,
-            )}
-            onClick={() => handleClick(idx)}
-          >
-            <Image
-              src={images.at(idx) ?? "/HerosectionBG2.jpg"}
-              fill
-              alt="image"
-            />
-          </div>
-        ))}
-      </div>
-    </>
+
+      <ScrollImagesSelector
+        images={images}
+        mainImageRef={mainImageRef}
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+      />
+    </div>
   );
 }

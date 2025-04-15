@@ -31,7 +31,7 @@ export default function PropertyInfoBlock({ property }: PropertyInfoBlockType) {
 
   return (
     <>
-      <div className="flex-1 space-y-5">
+      <div className="flex-1 space-y-5 text-nowrap">
         <div className="flex h-[70px] items-center justify-between">
           <div className="flex h-[26px] w-[77px] items-center justify-center gap-1 rounded-full bg-shades-off-white p-1 pr-2">
             <div className="h-2 w-2 rounded-full bg-scooter-600"></div>
@@ -59,7 +59,7 @@ export default function PropertyInfoBlock({ property }: PropertyInfoBlockType) {
           <IoCalendar className="h-4 w-4" />
           <p className="text-sm leading-5">Listed {formatTimeAgo(listed_in)}</p>
         </div>
-        <div className="flex h-[56px] w-full items-center justify-between rounded-xl bg-shades-off-white p-4 text-sm text-shades-black">
+        <div className="flex h-[56px] w-full items-center justify-between gap-2 rounded-xl bg-shades-off-white p-4 text-sm text-shades-black">
           <div className="mx-1 flex items-center gap-2">
             <Image
               src={"/icons/blackbed.svg"}
@@ -78,7 +78,6 @@ export default function PropertyInfoBlock({ property }: PropertyInfoBlockType) {
             />
             <p>{bathNumber} baths</p>
           </div>
-
           <div className="mx-1 flex items-center gap-2">
             <Image
               src={"/icons/blackfurnished.svg"}

@@ -65,11 +65,12 @@ export default function LeafletMap({ lat, lng }: LeafletMapType) {
     : [];
 
   return (
-    <div className="relative max-h-[444px] overflow-hidden rounded-[20px]">
+    <div className="relative overflow-hidden rounded-[20px]">
       <MapContainer
         center={[lat, lng]}
         zoom={12}
-        style={{ height: "444px", width: "100%" }}
+        style={{ width: "100%" }}
+        className="aspect-square h-[343px] sm:aspect-auto sm:h-[444px] sm:max-h-[444px]"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -23,10 +23,10 @@ export default async function FloorPlanAndMap({
   const { lat, lng } = coordinates;
 
   return (
-    <div className="flex gap-[30px]">
-      <div className="box-shadow mb-[10000px] mt-10 min-h-[403px] flex-1 space-y-5 rounded-[20px] p-6 font-exo">
+    <div className="flex flex-col gap-[30px] lg:flex-row">
+      <div className="box-shadow min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
         <p className="text-[36px] font-semibold">Floor Plan</p>
-        <div className="relative h-[444px] w-full">
+        <div className="relative aspect-square h-[343px] w-full sm:aspect-auto sm:h-[444px] sm:max-h-[444px]">
           <Image
             src={floor_plan}
             fill
@@ -36,7 +36,7 @@ export default async function FloorPlanAndMap({
         </div>
       </div>
 
-      <div className="box-shadow mb-[10000px] mt-10 min-h-[403px] flex-1 space-y-5 rounded-[20px] p-6 font-exo">
+      <div className="box-shadow min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
         <p className="text-[36px] font-semibold">Map</p>
 
         <Map lat={lat} lng={lng} />

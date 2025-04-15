@@ -21,11 +21,11 @@ export default function PropertyDetails({ property }: PropertyDetailsProps) {
 
   return (
     <>
-      <div className="box-shadow mt-6 flex min-h-[403px] space-x-5 rounded-[20px] p-5 font-exo">
+      <div className="box-shadow !mt-6 flex min-h-[403px] flex-wrap gap-5 rounded-[20px] font-exo sm:p-5">
         <PropertyImagePreview images={images} />
         <Separator
           orientation="vertical"
-          className="min-h-full w-[1px] bg-gray-50"
+          className="hidden min-h-full w-[1px] bg-gray-50 2xl:block"
         />
         <PropertyInfoBlock property={property} />
       </div>
