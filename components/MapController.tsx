@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 import { useMap } from "react-leaflet";
@@ -6,12 +7,14 @@ type MapControllerType = {
   userCoords: [number, number] | null;
   destinationCoords: [number, number];
   getMyLocation: () => void;
+  controllerClassName?: string;
 };
 
 export default function MapController({
   userCoords,
   destinationCoords,
   getMyLocation,
+  controllerClassName,
 }: MapControllerType) {
   const map = useMap();
 
@@ -26,7 +29,12 @@ export default function MapController({
   }
 
   return (
-    <div className="absolute bottom-3 left-3 z-[1000] space-x-2 font-exo">
+    <div
+      className={cn(
+        "absolute left-3 z-[1000] space-x-2 font-exo",
+        controllerClassName,
+      )}
+    >
       {userCoords ? (
         <button
           onClick={moveToUserLocation}

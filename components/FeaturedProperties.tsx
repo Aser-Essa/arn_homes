@@ -19,37 +19,21 @@ export default async function FeaturedProperties({
   title: React.ReactNode;
   className?: string;
 }) {
-  const { data } = await getPropertiesForSales({});
+  const { data: properties } = await getPropertiesForSales({});
 
   return (
     <Container className={cn(className)}>
       {title}
       <Carousel>
         <CarouselContent>
-          {data.map(
-            ({
-              id,
-              url,
-              title_address,
-              state_address,
-              images,
-              price,
-              bedNumber,
-              bathNumber,
-            }) => (
-              <CarouselItem key={url} className="sm:basis-1/2 lg:basis-1/3">
-                <HomeCard
-                  id={id}
-                  title_address={title_address}
-                  state_address={state_address}
-                  image={images?.at(0)}
-                  price={price}
-                  bedNumber={bedNumber}
-                  bathNumber={bathNumber}
-                />
-              </CarouselItem>
-            ),
-          )}
+          {properties.map((property) => (
+            <CarouselItem
+              key={property.url}
+              className="sm:basis-1/2 lg:basis-1/3"
+            >
+              <HomeCard property={property} />
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <div className="mt-10 flex items-center justify-end gap-2">
           <CarouselPrevious />

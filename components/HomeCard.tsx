@@ -1,35 +1,45 @@
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 import ToogleFavorite from "./ToogleFavorite";
 import Link from "next/link";
 
-type HomeCardType = {
-  id: number;
+type Property = {
+  id: string;
   title_address: string;
+  url: string;
+  images: string[];
   state_address: string;
-  image: string;
-  price: string;
+  price: number;
+  property_type: string;
+  listed_in: string;
   bedNumber: number;
   bathNumber: number;
 };
 
-export default function HomeCard({
-  id,
-  title_address,
-  state_address,
-  image,
-  price,
-  bedNumber,
-  bathNumber,
-}: HomeCardType) {
+type HomeCardType = {
+  property: Property;
+  className?: string;
+};
+
+export default function HomeCard({ property, className }: HomeCardType) {
+  const {
+    id,
+    title_address,
+    state_address,
+    images,
+    price,
+    bedNumber,
+    bathNumber,
+  } = property;
+
   return (
     <Link href={`/property/${id}`}>
       <div
-        className="relative overflow-hidden rounded-xl"
-        style={{
-          boxShadow: "0 0 1px 0 #0c1a4b3d, 0 3px 8px -1px #3333480d",
-        }}
+        className={cn(
+          "box-shadow relative overflow-hidden rounded-xl",
+          className,
+        )}
       >
         <div className="absolute top-[27px] z-50 flex h-[26px] w-[73px] items-center gap-1 rounded-r-full bg-shades-white p-1 pr-2">
           <div className="h-2 w-2 rounded-full bg-scooter-600"></div>
@@ -40,7 +50,7 @@ export default function HomeCard({
 
         <div className="space-y-4">
           <div className="relative h-[292px] w-full">
-            <Image src={image} fill alt="image" />
+            <Image src={images?.at(0) || "/"} fill alt="image" />
           </div>
           <div className="space-y-4 px-4 pb-4">
             <div className="space-y-1">

@@ -39,7 +39,7 @@ export default async function FloorPlanAndMap({
       <div className="box-shadow min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
         <p className="text-[36px] font-semibold">Map</p>
 
-        <Map lat={lat} lng={lng} />
+        <Map lat={lat} lng={lng} controllerClassName="bottom-3" />
       </div>
     </div>
   );

@@ -41,13 +41,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
-}
-
-[data-radix-popper-content-wrapper] {
-  width: calc(100% - 32px) !important;
-  max-width: 427px !important;
-  z-index: 1000000000000000000 !important;
 }

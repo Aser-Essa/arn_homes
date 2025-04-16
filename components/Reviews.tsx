@@ -15,7 +15,7 @@ import Autoplay from "embla-carousel-autoplay";
 export default function Reviews() {
   return (
     <>
-      <Container className="h-[614px] space-y-10 bg-scooter-50 pt-14 font-exo">
+      <Container className="h-[614px] space-y-10 overflow-x-hidden bg-scooter-50 pt-14 font-exo">
         <div className="space-y-2 sm:space-y-5">
           <div className="flex items-center justify-between">
             <Title>Customer Reviews</Title>

@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${exo.variable} ${league_spartan.variable} overflow-x-hidden antialiased`}
+        className={`${exo.variable} ${league_spartan.variable} overflow-x-hidden font-exo antialiased`}
       >
         <Toaster position="top-center" reverseOrder={false} />
         <Header />

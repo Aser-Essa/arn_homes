@@ -12,13 +12,21 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import toast from "react-hot-toast";
 import MapController from "./MapController";
+import { cn } from "@/lib/utils";
 
 type LeafletMapType = {
-  lat: number;
-  lng: number;
+  lat: number | undefined;
+  lng: number | undefined;
+  containerClassName?: string;
+  controllerClassName?: string;
 };
 
-export default function LeafletMap({ lat, lng }: LeafletMapType) {
+export default function LeafletMap({
+  lat = 0,
+  lng = 0,
+  containerClassName,
+  controllerClassName,
+}: LeafletMapType) {
   const [userLocation, setUserLocation] = useState({ lat, lng });
   const [, setLocationPermissionDenied] = useState(false);
   const [locationError, setLocationError] = useState("");
@@ -65,34 +73,48 @@ export default function LeafletMap({ lat, lng }: LeafletMapType) {
     : [];
 
   return (
-    <div className="relative overflow-hidden rounded-[20px]">
+    <div
+      className={cn(
+        "relative h-[343px] overflow-hidden rounded-[20px] sm:h-[444px] sm:max-h-[444px]",
+        containerClassName,
+      )}
+    >
       <MapContainer
         center={[lat, lng]}
         zoom={12}
         style={{ width: "100%" }}
-        className="aspect-square h-[343px] sm:aspect-auto sm:h-[444px] sm:max-h-[444px]"
+        className={"aspect-square h-full sm:aspect-auto"}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[lat, lng]}>
-          <Popup>Property Coords</Popup>
-        </Marker>
+
+        {lat && lng && (
+          <>
+            <Marker position={[lat, lng]}>
+              <Popup>Property Coords</Popup>
+            </Marker>
+          </>
+        )}
 
         {userCoords && (
           <>
             <Marker position={userCoords}>
               <Popup>Your Location</Popup>
             </Marker>
-            <Polyline positions={polyline} color="blue" />
           </>
+        )}
+
+        {userCoords && lat && lng && (
+          <Polyline positions={polyline} color="blue" />
         )}
 
         <MapController
           userCoords={userCoords}
           destinationCoords={destinationCoords}
           getMyLocation={getMyLocation}
+          controllerClassName={controllerClassName}
         />
       </MapContainer>
 

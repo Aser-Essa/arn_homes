@@ -3,13 +3,14 @@
 import React from "react";
 import CustomSelect from "./CustomSelect";
 import { useRouter } from "next/navigation";
-import { formatTimeCounter } from "@/lib/utils";
+import { cn, formatTimeCounter } from "@/lib/utils";
 
 type DateSortType = {
   params: { [key: string]: string | string[] | undefined };
+  className?: string;
 };
 
-export default function DateSort({ params }: DateSortType) {
+export default function DateSort({ params, className }: DateSortType) {
   const { time_sort } = params;
   const router = useRouter();
 
@@ -29,7 +30,7 @@ export default function DateSort({ params }: DateSortType) {
     <>
       <CustomSelect
         key={`${time_sort}`}
-        className="w-[223px]"
+        className={cn("w-[223px]", className)}
         placeholder={
           time_sort
             ? `${formatTimeCounter(Number(time_sort))}`

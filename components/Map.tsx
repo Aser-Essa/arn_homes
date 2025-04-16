@@ -1,6 +1,5 @@
 // components/Map.tsx
 "use client";
-
 import dynamic from "next/dynamic";
 
 const LeafletMap = dynamic(() => import("./LeafletMap"), {
@@ -8,10 +7,24 @@ const LeafletMap = dynamic(() => import("./LeafletMap"), {
 });
 
 type MapType = {
-  lat: number;
-  lng: number;
+  lat: number | undefined;
+  lng: number | undefined;
+  containerClassName?: string;
+  controllerClassName?: string;
 };
 
-export default function Map({ lat, lng }: MapType) {
-  return <LeafletMap lat={lat} lng={lng} />;
+export default function Map({
+  lat,
+  lng,
+  containerClassName,
+  controllerClassName,
+}: MapType) {
+  return (
+    <LeafletMap
+      lat={lat}
+      lng={lng}
+      containerClassName={containerClassName}
+      controllerClassName={controllerClassName}
+    />
+  );
 }

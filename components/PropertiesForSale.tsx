@@ -18,35 +18,15 @@ export default async function PropertiesForSale({
 
   return (
     <>
-      <Container className="mt-[15px] space-y-10">
+      <Container className="mt-10 space-y-10 lg:mt-[15px]">
         <div className="flex items-center justify-between">
           <Title>Properties For Sale</Title>
-          <DateSort params={params} />
+          <DateSort params={params} className={"hidden sm:flex"} />
         </div>
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(340px,1fr))] gap-8">
-          {PropertiesData.map(
-            ({
-              id,
-              url,
-              title_address,
-              state_address,
-              images,
-              price,
-              bedNumber,
-              bathNumber,
-            }) => (
-              <HomeCard
-                key={url}
-                id={id}
-                title_address={title_address}
-                state_address={state_address}
-                image={images?.at(0)}
-                price={price}
-                bedNumber={bedNumber}
-                bathNumber={bathNumber}
-              />
-            ),
-          )}
+          {PropertiesData.map((property) => (
+            <HomeCard key={property.url} property={property} />
+          ))}
         </div>
 
         <Pagenation count={count} />

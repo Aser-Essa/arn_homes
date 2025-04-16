@@ -98,7 +98,6 @@ export async function getProperty(id: string) {
   return { property };
 }
 
-// utils/geocode.ts
 export type Coordinates = {
   lat: number;
   lng: number;

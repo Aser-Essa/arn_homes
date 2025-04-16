@@ -13,8 +13,6 @@ export default async function page({ params }: { params: Params }) {
   const { id } = await params;
   const { property } = await getProperty(String(id));
 
-  console.log(property);
-
   return (
     <Container className="mb-[200px] min-h-[100vh] space-y-10">
       <BackButton />

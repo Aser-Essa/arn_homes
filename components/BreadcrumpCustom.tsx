@@ -15,7 +15,7 @@ export default function BreadCrump({
 }) {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="h-12 w-fit rounded-xl border-l-[5px] border-amber-600 bg-gray-900 pl-[17px] pr-[22px] font-exo text-xl">
+      <BreadcrumbList className="h-10 w-fit rounded-xl border-l-[5px] border-amber-600 bg-gray-900 pl-[17px] pr-[22px] font-exo text-base sm:h-12 sm:text-xl">
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
