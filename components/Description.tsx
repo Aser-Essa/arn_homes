@@ -31,7 +31,7 @@ export default function Description({
   }
 
   return (
-    <div className="box-shadow min-h-[403px] space-y-6 rounded-[20px] font-exo sm:p-6">
+    <div className="box-shadow hidden-box-shadow-on-mobile min-h-[403px] space-y-6 rounded-[20px] font-exo sm:p-6">
       <div className="space-y-5">
         <p className="text-[36px] font-semibold">Description</p>
         <div className="space-y-2.5">

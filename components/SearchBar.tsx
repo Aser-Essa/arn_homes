@@ -1,20 +1,37 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Container from "@/components/Container";
 import SwitchCategory from "./SwitchCategory";
-import { InputSearch } from "./InputSearch";
+import SearchInput from "./SearchInput";
+import { LuSearch } from "react-icons/lu";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
-export default function SearchBar() {
+type SearchBarType = {
+  items: string[];
+};
+
+export default function SearchBar({ items }: SearchBarType) {
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("sale");
+  const router = useRouter();
+
+  function clickHandler() {
+    const params = new URLSearchParams(window.location.search);
+    if (search) params.set("state_address", search);
+    router.push(`search/${category}?${params.toString()}`);
+  }
+
   return (
     <>
       <Container>
-        <div
-          className="relative top-[-41px] z-[100000] flex max-w-[976px] flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4"
-          style={{
-            boxShadow: "0 20px 24px -4px #ffecb30a, 0 8px 11px -4px #2d36430a",
-          }}
-        >
-          <SwitchCategory />
-          <InputSearch />
+        <div className="box-shadow relative top-[-41px] z-[100000] flex max-w-[976px] flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4">
+          <SwitchCategory category={category} setCategory={setCategory} />
+          <SearchInput items={items} search={search} setSearch={setSearch} />
+          <Button type="submit" className="h-[50px]" onClick={clickHandler}>
+            <LuSearch className="!h-5 !w-5" />
+            <p className="hidden md:block">Search</p>
+          </Button>
         </div>
       </Container>
     </>

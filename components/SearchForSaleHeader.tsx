@@ -4,25 +4,25 @@ import DateSort from "./DateSort";
 
 type SearchForSaleHeaderType = {
   params: { [key: string]: string | string[] | undefined };
-  numberOfProperties: number;
+  numberOfProperties: number | null;
 };
 
 export default function SearchForSaleHeader({
   params,
   numberOfProperties,
 }: SearchForSaleHeaderType) {
-  const search_title = params?.search_title;
+  const state_address = params?.state_address;
 
   return (
     <Container className="space-y-2.5">
-      <p className="text-[36px] font-semibold">
-        Properties for sale in {search_title}
+      <p className="text-[28px] font-semibold sm:text-[36px]">
+        Properties for sale in {state_address}
       </p>
       <div className="flex items-center justify-between">
         <p className="text-[28px] font-semibold text-scooter-900">
           {numberOfProperties} results
         </p>
-        <DateSort params={params} />
+        <DateSort params={params} className={"!min-w-[185px]"} />
       </div>
     </Container>
   );

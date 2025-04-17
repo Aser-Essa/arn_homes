@@ -21,10 +21,17 @@ export default function FilterBar({
   className,
   params,
 }: FilterBarType) {
-  const { bed_N, bath_N, min_Price, max_Price, price_Duration, property_Type } =
-    params;
+  const {
+    bed_N,
+    bath_N,
+    min_Price,
+    max_Price,
+    price_Duration,
+    property_Type,
+    state_address,
+  } = params;
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(state_address);
   const [bed, setBed] = useState("");
   const [bath, setBath] = useState("");
   const [minPrice, setMinPrice] = useState("");
@@ -59,7 +66,7 @@ export default function FilterBar({
     if (minPrice) params.set("min_Price", String(minPrice));
     if (maxPrice) params.set("max_Price", String(maxPrice));
     if (propertyType) params.set("property_Type", propertyType);
-    if (search) params.set("search_title", search);
+    if (search) params.set("state_address", String(search));
     router.push(`/search/sale?${params.toString()}`);
     router.refresh();
   }
@@ -69,7 +76,7 @@ export default function FilterBar({
       <div
         key={`${bed_N} ${bath_N} ${min_Price} ${max_Price} ${price_Duration} ${property_Type}`}
         className={cn(
-          "box-shadow relative z-[100000] flex flex-wrap items-center justify-evenly gap-4 rounded-xl bg-white p-4 lg:top-[-41px]",
+          "box-shadow relative z-[100000] flex flex-wrap items-center justify-center gap-4 rounded-xl bg-white p-4 lg:top-[-41px]",
           className,
         )}
       >
@@ -78,7 +85,7 @@ export default function FilterBar({
           search={search}
           setSearch={setSearch}
         />
-        <div className="hidden gap-4 md:flex">
+        <div className="hidden md:block">
           <PriceSelect
             setMinPrice={setMinPrice}
             setMaxPrice={setMaxPrice}
@@ -88,37 +95,45 @@ export default function FilterBar({
               price_Duration,
             }}
           />
+        </div>
 
+        <div className="hidden md:block">
           <CustomSelect
             placeholder="Beds"
             selectItems={bedOptions}
             onValueChange={(value) => setBed(value)}
             defaultValue={bed_N}
           />
+        </div>
 
+        <div className="hidden md:block">
           <CustomSelect
             placeholder="Baths"
             selectItems={bathOptions}
             onValueChange={(value) => setBath(value)}
             defaultValue={bath_N}
           />
+        </div>
 
+        <div className="hidden md:block">
           <PropertySelect
             onValueChange={(value) => setPropertyType(value)}
             defaultValue={property_Type && String(property_Type)}
           />
         </div>
 
-        <OverlayFilter
-          params={params}
-          bedOptions={bedOptions}
-          bathOptions={bathOptions}
-        />
+        <div className="flex items-center gap-4">
+          <OverlayFilter
+            params={params}
+            bedOptions={bedOptions}
+            bathOptions={bathOptions}
+          />
 
-        <Button type="submit" className="h-[50px]" onClick={handleClick}>
-          <LuSearch className="!h-5 !w-5" />
-          <p className="hidden sm:block">Search</p>
-        </Button>
+          <Button type="submit" className="h-[50px]" onClick={handleClick}>
+            <LuSearch className="!h-5 !w-5" />
+            <p className="hidden sm:block">Search</p>
+          </Button>
+        </div>
       </div>
     </>
   );

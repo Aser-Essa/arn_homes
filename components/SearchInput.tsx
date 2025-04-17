@@ -5,8 +5,10 @@ import { cn } from "@/lib/utils";
 
 type SearchInputType = {
   items: string[];
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  search: string | string[] | undefined;
+  setSearch: React.Dispatch<
+    React.SetStateAction<string | string[] | undefined>
+  >;
 };
 
 export default function SearchInput({
@@ -17,10 +19,13 @@ export default function SearchInput({
   const [isFocused, setIsFocused] = useState(false);
   const [listPosition, setListPosition] = useState<"top" | "bottom">("bottom");
   const InputRef = useRef<HTMLInputElement>(null);
+  const searchResultLimit = 6;
 
-  const filteredItems: string[] = items?.filter((item: string) =>
-    item.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredItems: string[] = items
+    ?.filter((item: string) =>
+      item.toLowerCase().includes(String(search).toLowerCase()),
+    )
+    .slice(0, searchResultLimit);
 
   function handleClickListItem(item: string) {
     setSearch(item);
@@ -39,7 +44,7 @@ export default function SearchInput({
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
 
-    if (spaceBelow < 150 && spaceBelow < spaceAbove) {
+    if (spaceBelow < 220 && spaceBelow < spaceAbove) {
       setListPosition("top");
     } else {
       setListPosition("bottom");
@@ -47,7 +52,7 @@ export default function SearchInput({
   }
 
   return (
-    <div className="relative font-exo">
+    <div className="relative min-w-[150px] flex-1 font-exo">
       <Input
         type="text"
         placeholder="Enter City, Zip, Address"
@@ -59,10 +64,10 @@ export default function SearchInput({
           updatePosition();
         }}
         onBlur={() => setIsFocused(false)}
-        className="h-[50px] w-full rounded-xl border-amber-100 px-4 py-3 !text-lg shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2] sm:w-[230px]"
+        className="h-[50px] w-full rounded-xl border-amber-100 px-4 py-3 !text-lg shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
       />
 
-      {isFocused && search.length > 0 && (
+      {isFocused && String(search).length > 0 && (
         <ul
           className={cn(
             "box-shadow absolute left-0 w-full overflow-hidden rounded-xl bg-shades-white",

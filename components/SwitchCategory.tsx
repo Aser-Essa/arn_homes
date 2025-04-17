@@ -1,10 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import SwitchCategoryBtn from "./SwitchCategoryBtn";
 
-export default function SwitchCategory() {
-  const [category, setCategory] = useState("sale");
+type SwitchCategoryType = {
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+};
 
+export default function SwitchCategory({
+  category,
+  setCategory,
+}: SwitchCategoryType) {
   return (
     <ul className="flex w-full items-center gap-2 text-nowrap font-medium text-[#0D0E0F] md:w-fit lg:mx-0">
       <SwitchCategoryBtn

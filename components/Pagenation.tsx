@@ -6,12 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 type PagenationType = {
   count: number | null;
+  perPage?: number;
 };
 
-export default function Pagenation({ count }: PagenationType) {
+export default function Pagenation({ count, perPage = 9 }: PagenationType) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const maxNumberOfPages = Math.ceil(Number(count) / 9);
+  const maxNumberOfPages = Math.ceil(Number(count) / perPage);
 
   const initialPage =
     Math.min(Number(searchParams.get("page")), maxNumberOfPages) || 1;

@@ -38,7 +38,7 @@ export default function CustomSelect({
     >
       <SelectTrigger
         className={cn(
-          "h-[50px] w-[142px] rounded-xl border-[1.5px] border-amber-100 font-exo text-lg text-shades-black ring-0 hover:border-amber-200 data-[placeholder]:text-shades-black data-[state=open]:ring-[2px] data-[state=open]:ring-[#FCEEC2]",
+          "h-[50px] min-w-[142px] max-w-[142px] rounded-xl border-[1.5px] border-amber-100 font-exo text-lg text-shades-black ring-0 hover:border-amber-200 data-[placeholder]:text-shades-black data-[state=open]:ring-[2px] data-[state=open]:ring-[#FCEEC2]",
           className,
         )}
       >

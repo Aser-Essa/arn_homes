@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 
-type PropertiesForSaleType = {
+type ParamsType = {
   bed_N?: string;
   bath_N?: string;
   min_Price?: string;
@@ -10,9 +10,23 @@ type PropertiesForSaleType = {
   furniture_Type?: string;
   time_sort?: string | undefined;
   page?: string | undefined;
+  state_address?: string;
 };
 
-export async function getPropertiesForSales(params: PropertiesForSaleType) {
+type PropertiesForSaleType = {
+  params?: ParamsType;
+  perPage?: number;
+};
+
+export type Coordinates = {
+  lat: number;
+  lng: number;
+};
+
+export async function getPropertiesForSales({
+  perPage = 9,
+  params = {},
+}: PropertiesForSaleType) {
   const {
     bed_N,
     bath_N,
@@ -21,67 +35,51 @@ export async function getPropertiesForSales(params: PropertiesForSaleType) {
     property_Type,
     time_sort,
     page,
+    state_address,
   } = params;
 
-  const perPage = 9;
-  const pageNumber = page ? Number(page) : 1;
-  const from = (pageNumber - 1) * perPage;
-  const to = from + perPage - 1;
+  let pageNumber = Math.max(1, Number(page) || 1);
+  let from = (pageNumber - 1) * perPage;
+  let to = from + perPage - 1;
 
-  const query = supabase.from("homes_for_sale").select("*", { count: "exact" });
+  const isValid = (val?: string) =>
+    val && val.toLowerCase() !== "any" && val.trim() !== "";
 
-  if (bed_N && bed_N.toLocaleLowerCase() !== "any" && bed_N?.trim() !== "") {
-    query.eq("bedNumber", bed_N);
-  }
+  let query = supabase.from("homes_for_sale").select("*", { count: "exact" });
 
-  if (bath_N && bath_N.toLocaleLowerCase() !== "any" && bath_N?.trim() !== "") {
-    query.eq("bathNumber", bath_N);
-  }
+  if (isValid(bed_N)) query = query.eq("bedNumber", bed_N);
+  if (isValid(bath_N)) query = query.eq("bathNumber", bath_N);
+  if (isValid(min_Price)) query = query.gte("price", Number(min_Price));
+  if (isValid(max_Price)) query = query.lte("price", Number(max_Price));
+  if (isValid(property_Type)) query = query.eq("propertytype", property_Type);
 
-  if (
-    min_Price &&
-    min_Price.toLocaleLowerCase() !== "any" &&
-    bath_N?.trim() !== ""
-  ) {
-    query.gte("price", Number(min_Price));
-  }
-
-  if (
-    max_Price &&
-    max_Price.toLocaleLowerCase() !== "any" &&
-    bath_N?.trim() !== ""
-  ) {
-    query.lte("price", Number(max_Price));
-  }
-
-  if (time_sort && time_sort.toLocaleLowerCase() !== "any") {
+  if (isValid(time_sort)) {
     const days = Number(time_sort);
     if (!isNaN(days)) {
       const time = new Date();
       time.setDate(time.getDate() - days);
-      query.gte("listed_in", time.toISOString());
+      query = query.gte("listed_in", time.toISOString());
     }
   }
 
-  if (
-    property_Type &&
-    property_Type.toLocaleLowerCase() !== "any" &&
-    property_Type?.trim() !== ""
-  ) {
-    query.eq("propertytype", property_Type);
+  if (isValid(state_address)) {
+    query = query.ilike("state_address", `%${state_address}%`);
   }
 
-  const { count: countRows, error: errorCountRows } = await query;
+  const { count: totalCount, error: countError } = await query;
+  if (countError) throw new Error(countError.message);
 
-  if (errorCountRows) throw new Error(errorCountRows?.message);
+  const maxNumberOfPages = Math.ceil(Number(totalCount) / perPage);
 
-  if (from >= 0 && to <= Number(countRows)) {
-    query.range(from, to);
+  pageNumber = Math.min(pageNumber, maxNumberOfPages);
+  from = (pageNumber - 1) * perPage;
+  to = from + perPage - 1;
+
+  const { data, count, error } = await query.range(from, to);
+
+  if (error) {
+    throw new Error(error.message);
   }
-
-  const { data, count, error } = await query;
-
-  if (error) throw new Error(error?.message);
 
   return { data, count };
 }
@@ -97,11 +95,6 @@ export async function getProperty(id: string) {
 
   return { property };
 }
-
-export type Coordinates = {
-  lat: number;
-  lng: number;
-};
 
 export async function getCoordinates(
   locationInput: string,

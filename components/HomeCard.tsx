@@ -3,19 +3,7 @@ import Image from "next/image";
 import React from "react";
 import ToogleFavorite from "./ToogleFavorite";
 import Link from "next/link";
-
-type Property = {
-  id: string;
-  title_address: string;
-  url: string;
-  images: string[];
-  state_address: string;
-  price: number;
-  property_type: string;
-  listed_in: string;
-  bedNumber: number;
-  bathNumber: number;
-};
+import { Property } from "@/types/types";
 
 type HomeCardType = {
   property: Property;
@@ -34,7 +22,7 @@ export default function HomeCard({ property, className }: HomeCardType) {
   } = property;
 
   return (
-    <Link href={`/property/${id}`}>
+    <Link href={`/property/${id}`} target="_blank">
       <div
         className={cn(
           "box-shadow relative overflow-hidden rounded-xl",

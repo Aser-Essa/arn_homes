@@ -14,8 +14,8 @@ export default async function SearchForSaleHeroSection({
   params,
   stateAddressArray,
 }: SearchForSaleHeroSectionType) {
-  const search_title = params?.search_title || "";
-  const coordinates = await getCoordinates(`${search_title}`);
+  const state_address = params?.state_address || "";
+  const coordinates = await getCoordinates(`${state_address}`);
 
   return (
     <Container>
@@ -24,9 +24,13 @@ export default async function SearchForSaleHeroSection({
         lat={coordinates?.lat}
         lng={coordinates?.lng}
         containerClassName={"mt-6"}
-        controllerClassName={"bottom-[53px]"}
+        controllerClassName={"lg:bottom-[53px] bottom-3"}
       />
-      <FilterBar params={params} stateAddressArray={stateAddressArray} />
+      <FilterBar
+        params={params}
+        stateAddressArray={stateAddressArray}
+        className="mb-10 mt-4 lg:mb-0 lg:mt-0"
+      />
     </Container>
   );
 }

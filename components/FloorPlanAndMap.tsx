@@ -24,7 +24,7 @@ export default async function FloorPlanAndMap({
 
   return (
     <div className="flex flex-col gap-[30px] lg:flex-row">
-      <div className="box-shadow min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
+      <div className="box-shadow hidden-box-shadow-on-mobile min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
         <p className="text-[36px] font-semibold">Floor Plan</p>
         <div className="relative aspect-square h-[343px] w-full sm:aspect-auto sm:h-[444px] sm:max-h-[444px]">
           <Image
@@ -36,7 +36,7 @@ export default async function FloorPlanAndMap({
         </div>
       </div>
 
-      <div className="box-shadow min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
+      <div className="box-shadow hidden-box-shadow-on-mobile min-h-[403px] flex-1 space-y-5 rounded-[20px] font-exo sm:p-6">
         <p className="text-[36px] font-semibold">Map</p>
 
         <Map lat={lat} lng={lng} controllerClassName="bottom-3" />
