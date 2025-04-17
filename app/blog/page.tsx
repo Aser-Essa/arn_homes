@@ -1,9 +1,19 @@
-import BlogsCards from "@/components/BlogsCards";
-import FirstBlog from "@/components/FirstBlog";
+import ArticlesCards from "@/components/ArticlesCards";
+import FirstArticle from "@/components/FirstArticle";
 import HeroSection from "@/components/HeroSection";
 import SearchBlogs from "@/components/SearchBlogs";
+import { getArticles } from "@/lib/data-service";
 
-export default function Home() {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function Page(props: { searchParams: SearchParams }) {
+  const searchParamsValues = await props.searchParams;
+
+  const { articles, count } = await getArticles({
+    params: searchParamsValues,
+    perPage: 10,
+  });
+
   return (
     <>
       <HeroSection
@@ -12,8 +22,8 @@ export default function Home() {
         slogan={"Explore the latest trends and insights in real estate."}
       />
       <SearchBlogs />
-      <FirstBlog image="/defaultBlog.webp" />
-      <BlogsCards />
+      <FirstArticle article={articles.at(0)} />
+      <ArticlesCards articles={articles} count={count} />
     </>
   );
 }

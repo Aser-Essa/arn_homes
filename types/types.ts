@@ -11,3 +11,20 @@ export type Property = {
   bathNumber: number;
   description: string;
 };
+
+export interface Paragraph {
+  title: string;
+  paragraph: string;
+}
+
+export interface Article {
+  id: number;
+  url: string;
+  title: string;
+  image: string;
+  category: string[];
+  date: string; // ISO format date string (can be parsed to Date or timestamptz)
+  author: string;
+  tags: string[];
+  paragraphs: Paragraph[];
+}

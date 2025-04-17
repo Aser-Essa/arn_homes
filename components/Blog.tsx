@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "./Container";
 import Title from "./Title";
-import BlogCard from "./BlogCard";
+import ArticleCard from "./ArticleCard";
 
 import {
   Carousel,
@@ -17,23 +17,23 @@ export default function Blog() {
         <Carousel>
           <CarouselContent>
             <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <BlogCard />
+              <ArticleCard />
             </CarouselItem>
 
             <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <BlogCard />
+              <ArticleCard />
             </CarouselItem>
 
             <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <BlogCard />
+              <ArticleCard />
             </CarouselItem>
 
             <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <BlogCard />
+              <ArticleCard />
             </CarouselItem>
 
             <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <BlogCard />
+              <ArticleCard />
             </CarouselItem>
           </CarouselContent>
         </Carousel>

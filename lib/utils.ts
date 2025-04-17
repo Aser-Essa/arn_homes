@@ -58,3 +58,13 @@ export function formatTimeAgo(dateString: string): string {
     return `${months} month${months > 1 ? "s" : ""} ago`;
   }
 }
+
+export function formatTimestamptzToReadable(dateString: string): string {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+}

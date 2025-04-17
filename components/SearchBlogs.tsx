@@ -13,7 +13,7 @@ export default function SearchBlogs() {
   return (
     <>
       <Container>
-        <div className="box-shadow relative top-[-41px] z-[100000] flex w-[505px] flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4">
+        <div className="box-shadow relative top-[-41px] z-[100000] flex w-full flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4 sm:w-[505px]">
           <SearchInput
             items={[]}
             search={search}

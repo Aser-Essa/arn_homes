@@ -127,3 +127,33 @@ export async function getCoordinates(
     return null;
   }
 }
+
+export async function getArticles({
+  perPage = 9,
+  params = {},
+}: PropertiesForSaleType) {
+  const { page } = params;
+
+  let pageNumber = Math.max(1, Number(page) || 1);
+  let from = (pageNumber - 1) * perPage;
+  let to = from + perPage - 1;
+
+  const query = supabase.from("blogs").select("*", { count: "exact" });
+
+  const { count: totalCount, error: countError } = await query;
+  if (countError) throw new Error(countError.message);
+
+  const maxNumberOfPages = Math.ceil(Number(totalCount) / perPage);
+
+  pageNumber = Math.min(pageNumber, maxNumberOfPages);
+  from = (pageNumber - 1) * perPage;
+  to = from + perPage - 1;
+
+  const { data: articles, count, error } = await query.range(from, to);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return { articles, count };
+}

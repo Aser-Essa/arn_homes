@@ -12,6 +12,7 @@ export default async function Page(props: { searchParams: SearchParams }) {
   const searchParamsValues = await props.searchParams;
 
   const { data } = await getPropertiesForSales(searchParamsValues);
+
   const stateAddressArray = data.map((el) => el.state_address);
 
   return (
