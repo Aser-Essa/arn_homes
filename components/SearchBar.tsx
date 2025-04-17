@@ -27,7 +27,12 @@ export default function SearchBar({ items }: SearchBarType) {
       <Container>
         <div className="box-shadow relative top-[-41px] z-[100000] flex max-w-[976px] flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-4">
           <SwitchCategory category={category} setCategory={setCategory} />
-          <SearchInput items={items} search={search} setSearch={setSearch} />
+          <SearchInput
+            items={items}
+            search={search}
+            setSearch={setSearch}
+            placeHolder="Enter City, Zip, Address"
+          />
           <Button type="submit" className="h-[50px]" onClick={clickHandler}>
             <LuSearch className="!h-5 !w-5" />
             <p className="hidden md:block">Search</p>

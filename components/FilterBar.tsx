@@ -31,7 +31,7 @@ export default function FilterBar({
     state_address,
   } = params;
 
-  const [search, setSearch] = useState(state_address);
+  const [search, setSearch] = useState(String(state_address));
   const [bed, setBed] = useState("");
   const [bath, setBath] = useState("");
   const [minPrice, setMinPrice] = useState("");
@@ -84,6 +84,7 @@ export default function FilterBar({
           items={stateAddressArray}
           search={search}
           setSearch={setSearch}
+          placeHolder="Enter City, Zip, Address"
         />
         <div className="hidden md:block">
           <PriceSelect

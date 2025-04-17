@@ -1,22 +1,44 @@
+import Image from "next/image";
 import React from "react";
 import Container from "./Container";
-import HerosectionBG from "./HerosectionBG";
+import BreadcrumpCustom from "./BreadcrumpCustom";
 
-export default function HeroSection() {
+import { BreadcrumbItem, BreadcrumbPage } from "@/components/ui/breadcrumb";
+
+type HeroSectionType = {
+  title: string;
+  slogan: string;
+  breadCrumpTitle: string;
+};
+
+export default function HeroSection({
+  title,
+  slogan,
+  breadCrumpTitle,
+}: HeroSectionType) {
   return (
-    <>
-      <Container className="relative flex h-[420px] w-full items-center sm:h-[582px]">
-        <div className="z-[100] space-y-5 font-league_spartan text-shades-white">
-          <p className="text-[48px] font-extrabold leading-[50px] sm:text-[60px] sm:leading-[66px] md:text-[80px] md:leading-[88px]">
-            Discover Your <br /> Dream Home
+    <Container className="relative overflow-hidden bg-scooter-50 py-8 font-exo md:pb-10">
+      <Image
+        src={"/BuildingIllustration.png"}
+        fill
+        alt="HeroSection"
+        className="!left-[80%] md:!left-[max(50vw,50%)]"
+      />
+      <div className="relative z-[1000] w-[95%] space-y-10 pb-20 sm:w-[90%]">
+        <BreadcrumpCustom>
+          <BreadcrumbItem>
+            <BreadcrumbPage>{breadCrumpTitle}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumpCustom>
+        <div className="space-y-2">
+          <p className="text-[clamp(38px,6vw,64px)] font-bold leading-[min(auto,88px)]">
+            {title}
           </p>
-          <p className="text-[26px] font-semibold leading-[28px] sm:text-[28px] sm:leading-[30px] md:text-[32px] md:leading-[35.5px]">
-            Your one-stop real estate destination for buying,
-            <br className="hidden sm:block" /> renting, and selling properties.
+          <p className="text-[clamp(20px,3vw,28px)] font-semibold leading-[min(auto,36px)]">
+            {slogan}
           </p>
         </div>
-        <HerosectionBG />
-      </Container>
-    </>
+      </div>
+    </Container>
   );
 }

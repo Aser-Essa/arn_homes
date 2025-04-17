@@ -1,4 +1,4 @@
-import HeroSectionSale from "@/components/HeroSectionSale";
+import HeroSection from "@/components/HeroSection";
 import FilterBar from "@/components/FilterBar";
 import React from "react";
 import PropertiesForSale from "@/components/PropertiesForSale";
@@ -16,7 +16,11 @@ export default async function Page(props: { searchParams: SearchParams }) {
 
   return (
     <>
-      <HeroSectionSale />
+      <HeroSection
+        breadCrumpTitle={"For Sale"}
+        title={"Properties for sale"}
+        slogan={"Search for the best houses for sale in your area."}
+      />
       <Container>
         <FilterBar
           params={searchParamsValues}

@@ -5,16 +5,16 @@ import { cn } from "@/lib/utils";
 
 type SearchInputType = {
   items: string[];
+  placeHolder: string;
   search: string | string[] | undefined;
-  setSearch: React.Dispatch<
-    React.SetStateAction<string | string[] | undefined>
-  >;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function SearchInput({
   items,
   search,
   setSearch,
+  placeHolder,
 }: SearchInputType) {
   const [isFocused, setIsFocused] = useState(false);
   const [listPosition, setListPosition] = useState<"top" | "bottom">("bottom");
@@ -55,7 +55,7 @@ export default function SearchInput({
     <div className="relative min-w-[150px] flex-1 font-exo">
       <Input
         type="text"
-        placeholder="Enter City, Zip, Address"
+        placeholder={placeHolder}
         value={search}
         ref={InputRef}
         onChange={handleChange}

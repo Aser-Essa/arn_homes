@@ -1,7 +1,7 @@
 import Stats from "@/components/Stats";
 import Blog from "@/components/Blog";
 import FeaturedProperties from "@/components/FeaturedProperties";
-import HeroSection from "@/components/HeroSection";
+import HomeHeroSection from "@/components/HomeHeroSection";
 import Reviews from "@/components/Reviews";
 import SearchBar from "@/components/SearchBar";
 import WhyUs from "@/components/WhyUs";
@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <>
-      <HeroSection />
+      <HomeHeroSection />
       <SearchBar items={stateAddressArray} />
       <FeaturedProperties
         className="mt-[14px] space-y-5 font-exo sm:space-y-10"
