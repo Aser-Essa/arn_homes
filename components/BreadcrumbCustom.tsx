@@ -16,12 +16,15 @@ type BreadcrumbCustomType = {
 export default function BreadcrumbCustom({ pathArray }: BreadcrumbCustomType) {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="mt-10 h-10 w-fit rounded-xl border-l-[5px] border-amber-600 bg-gray-900 pl-[17px] pr-[22px] font-exo text-base sm:h-12 sm:text-xl">
+      <BreadcrumbList className="mt-10 h-10 w-fit flex-nowrap rounded-xl border-l-[5px] border-amber-600 bg-gray-900 pl-[17px] pr-[22px] font-exo text-base sm:h-12 sm:max-w-[70%] sm:text-xl">
         {pathArray?.map(({ path, type, href }, index) => (
           <Fragment key={path}>
             <BreadcrumbItem>
               {type === "page" ? (
-                <BreadcrumbPage className="line-clamp-1">{path}</BreadcrumbPage>
+                <BreadcrumbPage className="line-clamp-1">
+                  {path}
+                  {path}
+                </BreadcrumbPage>
               ) : (
                 <BreadcrumbLink href={href}>{path}</BreadcrumbLink>
               )}

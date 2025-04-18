@@ -11,8 +11,6 @@ export default async function page({ params }: { params: Params }) {
   const { article } = await getArticle(String(id));
   const { paragraphs, title, image, tags } = article;
 
-  console.log(article);
-
   return (
     <>
       <ArticleHeroSection title={title} image={image} />
