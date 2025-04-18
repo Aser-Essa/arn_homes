@@ -1,6 +1,7 @@
 import { formatTimestamptzToReadable } from "@/lib/utils";
 import { Article } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 type ArticleCardType = {
@@ -9,14 +10,12 @@ type ArticleCardType = {
 
 export default function ArticleCard({ article }: ArticleCardType) {
   if (!article) return;
-  const { author, image, title, paragraphs, date } = article;
+  const { id, author, image, title, paragraphs, date } = article;
   return (
     <>
-      <div
-        className="relative overflow-hidden rounded-xl"
-        style={{
-          boxShadow: "0 0 1px 0 #0c1a4b3d, 0 3px 8px -1px #3333480d",
-        }}
+      <Link
+        href={`/article/${id}`}
+        className="box-shadow relative overflow-hidden rounded-xl"
       >
         <div className="space-y-5">
           <div className="relative h-[292px] w-full">
@@ -38,7 +37,7 @@ export default function ArticleCard({ article }: ArticleCardType) {
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

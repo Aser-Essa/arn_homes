@@ -31,8 +31,9 @@ export default function SwitchCategoryBtn({
   return (
     <li
       className={cn(
-        "flex w-full min-w-fit cursor-pointer items-center gap-2 rounded-xl border-[1.5px] border-amber-100 px-4 py-3 transition-all hover:border-amber-50 hover:bg-amber-50 md:w-fit",
-        category === value && "border-amber-50 bg-amber-50",
+        "flex w-full min-w-fit cursor-pointer items-center gap-2 transition-all hover:text-amber-600 sm:rounded-xl sm:border-[1.5px] sm:border-amber-100 sm:px-4 sm:py-3 sm:hover:border-amber-50 sm:hover:bg-amber-50 sm:hover:text-black md:w-fit",
+        category === value &&
+          "border-b border-amber-600 text-amber-600 sm:border-amber-50 sm:bg-amber-50 sm:text-black",
       )}
       onClick={handleClick}
     >

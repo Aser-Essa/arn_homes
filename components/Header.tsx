@@ -10,7 +10,9 @@ export default function Header() {
   return (
     <>
       <Container
-        className={"flex h-[98px] items-center justify-between py-5 font-exo"}
+        className={
+          "box-shadow relative z-[100000] flex h-[98px] items-center justify-between py-5 font-exo"
+        }
       >
         <Logo />
         <NavLinks />

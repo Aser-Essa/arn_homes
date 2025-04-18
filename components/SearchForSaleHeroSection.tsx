@@ -2,8 +2,8 @@ import React from "react";
 import FilterBar from "@/components/FilterBar";
 import Container from "./Container";
 import Map from "./Map";
-import SearchForSaleBreadcrump from "./SearchForSaleBreadcrump";
 import { getCoordinates } from "@/lib/data-service";
+import SearchForSaleBreadcrumb from "./SearchForSaleBreadcrumb";
 
 type SearchForSaleHeroSectionType = {
   params: { [key: string]: string | string[] | undefined };
@@ -19,7 +19,7 @@ export default async function SearchForSaleHeroSection({
 
   return (
     <Container>
-      <SearchForSaleBreadcrump />
+      <SearchForSaleBreadcrumb />
       <Map
         lat={coordinates?.lat}
         lng={coordinates?.lng}

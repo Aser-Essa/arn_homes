@@ -25,9 +25,11 @@ export default async function Blog() {
             {articles.map((article) => (
               <CarouselItem
                 key={article.id}
-                className="sm:basis-[47%] lg:basis-[32%]"
+                className="pb-2 sm:basis-[47%] lg:basis-[32%]"
               >
-                <ArticleCard article={article} />
+                <div className="box-shadow overflow-hidden rounded-xl">
+                  <ArticleCard article={article} />
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>

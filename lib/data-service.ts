@@ -157,3 +157,15 @@ export async function getArticles({
 
   return { articles, count };
 }
+
+export async function getArticle(id: string) {
+  const { data: article, error } = await supabase
+    .from("blogs")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw new Error(error?.message);
+
+  return { article };
+}

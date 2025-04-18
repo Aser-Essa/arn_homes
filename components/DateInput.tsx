@@ -25,7 +25,7 @@ export default function DateInput({ date, setDate }: DateInputType) {
           <Button
             variant={"outline"}
             className={cn(
-              "h-[50px] w-full justify-between rounded-xl border-amber-100 text-left text-lg font-normal text-gray-300 !ring-0",
+              "h-[50px] w-full justify-between rounded-xl border-amber-100 text-left text-lg font-normal text-gray-300 !ring-0 hover:bg-white",
               !date && "text-muted-foreground",
             )}
           >

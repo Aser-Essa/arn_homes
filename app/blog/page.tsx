@@ -14,10 +14,21 @@ export default async function Page(props: { searchParams: SearchParams }) {
     perPage: 10,
   });
 
+  const pathArray = [
+    {
+      path: "Home",
+      href: "/",
+    },
+    {
+      path: "Blog",
+      type: "page",
+    },
+  ];
+
   return (
     <>
       <HeroSection
-        breadCrumpTitle={"Blog"}
+        pathArray={pathArray}
         title={"Blog"}
         slogan={"Explore the latest trends and insights in real estate."}
       />

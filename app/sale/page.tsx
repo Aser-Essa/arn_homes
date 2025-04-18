@@ -15,10 +15,21 @@ export default async function Page(props: { searchParams: SearchParams }) {
 
   const stateAddressArray = data.map((el) => el.state_address);
 
+  const pathArray = [
+    {
+      path: "Home",
+      href: "/",
+    },
+    {
+      path: "For Sale",
+      type: "page",
+    },
+  ];
+
   return (
     <>
       <HeroSection
-        breadCrumpTitle={"For Sale"}
+        pathArray={pathArray}
         title={"Properties for sale"}
         slogan={"Search for the best houses for sale in your area."}
       />

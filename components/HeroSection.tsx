@@ -1,20 +1,18 @@
 import Image from "next/image";
 import React from "react";
 import Container from "./Container";
-import BreadcrumpCustom from "./BreadcrumpCustom";
-
-import { BreadcrumbItem, BreadcrumbPage } from "@/components/ui/breadcrumb";
+import BreadcrumbCustom from "./BreadcrumbCustom";
 
 type HeroSectionType = {
   title: string;
   slogan: string;
-  breadCrumpTitle: string;
+  pathArray: { path: string; type?: string; href?: string }[];
 };
 
 export default function HeroSection({
+  pathArray,
   title,
   slogan,
-  breadCrumpTitle,
 }: HeroSectionType) {
   return (
     <Container className="relative overflow-hidden bg-scooter-50 py-8 font-exo md:pb-10">
@@ -25,11 +23,7 @@ export default function HeroSection({
         className="!left-[80%] md:!left-[max(50vw,50%)]"
       />
       <div className="relative z-[1000] w-[95%] space-y-10 pb-20 sm:w-[90%]">
-        <BreadcrumpCustom>
-          <BreadcrumbItem>
-            <BreadcrumbPage>{breadCrumpTitle}</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumpCustom>
+        <BreadcrumbCustom pathArray={pathArray} />
         <div className="space-y-2">
           <p className="text-[clamp(38px,6vw,64px)] font-bold leading-[min(auto,88px)]">
             {title}
