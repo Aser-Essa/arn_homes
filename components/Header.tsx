@@ -2,10 +2,10 @@ import React from "react";
 import Container from "./Container";
 import { Button } from "./ui/button";
 import NavLinks from "./NavLinks";
-import { FaBars } from "react-icons/fa6";
 import Logo from "./Logo";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import SideMobileMenu from "./SideMobileMenu";
 
 type HeaderType = {
   className?: string;
@@ -33,7 +33,7 @@ export default function Header({ className }: HeaderType) {
           />
           Add Listing
         </Button>
-        <FaBars className="h-6 w-6 cursor-pointer min-[820px]:hidden" />
+        <SideMobileMenu />
       </Container>
     </>
   );

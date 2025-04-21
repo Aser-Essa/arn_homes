@@ -9,9 +9,15 @@ type NavLinkType = {
   href: string;
   icon?: string;
   children: React.ReactNode;
+  className?: string;
 };
 
-export default function NavLink({ href, icon, children }: NavLinkType) {
+export default function NavLink({
+  href,
+  icon,
+  children,
+  className,
+}: NavLinkType) {
   const path = usePathname();
   // const isActive = "rounded-xl bg-scooter-50 p-2";
 
@@ -27,6 +33,7 @@ export default function NavLink({ href, icon, children }: NavLinkType) {
           href={href}
           className={cn(
             "flex items-center gap-1",
+            className,
             isActive && "rounded-xl bg-scooter-50 p-2",
           )}
         >
