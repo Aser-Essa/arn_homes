@@ -26,7 +26,7 @@ export default function NavLinks() {
           <SignInButton />
         </SignedOut>
         <SignedIn>
-          <NavLink href="/account/properties" icon="/icons/user-circle.svg">
+          <NavLink href="/account" icon="/icons/user-circle.svg">
             Account
           </NavLink>
         </SignedIn>
