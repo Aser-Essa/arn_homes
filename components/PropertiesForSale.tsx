@@ -14,7 +14,9 @@ type PropertiesForSaleType = {
 export default async function PropertiesForSale({
   params,
 }: PropertiesForSaleType) {
-  const { data: PropertiesData, count } = await getPropertiesForSales(params);
+  const { data: PropertiesData, count } = await getPropertiesForSales({
+    params: { time_sort: String(params?.time_sort) },
+  });
 
   return (
     <>

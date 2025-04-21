@@ -1,5 +1,6 @@
 import React from "react";
 import NavLink from "./NavLink";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 export default function NavLinks() {
   return (
@@ -8,26 +9,27 @@ export default function NavLinks() {
         <NavLink href="/" icon="/icons/home.svg">
           Home
         </NavLink>
-
         <NavLink href="/sale" icon="/icons/store.svg">
           For sale
         </NavLink>
-
         <NavLink href="/rent" icon="/icons/home-activity.svg">
           For rent
         </NavLink>
-
         <NavLink href="/investment" icon="/icons/building-coins.svg">
           For investment
         </NavLink>
-
         <NavLink href="/blog" icon="/icons/blog.svg">
           Blog
         </NavLink>
 
-        <NavLink href="/SignIn" icon="">
-          Sign in
-        </NavLink>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <NavLink href="/account/properties" icon="/icons/user-circle.svg">
+            Account
+          </NavLink>
+        </SignedIn>
       </ul>
     </>
   );

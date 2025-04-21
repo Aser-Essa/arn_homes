@@ -13,15 +13,24 @@ type NavLinkType = {
 
 export default function NavLink({ href, icon, children }: NavLinkType) {
   const path = usePathname();
-  const isActive = "rounded-xl bg-scooter-50 p-2";
+  // const isActive = "rounded-xl bg-scooter-50 p-2";
+
+  const isActive =
+    (href.split("/").join("").length > 0 && path.includes(href)) ||
+    (href === "" && path === "") ||
+    (href === "/" && path === "/");
+
   return (
     <>
       <li>
         <Link
           href={href}
-          className={cn("flex items-center gap-1", path === href && isActive)}
+          className={cn(
+            "flex items-center gap-1",
+            isActive && "rounded-xl bg-scooter-50 p-2",
+          )}
         >
-          {path === href && icon && (
+          {isActive && icon && (
             <Image
               src={icon}
               width={18}

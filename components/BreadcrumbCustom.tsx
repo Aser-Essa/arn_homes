@@ -21,10 +21,7 @@ export default function BreadcrumbCustom({ pathArray }: BreadcrumbCustomType) {
           <Fragment key={path}>
             <BreadcrumbItem>
               {type === "page" ? (
-                <BreadcrumbPage className="line-clamp-1">
-                  {path}
-                  {path}
-                </BreadcrumbPage>
+                <BreadcrumbPage className="line-clamp-1">{path}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink href={href}>{path}</BreadcrumbLink>
               )}

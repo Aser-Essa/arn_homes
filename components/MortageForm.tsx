@@ -56,7 +56,6 @@ export default function MortageForm() {
         Math.pow(1 + monthlyInterestRate, months)) /
       (Math.pow(1 + monthlyInterestRate, months) - 1);
     setMortagePrice(Number(monthlyPayment.toFixed(2)));
-    console.log(data);
   }
 
   return (

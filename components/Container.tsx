@@ -10,7 +10,9 @@ export default function Container({
 }) {
   return (
     <>
-      <div className={cn("px-4 md:px-8 lg:px-[100px]", `${className}`)}>
+      <div
+        className={cn("px-4 font-exo md:px-8 lg:px-[100px]", `${className}`)}
+      >
         {children}
       </div>
     </>
