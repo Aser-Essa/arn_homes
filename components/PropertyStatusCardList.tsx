@@ -12,33 +12,33 @@ export default function PropertyStatusCardList({
     {
       text: "Active",
       icon: "/icons/active.svg",
-      href: "/active",
+      status: "active",
     },
     {
       text: "Reviewing",
       icon: "/icons/review.svg",
-      href: "/reviewing",
+      status: "reviewing",
     },
     {
       text: "Declined",
       icon: "/icons/declined.svg",
-      href: "/declined",
+      status: "declined",
     },
     {
       text: "Inactive",
       icon: "/icons/inactive.svg",
-      href: "/inactive",
+      status: "inactive",
     },
   ];
 
   return (
     <div className="mt-4 space-y-4">
-      {statuses?.map(({ text, icon, href }, idx) => (
+      {statuses?.map(({ text, icon, status }, idx) => (
         <PropertyStatusCard
           key={`${text} ${idx}`}
           text={text}
           icon={icon}
-          href={`properties/${category}${href}`}
+          href={`account/properties?category=${category}&status=${status}`}
         />
       ))}
     </div>

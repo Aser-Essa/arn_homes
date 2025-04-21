@@ -1,9 +1,10 @@
 import React from "react";
 import Container from "./Container";
 import DateSort from "./DateSort";
+import { params } from "@/types/types";
 
 type SearchForSaleHeaderType = {
-  params: { [key: string]: string | string[] | undefined };
+  params: params;
   numberOfProperties: number | null;
 };
 

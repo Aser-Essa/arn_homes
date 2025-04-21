@@ -9,9 +9,10 @@ import PropertySelect from "./PropertySelect";
 import OverlayFilter from "./OverlayFilter";
 import { cn } from "@/lib/utils";
 import SearchInput from "./SearchInput";
+import { params } from "@/types/types";
 
 type FilterBarType = {
-  params: { [key: string]: string | string[] | undefined };
+  params: params;
   className?: string;
   stateAddressArray?: string[];
 };

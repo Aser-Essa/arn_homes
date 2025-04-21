@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
 import SideBar from "@/components/SideBar";
-import CompleteProfileBanner from "@/components/CompleteProfileBanner";
 
 const exo = Exo({
   variable: "--font-exo",
@@ -38,12 +37,11 @@ export default function RootLayout({
         >
           <Toaster position="top-center" reverseOrder={false} />
           <Header className="lg:px-10" />
-          <div className="block sm:hidden">
-            <CompleteProfileBanner />
-          </div>
           <div className="flex">
-            <SideBar />
-            <div className="hidden w-[76vw] p-10 sm:block">{children}</div>
+            <div className="hidden md:block">
+              <SideBar />
+            </div>
+            <div className="w-full md:flex-1">{children}</div>
           </div>
           <Footer />
         </body>

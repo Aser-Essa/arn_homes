@@ -7,7 +7,7 @@ import { MdOutlineStarHalf } from "react-icons/md";
 
 export default function SideBar() {
   return (
-    <div className="box-shadow relative h-[1120px] w-full space-y-6 px-3 py-3.5 shadow-shades-white sm:w-[24vw] sm:py-10 lg:px-6">
+    <div className="box-shadow relative h-full w-full space-y-6 px-3 py-3.5 shadow-shades-white md:w-[24vw] md:py-10 lg:px-6">
       <div className="hidden h-12 w-full cursor-pointer items-center gap-2 rounded-xl border-l-[5px] border-amber-600 bg-gray-900 px-6 pl-[11px] pr-4 font-exo text-shades-white transition-all hover:text-scooter-600 md:flex md:text-lg lg:text-xl">
         <Image
           src={"/icons/dashboard.svg"}

@@ -1,30 +1,32 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 type PropertiesCategorySwitchType = {
   category: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function PropertiesCategorySwitch({
   category,
-  setCategory,
 }: PropertiesCategorySwitchType) {
-  function handleClick(selected: string) {
-    setCategory(selected);
+  const path = usePathname();
+  const router = useRouter();
+
+  function handleClick(category: string) {
+    const params = new URLSearchParams(window.location.search);
+    if (category) params.set("category", category);
+    router.push(`${path}?${params.toString()}`);
   }
 
   return (
-    <ul className="absolute flex items-center gap-6 max-lg:right-0 lg:left-1/2 lg:-translate-x-1/2 lg:text-lg">
+    <ul className="flex items-center gap-6 max-lg:right-0 sm:absolute lg:left-1/2 lg:-translate-x-1/2 lg:text-lg">
       <li
         className={cn(
           "cursor-pointer pb-1 transition-all hover:text-scooter-700",
           category === "sale" && "border-b border-scooter-700 text-scooter-700",
         )}
-        onClick={() => handleClick("sale")}
       >
-        For sale
+        <div onClick={() => handleClick("sale")}>For sale</div>
       </li>
 
       <li
@@ -32,9 +34,8 @@ export default function PropertiesCategorySwitch({
           "cursor-pointer pb-1 transition-all hover:text-scooter-700",
           category === "rent" && "border-b border-scooter-700 text-scooter-700",
         )}
-        onClick={() => handleClick("rent")}
       >
-        For rent
+        <div onClick={() => handleClick("rent")}>For rent</div>
       </li>
 
       <li
@@ -43,9 +44,8 @@ export default function PropertiesCategorySwitch({
           category === "investment" &&
             "border-b border-scooter-700 text-scooter-700",
         )}
-        onClick={() => handleClick("investment")}
       >
-        For investment
+        <div onClick={() => handleClick("investment")}>For investment</div>
       </li>
     </ul>
   );

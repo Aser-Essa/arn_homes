@@ -9,9 +9,9 @@ type IconTextType = {
 export default function IconText({ icon, text }: IconTextType) {
   return (
     <>
-      <div className="mx-1 flex items-center gap-2">
+      <div className="mx-1 flex items-center gap-1 md:gap-2">
         <Image src={icon} width={20} height={14} alt="bed" />
-        <p>{text}</p>
+        <p className="text-xs md:text-base">{text}</p>
       </div>
     </>
   );

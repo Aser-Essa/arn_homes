@@ -28,3 +28,5 @@ export interface Article {
   tags: string[];
   paragraphs: Paragraph[];
 }
+
+export type params = { [key: string]: string | string[] | undefined };

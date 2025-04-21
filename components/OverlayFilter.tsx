@@ -19,6 +19,7 @@ import FurnishedSelect from "./FurnishedSelect";
 import PriceRangeSelect from "./PriceRangeSelect";
 import PropertyTypeSelect from "./PropertyTypeSelect";
 import SortOrder from "./SortOrder";
+import { params } from "@/types/types";
 
 type selectItemObj = {
   value: string | number;
@@ -26,7 +27,7 @@ type selectItemObj = {
 };
 
 type OverlayFilterType = {
-  params: { [key: string]: string | string[] | undefined };
+  params: params;
   bedOptions: selectItemObj[];
   bathOptions: selectItemObj[];
 };

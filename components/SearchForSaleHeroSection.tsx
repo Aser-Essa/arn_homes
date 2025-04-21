@@ -4,9 +4,10 @@ import Container from "./Container";
 import Map from "./Map";
 import { getCoordinates } from "@/lib/data-service";
 import SearchForSaleBreadcrumb from "./SearchForSaleBreadcrumb";
+import { params } from "@/types/types";
 
 type SearchForSaleHeroSectionType = {
-  params: { [key: string]: string | string[] | undefined };
+  params: params;
   stateAddressArray: string[];
 };
 

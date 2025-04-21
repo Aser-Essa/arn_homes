@@ -45,7 +45,7 @@ export default function SideMobileMenu() {
   ];
 
   return (
-    <div className="sm:!hidden">
+    <div className="min-[820px]:!hidden">
       <Sheet>
         <SheetTrigger asChild>
           <FaBars className="h-6 w-6 cursor-pointer" />

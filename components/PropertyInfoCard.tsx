@@ -6,6 +6,7 @@ import PropertyInfoStats from "./PropertyInfoStats";
 
 type PropertyInfoCardType = {
   property: Property;
+  isCard?: boolean;
 };
 
 export default function PropertyInfoCard({ property }: PropertyInfoCardType) {

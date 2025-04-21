@@ -6,9 +6,10 @@ import { getPropertiesForSales } from "@/lib/data-service";
 import DateSort from "./DateSort";
 
 import Pagenation from "./Pagenation";
+import { params } from "@/types/types";
 
 type PropertiesForSaleType = {
-  params: { [key: string]: string | string[] | undefined };
+  params: params;
 };
 
 export default async function PropertiesForSale({

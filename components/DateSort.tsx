@@ -4,9 +4,10 @@ import React from "react";
 import CustomSelect from "./CustomSelect";
 import { useRouter } from "next/navigation";
 import { cn, formatTimeCounter } from "@/lib/utils";
+import { params } from "@/types/types";
 
 type DateSortType = {
-  params: { [key: string]: string | string[] | undefined };
+  params: params;
   className?: string;
 };
 
