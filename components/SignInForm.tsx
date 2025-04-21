@@ -16,7 +16,7 @@ export default function SignInForm() {
             <>
               <SignIn.Step name="start" className="space-y-10">
                 <div className="space-y-2.5">
-                  <p className="text-[clamp(26px,3vw,36px)] font-semibold xl:leading-[44px]">
+                  <p className="text-[clamp(26px,3vw,36px)] font-semibold xl:leading-none">
                     Welcome to Arn Homes.
                     <br /> Sign in to enjoy much more{" "}
                   </p>

@@ -97,7 +97,7 @@ export default function Footer() {
                 <CiInstagram className="h-6 w-6" />
               </Link>
             </div>
-            <p className="text-end font-medium leading-[44px] text-shades-white">
+            <p className="text-end font-medium leading-none text-shades-white">
               &copy; 2023 Arn Homes Limited. All rights reserved.
             </p>
           </div>

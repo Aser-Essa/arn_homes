@@ -23,13 +23,13 @@ export default function UserPropertyInfoCard({
         <UserPropertyCardControl />
         <p
           className={cn(
-            "!mt-0 text-sm font-semibold sm:text-[36px] sm:leading-[44px]",
+            "!mt-0 text-sm font-semibold sm:text-[36px] sm:leading-none",
           )}
         >
           {formatPrice(price)}
         </p>
         <div className="space-y-1">
-          <p className="text-sm font-semibold text-scooter-900 sm:text-[28px]">
+          <p className="text-sm font-semibold leading-none text-scooter-900 sm:text-[28px]">
             {property_type}
           </p>
           <p className="text-sm sm:text-base">{state_address}</p>

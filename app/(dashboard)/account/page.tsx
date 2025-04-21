@@ -9,7 +9,7 @@ export default async function page(props: { searchParams: SearchParams }) {
   const searchParamsValues = await props.searchParams;
 
   return (
-    <Container className="w-full overflow-y-scroll !p-0 md:w-[76vw] md:!p-10">
+    <Container className="mb-[150px] w-full overflow-y-scroll !p-0 md:w-[76vw] md:!p-10">
       <div className="block md:hidden">
         <CompleteProfileBanner />
       </div>
