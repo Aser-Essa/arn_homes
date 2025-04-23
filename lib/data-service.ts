@@ -179,15 +179,14 @@ export async function getArticle(id: string) {
 }
 
 export async function createUser(userData: UserDataType) {
-  console.log(userData);
-
-  const { id, full_name, email, avatar } = userData;
-
-  const { data: user, error } = await supabase
-    .from("users")
-    .upsert([{ id, full_name, email, avatar }], { onConflict: "email" });
-
-  if (error) throw new Error(error?.message);
-
-  return { user };
+  try {
+    const { error } = await supabase.from("users").insert(userData);
+    if (error) {
+      console.error("Failed to insert user:", error);
+    } else {
+      console.log("User inserted successfully");
+    }
+  } catch (err) {
+    console.error("Unexpected error in createUser:", err);
+  }
 }
