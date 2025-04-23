@@ -185,8 +185,7 @@ export async function createUser(userData: UserDataType) {
 
   const { data: user, error } = await supabase
     .from("users")
-    .insert([{ id, full_name, email, avatar }])
-    .select();
+    .upsert([{ id, full_name, email, avatar }], { onConflict: "email" });
 
   if (error) throw new Error(error?.message);
 
