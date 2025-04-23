@@ -180,7 +180,7 @@ export async function getArticle(id: string) {
 
 export async function createUser(userData: UserDataType) {
   try {
-    const { error } = await supabase.from("users").insert(userData);
+    const { error } = await supabase.from("users").insert([userData]);
     if (error) {
       console.error("Failed to insert user:", error);
     } else {
