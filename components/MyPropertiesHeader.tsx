@@ -1,15 +1,21 @@
 import React from "react";
-import PropertiesCategorySwitch from "./PropertiesCategorySwitch";
 import { params } from "@/types/types";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
+import CategorySwitch from "./CategorySwitch";
 
 type MyPropertiesHeaderType = {
   params: params;
 };
 
+const categories = [
+  { key: "sale", label: "For sale" },
+  { key: "rent", label: "For rent" },
+  { key: "investment", label: "For investment" },
+];
+
 export default function MyPropertiesHeader({ params }: MyPropertiesHeaderType) {
-  const { category: categoryParam } = params;
+  const { property_category } = params;
 
   return (
     <>
@@ -27,8 +33,10 @@ export default function MyPropertiesHeader({ params }: MyPropertiesHeaderType) {
           <IoIosArrowBack />
           <p>My properties</p>
         </Link>
-        <PropertiesCategorySwitch
-          category={categoryParam ? String(categoryParam) : "sale"}
+        <CategorySwitch
+          categories={categories}
+          category_val={property_category ? String(property_category) : "sale"}
+          category_name={"property_category"}
         />
       </div>
     </>

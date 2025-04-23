@@ -1,11 +1,10 @@
 import React from "react";
 import Container from "./Container";
-import { Button } from "./ui/button";
 import NavLinks from "./NavLinks";
 import Logo from "./Logo";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import SideMobileMenu from "./SideMobileMenu";
+import AddPropertyButton from "./AddPropertyButton";
 
 type HeaderType = {
   className?: string;
@@ -22,16 +21,7 @@ export default function Header({ className }: HeaderType) {
       >
         <Logo />
         <NavLinks />
-        <Button className="hidden h-[58px] items-center gap-2 md:px-3 md:py-2 min-[820px]:flex lg:px-6 lg:py-4">
-          <Image
-            src={"/icons/home_price.svg"}
-            width={18}
-            height={18}
-            alt="home"
-            className="mt-[-4px]"
-          />
-          Add Listing
-        </Button>
+        <AddPropertyButton />
         <SideMobileMenu />
       </Container>
     </>

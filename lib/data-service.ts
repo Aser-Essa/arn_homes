@@ -170,3 +170,18 @@ export async function getArticle(id: string) {
 
   return { article };
 }
+
+export async function createUser(userData) {
+  console.log(userData);
+
+  const { id, full_name, email, avatar } = userData;
+
+  const { data: user, error } = await supabase
+    .from("users")
+    .insert([{ id, full_name, email, avatar }])
+    .select();
+
+  if (error) throw new Error(error?.message);
+
+  return { user };
+}
