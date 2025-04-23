@@ -26,7 +26,7 @@ export type Coordinates = {
 type UserDataType = {
   id: string;
   full_name: string;
-  email: string;
+  email: string | null;
   avatar: string;
 };
 
