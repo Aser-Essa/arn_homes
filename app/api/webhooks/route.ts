@@ -1,8 +1,9 @@
 import { createUser } from "@/lib/data-service";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
+import { NextRequest } from "next/server"; // Import NextRequest
 import type { UserJSON } from "@clerk/backend"; // Import UserJSON type explicitly
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const evt = await verifyWebhook(req);
 

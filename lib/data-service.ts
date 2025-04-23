@@ -23,6 +23,13 @@ export type Coordinates = {
   lng: number;
 };
 
+type UserDataType = {
+  id: string;
+  full_name: string;
+  email: string;
+  avatar: string;
+};
+
 export async function getPropertiesForSales({
   perPage = 9,
   params = {},
@@ -171,7 +178,7 @@ export async function getArticle(id: string) {
   return { article };
 }
 
-export async function createUser(userData) {
+export async function createUser(userData: UserDataType) {
   console.log(userData);
 
   const { id, full_name, email, avatar } = userData;
