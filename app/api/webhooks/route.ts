@@ -9,8 +9,12 @@ export async function POST(req: NextRequest) {
 
     const eventType = evt.type;
 
+    console.log(eventType);
+
     if (eventType === "user.created") {
       const user = evt.data as UserJSON; // 👈 safely cast to UserJSON
+
+      console.log(user);
 
       const { id, first_name, last_name, email_addresses, image_url } = user;
 
@@ -21,7 +25,7 @@ export async function POST(req: NextRequest) {
         avatar: image_url,
       };
 
-      createUser(userData);
+      await createUser(userData);
     }
 
     return new Response("Webhook received", { status: 200 });
