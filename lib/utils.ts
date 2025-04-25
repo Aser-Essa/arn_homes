@@ -25,6 +25,23 @@ export function formatPrice(price: number) {
   }).format(price);
 }
 
+export function parseFormattedPrice(formatted: string): number {
+  const numericString = formatted.replace(/[^0-9.]/g, "");
+  return Number(numericString);
+}
+
+export const getCurrentTime = (): string => {
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes: string | number = now.getMinutes();
+  const ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? `0${minutes}` : `${minutes}`; // Ensuring minutes are string
+
+  return `${hours}:${minutes}${ampm}`;
+};
+
 export function formatTimeCounter(days: number): string {
   const weeks = Math.floor(days / 7);
   const months = Math.floor(days / 30);

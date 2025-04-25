@@ -9,21 +9,40 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { formatPrice, parseFormattedPrice } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import CustomSelect from "./CustomSelect";
-import { useState } from "react";
-import { formatPrice } from "@/lib/utils";
 
-type onSubmitDataType = {
+const MortgageFormSchema = z.object({
+  price: z.number().min(1, "Price is required"),
+  repayment_term: z.number().min(0, "repayment term sholud be more than 0"),
+  interest_rate: z
+    .number({ invalid_type_error: "Interest rate is required" })
+    .min(0.01, "Interest rate must be greater than 0")
+    .refine((val) => val !== null, "Interest rate is required"),
+});
+
+type MortgageFormType = {
   price: number;
-  repayment_term: number;
-  interest_rate: number;
 };
 
-export default function MortageForm() {
-  const [mortagePrice, setMortagePrice] = useState(45);
+export default function MortgageForm({ price }: MortgageFormType) {
+  const [mortgagePrice, setMortgagePrice] = useState(0);
+  const [priceInput, setPriceInput] = useState(formatPrice(price));
 
-  const isNanValue = !Number(formatPrice(mortagePrice).replace(/[^0-9]/g, ""));
+  const form = useForm({
+    resolver: zodResolver(MortgageFormSchema),
+    defaultValues: {
+      price,
+      repayment_term: 25,
+      interest_rate: 5.5,
+    },
+  });
+
+  const isNanValue = !Number(formatPrice(mortgagePrice).replace(/[^0-9]/g, ""));
 
   const years = [
     { label: "5 years", value: 5 },
@@ -34,29 +53,40 @@ export default function MortageForm() {
     { label: "30 years", value: 30 },
   ];
 
-  const form = useForm({
-    defaultValues: {
-      price: 7250,
-      repayment_term: 25,
-      interest_rate: 5.5,
+  const calcMortgage = useCallback(
+    function calcMortgage() {
+      const { price, repayment_term, interest_rate } = form.getValues();
+      const principal = price;
+      const annualInterestRate = interest_rate;
+      const months = repayment_term * 12;
+      const monthlyInterestRate = annualInterestRate / 100 / 12;
+      const monthlyPayment =
+        (principal *
+          monthlyInterestRate *
+          Math.pow(1 + monthlyInterestRate, months)) /
+        (Math.pow(1 + monthlyInterestRate, months) - 1);
+      setMortgagePrice(Number(monthlyPayment.toFixed(2)));
     },
-  });
+    [form],
+  );
 
-  function onSubmit(data: onSubmitDataType) {
-    const { price, repayment_term, interest_rate } = data;
-
-    const principal = price;
-    const annualInterestRate = interest_rate;
-    const months = repayment_term * 12;
-    const monthlyInterestRate = annualInterestRate / 100 / 12;
-
-    const monthlyPayment =
-      (principal *
-        monthlyInterestRate *
-        Math.pow(1 + monthlyInterestRate, months)) /
-      (Math.pow(1 + monthlyInterestRate, months) - 1);
-    setMortagePrice(Number(monthlyPayment.toFixed(2)));
+  function onSubmit() {
+    calcMortgage();
   }
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numericValue = parseFormattedPrice(
+      e.target.value.replace(/[^0-9.]/g, ""),
+    );
+    if (!isNaN(numericValue)) {
+      setPriceInput(formatPrice(numericValue));
+      form.setValue("price", numericValue);
+    }
+  };
+
+  useEffect(() => {
+    calcMortgage();
+  }, [calcMortgage]);
 
   return (
     <>
@@ -74,9 +104,11 @@ export default function MortageForm() {
                 <FormControl>
                   <Input
                     type="text"
-                    placeholder="£7,250"
-                    className="h-[50px] w-full rounded-xl border-amber-100 !text-lg text-gray-300 shadow-none !ring-0 placeholder:text-lg placeholder:text-gray-300 focus:outline-none"
+                    disabled
+                    className="h-[50px] w-full rounded-xl border-amber-100 !text-lg text-gray-300 shadow-none !ring-0 placeholder:text-lg placeholder:text-gray-300 focus:outline-none disabled:opacity-100"
                     {...field}
+                    value={priceInput}
+                    onChange={handlePriceChange}
                   />
                 </FormControl>
                 <FormMessage />
@@ -95,10 +127,10 @@ export default function MortageForm() {
                 <FormControl>
                   <CustomSelect
                     placeholder="Repayment term"
-                    defaultValue={"25"}
+                    defaultValue={25}
                     selectItems={years}
-                    onValueChange={field.onChange}
-                    className="w-full text-gray-300"
+                    onValueChange={(value) => field.onChange(Number(value))}
+                    className="!w-full min-w-full max-w-full text-gray-300"
                   />
                 </FormControl>
                 <FormMessage />
@@ -118,9 +150,9 @@ export default function MortageForm() {
                   <div className="relative">
                     <Input
                       type="number"
-                      placeholder="5.5"
                       className="h-[50px] rounded-xl border-amber-100 !text-lg text-gray-300 shadow-none !ring-0 placeholder:text-lg placeholder:text-gray-300 focus:outline-none"
                       {...field}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
                     />
                     <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 bg-white p-2 pr-0 text-lg text-gray-300">
                       %
@@ -135,7 +167,7 @@ export default function MortageForm() {
             <p className="text-lg font-semibold text-red-500">Invalid Input</p>
           ) : (
             <p className="text-2xl font-semibold">
-              {formatPrice(mortagePrice)} due per month
+              {formatPrice(mortgagePrice)} due per month
             </p>
           )}
 

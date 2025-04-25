@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -14,10 +13,10 @@ import Image from "next/image";
 
 type DateInputType = {
   date: Date | undefined;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  onValueChange: () => void;
 };
 
-export default function DateInput({ date, setDate }: DateInputType) {
+export default function DateInput({ date, onValueChange }: DateInputType) {
   return (
     <>
       <Popover>
@@ -47,7 +46,7 @@ export default function DateInput({ date, setDate }: DateInputType) {
             <Calendar
               mode="single"
               selected={date}
-              onSelect={setDate}
+              onSelect={onValueChange}
               initialFocus
               className="w-full"
             />

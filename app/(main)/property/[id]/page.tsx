@@ -13,21 +13,34 @@ export default async function page({ params }: { params: Params }) {
   const { id } = await params;
   const { property } = await getProperty(String(id));
 
+  const {
+    description,
+    Exterior,
+    Interior,
+    floor_plan,
+    state_address,
+    title_address,
+    price,
+  } = property;
+
   return (
     <Container className="mb-[200px] min-h-[100vh] space-y-10">
       <BackButton />
       <PropertyDetails property={property} />
       <Description
-        description={property?.description}
-        exterior={property?.Exterior}
-        interior={property?.Interior}
+        description={description}
+        exterior={Exterior}
+        interior={Interior}
       />
       <FloorPlanAndMap
-        floor_plan={property?.floor_plan}
-        state_address={property?.state_address}
-        title_address={property?.title_address}
+        floor_plan={floor_plan}
+        state_address={state_address}
+        title_address={title_address}
       />
-      <ScheduleAndMortgageForms />
+      <ScheduleAndMortgageForms
+        price={price}
+        property_id={id ? String(id) : ""}
+      />
 
       <FeaturedProperties
         className="space-y-10 !px-0 font-exo"

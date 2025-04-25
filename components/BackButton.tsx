@@ -1,12 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { IoIosArrowBack } from "react-icons/io";
 
 export default function BackButton() {
-  const router = useRouter();
-
   function handleClick() {
-    router.back();
+    window.close();
   }
 
   return (

@@ -191,3 +191,11 @@ export async function createUser(userData: UserDataType) {
     console.error("Unexpected error in createUser:", err);
   }
 }
+
+// const {
+//   name,
+//   phone,
+//   date: scheduled_date,
+//   select_time: scheduled_time,
+// } = formData;
+// const id = randomUUID();

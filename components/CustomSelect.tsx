@@ -20,7 +20,8 @@ type CustomSelectType = {
   placeholder: string;
   selectItems: selectItemObj[];
   className?: string;
-  defaultValue?: string | string[] | undefined;
+  defaultValue?: number | string | string[] | undefined;
+  value?: string;
   onValueChange: (value: string) => void;
 };
 
@@ -30,11 +31,13 @@ export default function CustomSelect({
   selectItems = [],
   onValueChange,
   defaultValue,
+  value,
 }: CustomSelectType) {
   return (
     <Select
       onValueChange={(value) => onValueChange(value)}
-      defaultValue={defaultValue && String(defaultValue)}
+      defaultValue={defaultValue ? String(defaultValue) : ""}
+      value={value}
     >
       <SelectTrigger
         className={cn(
