@@ -23,7 +23,7 @@ export default function SearchForSaleHeader({
         <p className="text-[28px] font-semibold text-scooter-900">
           {numberOfProperties} results
         </p>
-        <DateSort params={params} className={"!min-w-[185px]"} />
+        <DateSort params={params} className={"!min-w-[223px]"} />
       </div>
     </Container>
   );

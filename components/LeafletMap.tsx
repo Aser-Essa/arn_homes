@@ -14,20 +14,26 @@ import toast from "react-hot-toast";
 import MapController from "./MapController";
 import { cn } from "@/lib/utils";
 
-type LeafletMapType = {
+type LatLngType = {
   lat: number | undefined;
   lng: number | undefined;
-  containerClassName?: string;
-  controllerClassName?: string;
 };
 
+type LeafletMapType = {
+  containerClassName?: string;
+  controllerClassName?: string;
+} & LatLngType;
+
 export default function LeafletMap({
-  lat = 0,
-  lng = 0,
+  lat = 51.5074,
+  lng = -0.1278,
   containerClassName,
   controllerClassName,
 }: LeafletMapType) {
-  const [userLocation, setUserLocation] = useState({ lat, lng });
+  const [userLocation, setUserLocation] = useState<LatLngType>({
+    lat: undefined,
+    lng: undefined,
+  });
   const [, setLocationPermissionDenied] = useState(false);
   const [locationError, setLocationError] = useState("");
 
@@ -63,9 +69,10 @@ export default function LeafletMap({
     getMyLocation();
   }, []);
 
-  const userCoords: [number, number] | null = userLocation
-    ? [userLocation.lat, userLocation.lng]
-    : null;
+  const userCoords: [number, number] | null =
+    userLocation.lat && userLocation.lng
+      ? [userLocation.lat, userLocation.lng]
+      : null;
   const destinationCoords: [number, number] = [lat, lng];
 
   const polyline: [number, number][][] = userCoords

@@ -1,7 +1,7 @@
 import { GoPlus } from "react-icons/go";
 import Container from "./Container";
 import Title from "./Title";
-import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function SignInBanner() {
   return (
@@ -14,10 +14,13 @@ export default function SignInBanner() {
           to the tab chaos and hello to organization with our cutting-edge
           platform.
         </p>
-        <Button className="h-[50px] bg-scooter-600 hover:bg-scooter-500">
+        <Link
+          href={"/sign-in"}
+          className="flex h-[50px] w-[120px] items-center justify-center rounded-xl bg-scooter-600 text-lg font-medium transition-all hover:bg-scooter-500"
+        >
           <GoPlus className="!h-6 !w-6" />
           <p>Sign in</p>
-        </Button>
+        </Link>
       </Container>
     </>
   );

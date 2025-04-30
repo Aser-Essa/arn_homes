@@ -4,6 +4,7 @@ import React from "react";
 import ToogleFavorite from "./ToogleFavorite";
 import Link from "next/link";
 import { Property } from "@/types/types";
+import { BsArrowUpRight } from "react-icons/bs";
 
 type HomeCardType = {
   property: Property;
@@ -38,6 +39,11 @@ export default function HomeCard({ property, className }: HomeCardType) {
 
         <div className="space-y-4">
           <div className="relative h-[292px] w-full">
+            <div className="absolute inset-0 z-[10] flex items-center justify-center bg-[#0d0e0f66] opacity-0 transition-all hover:opacity-100">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-shades-white">
+                <BsArrowUpRight className="h-6 w-6" />
+              </div>
+            </div>
             <Image src={images?.at(0) || "/"} fill alt="image" />
           </div>
           <div className="space-y-4 px-4 pb-4">

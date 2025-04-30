@@ -24,7 +24,7 @@ export default function DateSort({ params, className }: DateSortType) {
   function onValueChange(value: string) {
     const params = new URLSearchParams(window.location.search);
     params.set("time_sort", value);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   }
 
   return (
@@ -34,7 +34,7 @@ export default function DateSort({ params, className }: DateSortType) {
         className={cn("w-[223px]", className)}
         placeholder={
           time_sort
-            ? `${formatTimeCounter(Number(time_sort))}`
+            ? `Sort order: ${formatTimeCounter(Number(time_sort))}`
             : "Sort order: Anytime"
         }
         selectItems={dateOptions}

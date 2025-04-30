@@ -10,6 +10,7 @@ import OverlayFilter from "./OverlayFilter";
 import { cn } from "@/lib/utils";
 import SearchInput from "./SearchInput";
 import { params } from "@/types/types";
+import toast from "react-hot-toast";
 
 type FilterBarType = {
   params: params;
@@ -70,8 +71,12 @@ export default function FilterBar({
     if (maxPrice) params.set("max_Price", String(maxPrice));
     if (propertyType) params.set("property_Type", propertyType);
     if (search) params.set("state_address", String(search));
-    router.push(`/search/sale?${params.toString()}`);
-    router.refresh();
+    if (bed || bath || minPrice || maxPrice || propertyType || search) {
+      router.push(`/search/sale?${params.toString()}`);
+      router.refresh();
+    } else {
+      toast.error("Select one filter at least");
+    }
   }
 
   return (

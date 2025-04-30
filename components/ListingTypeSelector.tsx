@@ -13,7 +13,7 @@ export default function ListingTypeSelector({
   return (
     <div>
       <Tabs value={value} onValueChange={onChange}>
-        <TabsList className="h-[42px] w-full border border-amber-100 bg-amber-50">
+        <TabsList className="h-[44px] w-full border border-amber-100 bg-amber-50 !text-base">
           <TabsTrigger value="sale" className="h-full w-full">
             For Sale
           </TabsTrigger>

@@ -5,6 +5,7 @@ import PropertiesForSale from "@/components/PropertiesForSale";
 import SignInBanner from "@/components/SignInBanner";
 import Container from "@/components/Container";
 import { getPropertiesForSales } from "@/lib/data-service";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -40,7 +41,12 @@ export default async function Page(props: { searchParams: SearchParams }) {
         />
       </Container>
       <PropertiesForSale params={searchParamsValues} />
-      <SignInBanner />
+      <SignedOut>
+        <SignInBanner />
+      </SignedOut>
+      <SignedIn>
+        <div className="mb-[200px]"></div>
+      </SignedIn>
     </>
   );
 }
