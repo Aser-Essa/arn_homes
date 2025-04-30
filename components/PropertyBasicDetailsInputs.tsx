@@ -28,26 +28,27 @@ export default function PropertyBasicDetailsInputs() {
   return (
     <>
       {formFields.map((field) => (
-        <FormField
-          key={field}
-          control={control}
-          name={field}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-medium capitalize">
-                {field.name.replace("_", " ")}
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type={"text"}
-                  className="h-[44px] w-full rounded-lg border-amber-100 px-4 py-3 !text-base shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div key={field}>
+          <FormField
+            control={control}
+            name={field}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-medium capitalize">
+                  {field.name.replace("_", " ")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type={"text"}
+                    className="h-[44px] w-full rounded-lg border-amber-100 px-4 py-3 !text-base shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
       ))}
 
       <FormField

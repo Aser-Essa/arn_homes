@@ -159,7 +159,7 @@ export default function AddPropertyFormCard({
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid gap-x-4 gap-y-6 md:grid-cols-2">
+              <div className="space-y-6 md:grid md:grid-cols-2 md:space-x-4">
                 <PropertyBasicDetailsInputs />
                 <FormField
                   control={form.control}
@@ -182,8 +182,6 @@ export default function AddPropertyFormCard({
                 <PropertyFeaturesSection />
                 <UploadImages contextType={"property"} title={"Images"} />
                 <UploadImages contextType={"floorPlan"} title={"Floor Image"} />
-
-                {/* <UploadFloorPlan /> */}
               </div>
 
               <div className="text-right">
