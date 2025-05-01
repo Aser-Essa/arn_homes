@@ -22,6 +22,7 @@ const MortgageFormSchema = z.object({
   interest_rate: z
     .number({ invalid_type_error: "Interest rate is required" })
     .min(0.01, "Interest rate must be greater than 0")
+    .nullable()
     .refine((val) => val !== null, "Interest rate is required"),
 });
 

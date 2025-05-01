@@ -30,6 +30,14 @@ export function parseFormattedPrice(formatted: string): number {
   return Number(numericString);
 }
 
+export function formatPercentage(percentage: number) {
+  return `%${percentage}`;
+}
+
+export function formatArea(area: number) {
+  return `${area} sq ft`;
+}
+
 export const getCurrentTime = (): string => {
   const now = new Date();
   let hours = now.getHours();
@@ -84,4 +92,17 @@ export function formatTimestamptzToReadable(dateString: string): string {
     year: "numeric",
   };
   return date.toLocaleDateString("en-US", options);
+}
+
+export function formatLeaseTerm(months: number): string {
+  if (months <= 0) return "0 months";
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+  const yearPart = years > 0 ? `${years} year${years > 1 ? "s" : ""}` : "";
+  const monthPart =
+    remainingMonths > 0
+      ? `${remainingMonths} month${remainingMonths > 1 ? "s" : ""}`
+      : "";
+  if (yearPart && monthPart) return `${yearPart} ${monthPart}`;
+  return yearPart || monthPart;
 }

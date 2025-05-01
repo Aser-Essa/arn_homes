@@ -12,7 +12,7 @@ type UploadImagesType = {
 export default function UploadImages({ contextType, title }: UploadImagesType) {
   return (
     <>
-      <div className="col-span-2 space-y-2">
+      <div className="space-y-2 md:col-span-2">
         <p className="text-base font-medium capitalize">{title}</p>
         <div className="w-full">
           <Dropzone contextType={contextType}>
