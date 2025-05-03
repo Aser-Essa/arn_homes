@@ -1,5 +1,5 @@
 "use server";
-import { PropertyFormData } from "@/components/AddPropertyFormCard";
+import { PropertyFormData } from "@/types/types";
 import { supabase } from "./supabase";
 
 type ScheduleFormDataType = {

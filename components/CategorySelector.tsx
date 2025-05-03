@@ -1,15 +1,15 @@
 "use client";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-type ListingTypeSelectorType = {
+type CategorySelectorType = {
   value: string;
   onChange: (value: string) => void;
 };
 
-export default function ListingTypeSelector({
+export default function CategorySelector({
   value,
   onChange,
-}: ListingTypeSelectorType) {
+}: CategorySelectorType) {
   return (
     <div>
       <Tabs value={value} onValueChange={onChange}>

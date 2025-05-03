@@ -33,7 +33,11 @@ export default function FeatureSectionsForm({ name }: FeatureSectionsFormType) {
         type="button"
         className="rounded-lg"
         onClick={() =>
-          append({ title: `${name} Title`, points: [""], isOpen: true })
+          append({
+            title: `${name} Title`,
+            points: [{ Key: "", Value: "" }],
+            isOpen: true,
+          })
         }
       >
         Add Feature

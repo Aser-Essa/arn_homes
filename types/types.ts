@@ -1,3 +1,6 @@
+import { formSchema, sectionSchema } from "@/schemas/propertySchemas";
+import { z } from "zod";
+
 export type Property = {
   id: string;
   title_address: string;
@@ -30,3 +33,7 @@ export interface Article {
 }
 
 export type params = { [key: string]: string | string[] | undefined };
+
+export type PropertyFormData = z.infer<typeof formSchema>;
+
+export type features = z.infer<typeof sectionSchema>[];

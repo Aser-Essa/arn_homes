@@ -10,11 +10,17 @@ export default function FeaturePointsInput({
   name: string;
   isOpen: boolean;
 }) {
-  const { control, register } = useFormContext();
+  const { control, register, getFieldState } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name,
   });
+
+  function getError(idx: number) {
+    const pointErrorMessage = getFieldState(`${name}.${idx}.Key`).error
+      ?.message;
+    return pointErrorMessage;
+  }
 
   return (
     <>
@@ -28,8 +34,13 @@ export default function FeaturePointsInput({
         {fields.length > 0 && (
           <div className="min-h-[100px] space-y-2">
             {fields.map((field, j) => (
-              <div key={field.id} className="flex items-center gap-2">
-                <Input {...register(`${name}.${j}.Key`)} placeholder="Key" />
+              <div key={field.id} className="flex items-start gap-2">
+                <div className="space-y-1">
+                  <Input {...register(`${name}.${j}.Key`)} placeholder="Key" />
+                  <p className="text-[.8rem] font-medium text-red-500">
+                    {getError(j)}
+                  </p>
+                </div>
                 <Input
                   {...register(`${name}.${j}.Value`)}
                   placeholder="Value"

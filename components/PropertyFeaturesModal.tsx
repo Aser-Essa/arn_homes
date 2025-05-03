@@ -22,7 +22,7 @@ export function PropertyFeaturesModal({ type }: PropertyFeaturesModalType) {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="h-[44px] rounded-lg border-amber-100 bg-amber-50 !text-base capitalize !shadow-none transition-all hover:bg-amber-100"
+          className="h-[44px] w-full rounded-lg border-amber-100 bg-amber-50 !text-base capitalize !shadow-none transition-all hover:bg-amber-100"
         >
           Add {type}
         </Button>
