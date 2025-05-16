@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form";
 import FormFieldWrapper from "./FormFieldWrapper";
 import { FormControl, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Checkbox } from "./ui/checkbox";
+import { Input } from "./ui/input";
 
 export default function RentFields() {
   const { watch } = useFormContext();
@@ -25,7 +26,30 @@ export default function RentFields() {
     <>
       {propertyCategory === "rent" && (
         <>
-          <FormFieldWrapper name="lease_term" label="Lease Term">
+          <FormFieldWrapper name={"extras.monthly_rent"} label="Monthly Rent">
+            {(field) => (
+              <Input
+                type={"text"}
+                className="h-[44px] w-full rounded-lg border-amber-100 px-4 py-3 !text-base font-medium shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
+                {...field}
+              />
+            )}
+          </FormFieldWrapper>
+
+          <FormFieldWrapper
+            name={"extras.deposit_amount"}
+            label="Deposit Amount"
+          >
+            {(field) => (
+              <Input
+                type={"text"}
+                className="h-[44px] w-full rounded-lg border-amber-100 px-4 py-3 !text-base font-medium shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
+                {...field}
+              />
+            )}
+          </FormFieldWrapper>
+
+          <FormFieldWrapper name="extras.lease_term" label="Lease Term">
             {(field) => (
               <CustomSelect
                 placeholder="Lease Term"
@@ -38,7 +62,7 @@ export default function RentFields() {
           </FormFieldWrapper>
 
           <div>
-            <FormFieldWrapper name="is_furnished">
+            <FormFieldWrapper name="extras.is_furnished" label=" ">
               {(field) => (
                 <FormItem className="flex items-center gap-4">
                   <FormControl>

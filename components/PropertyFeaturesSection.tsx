@@ -5,8 +5,6 @@ import { useFormContext } from "react-hook-form";
 export default function PropertyFeaturesSection() {
   const { getFieldState, formState } = useFormContext();
 
-  console.log();
-
   const exteriorError = getFieldState(`exterior`)?.error?.message;
   const interiorError = getFieldState(`interior`)?.error?.message;
 
@@ -49,7 +47,7 @@ export default function PropertyFeaturesSection() {
 
   return (
     <>
-      <div className="w-full space-y-2">
+      <div className="col-span-2 w-full space-y-2">
         <p className="text-base font-medium capitalize">Add Features</p>
         <div className="grid w-full grid-cols-2 gap-2">
           <div className="w-full space-y-2">

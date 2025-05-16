@@ -1,12 +1,57 @@
+"use client";
 import { Textarea } from "@/components/ui/textarea";
-import React from "react";
+import React, { useEffect } from "react";
 import AddPropertiesTextInputFields from "./AddPropertiesTextInputFields";
 import CategorySelector from "./CategorySelector";
 import FormFieldWrapper from "./FormFieldWrapper";
 import InvestmentFields from "./InvestmentFields";
 import RentFields from "./RentFields";
+import { useFormContext } from "react-hook-form";
+
+export const commonFields = [
+  "title",
+  "address",
+  "bed_number",
+  "bath_number",
+  "area",
+  "description",
+  "property_type",
+  "category",
+  "listed_in",
+  "floor_plan",
+  "images",
+  "state",
+  "exterior",
+  "interior",
+];
+
+export const saleFields = ["price"];
+
+export const rentFields = [
+  "monthly_rent",
+  "deposit_amount",
+  "lease_term",
+  "is_furnished",
+];
+
+export const investmentFields = [
+  "price",
+  "expected_roi",
+  "minimum_investment",
+  "investment_term",
+  "investment_type",
+];
 
 export default function PropertyInputs() {
+  const { resetField, watch } = useFormContext();
+  const category = watch("category");
+
+  useEffect(() => {
+    const allFields = [...saleFields, ...rentFields, ...investmentFields];
+
+    allFields.forEach((field) => resetField(`extras.${field}`));
+  }, [category, resetField]);
+
   return (
     <>
       <FormFieldWrapper

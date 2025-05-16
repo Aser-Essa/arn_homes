@@ -28,13 +28,15 @@ export default function FormFieldWrapper<T extends FieldValues>({
   className,
   children,
 }: FormFieldWrapperType<T>) {
-  const { control } = useFormContext<T>();
+  const { control, formState } = useFormContext<T>();
+  const isLoading = formState.isLoading;
 
   return (
     <>
       <FormField
         control={control}
         name={name}
+        disabled={isLoading}
         render={({ field }) => (
           <FormItem className={cn(className)}>
             <FormLabel className={"font-medium capitalize"}>

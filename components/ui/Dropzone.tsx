@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CheckCircle, File, Loader2, Upload, X } from "lucide-react";
+import { CheckCircle, File, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useContext } from "react";
 import {
@@ -78,7 +78,7 @@ const DropzoneContent = ({
   const {
     files,
     setFiles,
-    onUpload,
+    // onUpload,
     loading,
     successes,
     errors,
@@ -202,14 +202,14 @@ const DropzoneContent = ({
       )}
 
       {exceedMinFiles && (
-        <p className="mt-2 text-center text-sm text-red-500">
+        <p className="mt-6 text-center text-sm text-red-500">
           You must upload at least {minFiles} file{minFiles > 1 ? "s" : ""}. You
           still need to add {minFiles - files.length} more file
           {minFiles - files.length > 1 ? "s" : ""}.
         </p>
       )}
 
-      {files.length > 0 && !exceedMaxFiles && (
+      {/* {files.length > 0 && !exceedMaxFiles && (
         <div className="mt-2">
           <Button
             variant="outline"
@@ -224,9 +224,9 @@ const DropzoneContent = ({
             ) : (
               <>Upload files</>
             )}
-          </Button>
+          </Button> 
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -35,7 +35,16 @@ export default function RootLayout({
         <body
           className={`${exo.variable} ${league_spartan.variable} overflow-x-hidden font-exo antialiased`}
         >
-          <Toaster position="top-center" reverseOrder={false} />
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            containerStyle={{
+              zIndex: "200000",
+              top: "24px",
+              fontWeight: "600",
+              color: "#0d0e0f",
+            }}
+          />
           <Header className="lg:px-10" />
           <div className="flex">
             <div className="hidden md:block">

@@ -58,7 +58,7 @@ export default function MortgageForm({ price }: MortgageFormType) {
     function calcMortgage() {
       const { price, repayment_term, interest_rate } = form.getValues();
       const principal = price;
-      const annualInterestRate = interest_rate;
+      const annualInterestRate = interest_rate || 1;
       const months = repayment_term * 12;
       const monthlyInterestRate = annualInterestRate / 100 / 12;
       const monthlyPayment =
@@ -153,6 +153,7 @@ export default function MortgageForm({ price }: MortgageFormType) {
                       type="number"
                       className="h-[50px] rounded-xl border-amber-100 !text-lg text-gray-300 shadow-none !ring-0 placeholder:text-lg placeholder:text-gray-300 focus:outline-none"
                       {...field}
+                      value={field.value || ""}
                       onChange={(e) => field.onChange(e.target.valueAsNumber)}
                     />
                     <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 bg-white p-2 pr-0 text-lg text-gray-300">

@@ -1,5 +1,4 @@
 "use server";
-import { PropertyFormData } from "@/types/types";
 import { supabase } from "./supabase";
 
 type ScheduleFormDataType = {
@@ -14,14 +13,42 @@ type ScheduleFormDataType = {
 type sectionSchema = {
   title: string;
   points: string[];
-  isOpen: boolean;
 };
 
-type PropertyData = Omit<PropertyFormData, "exterior" | "interior"> & {
-  images: string[];
-  propertyId?: string;
+type PropertyData = {
+  user_id: string;
+  id: string;
+  title: string;
+  address: string;
+  bed_number: number;
+  bath_number: number;
+  area: number;
+  description: string;
+  property_type: string;
+  category: string;
+  listed_in: string;
+  state: string;
   exterior: sectionSchema[];
   interior: sectionSchema[];
+  images: string[];
+  floor_plan: string;
+  status: string;
+  extras?: {
+    is_furnished?: boolean;
+    price?: number;
+    deposit_amount?: number;
+    expected_roi?: number;
+    minimum_investment?: number;
+    monthly_rent?: number;
+    lease_term?: string;
+    investment_term?: string;
+    investment_type?: string;
+  };
+};
+
+type updatePropertyType = {
+  propertyId: string;
+  updatedData: Partial<PropertyData>;
 };
 
 export async function scheduleTour(tour_data: ScheduleFormDataType) {
@@ -37,18 +64,33 @@ export async function scheduleTour(tour_data: ScheduleFormDataType) {
   return { data, error: null };
 }
 
-export async function insertProperty(property_data: PropertyData) {
-  console.log(property_data);
+export async function createOrUpdateProperty(property_data: PropertyData) {
+  const { data, error } = await supabase
+    .from("properties")
+    .upsert([property_data])
+    .select();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function updateProperty({
+  updatedData,
+  propertyId,
+}: updatePropertyType) {
+  console.log(updatedData, propertyId);
 
   const { data, error } = await supabase
     .from("properties")
-    .insert([property_data])
-    .select();
+    .update(updatedData)
+    .eq("id", propertyId);
 
-  console.log(error);
   if (error) {
-    return { data: null, error: error.message };
+    throw new Error(error.message);
   }
 
-  return { data, error: null };
+  return data;
 }

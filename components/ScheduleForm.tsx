@@ -81,7 +81,7 @@ export default function ScheduleForm({ property_id }: { property_id: string }) {
     }
   }
 
-  console.log(form.getValues());
+  // console.log(form.getValues());
 
   return (
     <Form {...form}>

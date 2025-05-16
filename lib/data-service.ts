@@ -62,7 +62,6 @@ export async function getPropertiesForSales({
 
   if (isValid(time_sort)) {
     const days = Number(time_sort);
-    console.log(days);
     if (!isNaN(days)) {
       const time = new Date();
       time.setDate(time.getDate() - days);

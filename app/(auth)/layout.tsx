@@ -33,7 +33,16 @@ export default function RootLayout({
         <body
           className={`${exo.variable} ${league_spartan.variable} overflow-x-hidden font-exo antialiased`}
         >
-          <Toaster position="top-center" reverseOrder={false} />
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            containerStyle={{
+              zIndex: "200000",
+              top: "24px",
+              fontWeight: "600",
+              color: "#0d0e0f",
+            }}
+          />
           <div className="flex h-screen justify-center max-lg:items-center">
             <div className="hidden w-[47vw] items-center justify-center bg-shades-black lg:flex">
               <Image src={"/Logo.svg"} width={144} height={144} alt="Logo" />

@@ -1,5 +1,5 @@
 import { parseFormattedPrice } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 type Formatter = (value: number) => string;
@@ -20,9 +20,15 @@ export function useChangeCustomValue({
 }: useChangeCustomValueType): useChangeCustomValueReturn {
   const { setValue, getValues } = useFormContext();
 
-  const initial = getValues()[fieldName];
+  const value = getValues(fieldName);
 
-  const [state, setState] = useState(formatter(initial));
+  const [state, setState] = useState(formatter(value));
+
+  useEffect(() => {
+    if (value != state) {
+      setState(formatter(value));
+    }
+  }, [formatter, state, value]);
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const cleaned = e.target.value.replace(/[^0-9.]/g, "");
     const numeric = parseFormattedPrice(cleaned);

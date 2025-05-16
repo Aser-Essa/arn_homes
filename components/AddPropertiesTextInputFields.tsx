@@ -9,7 +9,7 @@ import { useChangeCustomValue } from "@/hooks/useChangeCustomValue";
 export default function AddPropertiesTextInputFields() {
   const { watch } = useFormContext();
   const [price, priceChangeHandler] = useChangeCustomValue({
-    fieldName: "price",
+    fieldName: "extras.price",
     formatter: formatPrice,
   });
 
@@ -25,20 +25,14 @@ export default function AddPropertiesTextInputFields() {
     "state",
   ];
 
-  const categoryFieldMap: Record<string, string[]> = {
-    sale: [],
-    rent: ["monthly_rent", "deposit_amount"],
-    investment: [],
-  };
-
-  const CategoryBasedFields = categoryFieldMap[propertyCategory] || [];
-
-  const formFields = [...basicFormFields, ...CategoryBasedFields];
-
   return (
     <>
-      {formFields.map((field) => (
-        <FormFieldWrapper name={field} key={field}>
+      {basicFormFields.map((field) => (
+        <FormFieldWrapper
+          name={field}
+          key={field}
+          label={field == "area" ? "Area (in sqft)" : field}
+        >
           {(field) => (
             <Input
               type={"text"}
@@ -50,7 +44,7 @@ export default function AddPropertiesTextInputFields() {
       ))}
 
       {propertyCategory !== "rent" && (
-        <FormFieldWrapper name={"price"}>
+        <FormFieldWrapper name={"extras.price"} label="Price">
           {(field) => (
             <Input
               type={"text"}

@@ -34,12 +34,12 @@ export default function InvestmentFields() {
   ];
 
   const [roi, roiChangeHandler] = useChangeCustomValue({
-    fieldName: "expected_roi",
+    fieldName: "extras.expected_roi",
     formatter: formatPercentage,
   });
 
   const [minInvestment, minInvestmentChangeHandler] = useChangeCustomValue({
-    fieldName: "minimum_investment",
+    fieldName: "extras.minimum_investment",
     formatter: formatPrice,
   });
 
@@ -47,7 +47,7 @@ export default function InvestmentFields() {
     <>
       {propertyCategory === "investment" && (
         <>
-          <FormFieldWrapper name="expected_roi" label="Expected ROI">
+          <FormFieldWrapper name="extras.expected_roi" label="Expected ROI">
             {(field) => (
               <Input
                 type="text"
@@ -60,7 +60,7 @@ export default function InvestmentFields() {
           </FormFieldWrapper>
 
           <FormFieldWrapper
-            name="minimum_investment"
+            name="extras.minimum_investment"
             label="Minimum Investment"
           >
             {(field) => (
@@ -74,7 +74,10 @@ export default function InvestmentFields() {
             )}
           </FormFieldWrapper>
 
-          <FormFieldWrapper name="investment_term" label="Investment Term">
+          <FormFieldWrapper
+            name="extras.investment_term"
+            label="Investment Term"
+          >
             {(field) => (
               <CustomSelect
                 placeholder="Investment Term"
@@ -86,7 +89,10 @@ export default function InvestmentFields() {
             )}
           </FormFieldWrapper>
 
-          <FormFieldWrapper name="investment_type" label="Investment Type">
+          <FormFieldWrapper
+            name="extras.investment_type"
+            label="Investment Type"
+          >
             {(field) => (
               <CustomSelect
                 placeholder="Investment Type"
