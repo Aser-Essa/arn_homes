@@ -30,9 +30,9 @@ export default function FeatureSectionCard({
             collapsed: { height: "68px" },
           }}
           transition={{ duration: 0.3, ease: "linear" }}
-          className="overflow-hidden rounded-lg border"
+          className="w-full overflow-hidden rounded-lg border"
         >
-          <div className="relative space-y-4 p-4">
+          <div className="relative w-full space-y-4 p-4">
             <FeatureSectionCardHeader
               name={name}
               idx={idx}

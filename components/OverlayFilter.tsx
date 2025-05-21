@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Sheet,
@@ -30,12 +30,14 @@ type OverlayFilterType = {
   params: params;
   bedOptions: selectItemObj[];
   bathOptions: selectItemObj[];
+  category?: string | string[] | undefined;
 };
 
 export default function OverlayFilter({
   params,
   bedOptions,
   bathOptions,
+  category,
 }: OverlayFilterType) {
   const {
     bed_N,
@@ -43,6 +45,7 @@ export default function OverlayFilter({
     min_Price,
     max_Price,
     property_Type,
+    price_Duration,
     furniture_Type,
     time_sort,
   } = params;
@@ -54,6 +57,7 @@ export default function OverlayFilter({
   const [furnitureType, setfurnitureType] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [priceDuration, setPriceDuration] = useState("");
   const [timeSort, setTimeSort] = useState("");
 
   function handleClickReset() {
@@ -70,12 +74,22 @@ export default function OverlayFilter({
       property_Type: propertyType,
       furniture_Type: furnitureType,
       time_sort: timeSort,
+      price_Duration: priceDuration,
     };
     Object.entries(filters).forEach(([key, value]) => {
       if (value) params.set(key, String(value));
     });
     router.push(`?${params.toString()}`);
   }
+
+  useEffect(() => {
+    setBed(bed_N ? String(bed_N) : "");
+    setBath(bath_N ? String(bath_N) : "");
+    setMinPrice(min_Price ? String(min_Price) : "");
+    setMaxPrice(max_Price ? String(max_Price) : "");
+    setPropertyType(property_Type ? String(property_Type) : "");
+    setPriceDuration(price_Duration ? String(price_Duration) : "");
+  }, [bath_N, bed_N, max_Price, min_Price, price_Duration, property_Type]);
 
   return (
     <>
@@ -110,10 +124,13 @@ export default function OverlayFilter({
             <PriceRangeSelect
               setMinPrice={setMinPrice}
               setMaxPrice={setMaxPrice}
+              setPriceDuration={setPriceDuration}
+              priceDurationState={priceDuration}
               maxPriceState={maxPrice}
               minPriceState={minPrice}
               min_Price={min_Price}
               max_Price={max_Price}
+              category={category}
             />
 
             <PropertyTypeSelect

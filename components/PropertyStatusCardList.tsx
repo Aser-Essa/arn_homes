@@ -1,11 +1,15 @@
 import React from "react";
 import PropertyStatusCard from "./PropertyStatusCard";
+import { getMyProperties } from "@/lib/data-service";
+import { auth } from "@clerk/nextjs/server";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 type PropertyStatusCardListType = {
   category: string;
 };
 
-export default function PropertyStatusCardList({
+export default async function PropertyStatusCardList({
   category,
 }: PropertyStatusCardListType) {
   const statuses = [
@@ -31,6 +35,26 @@ export default function PropertyStatusCardList({
     },
   ];
 
+  const { userId } = await auth();
+
+  if (!userId) {
+    toast.error("User not authenticated");
+    redirect("/sign-in");
+  }
+
+  const counts = Object.fromEntries(
+    await Promise.all(
+      statuses.map(async ({ status }) => {
+        const { count } = await getMyProperties({
+          userId,
+          status: status,
+          category,
+        });
+        return [[status], count];
+      }),
+    ),
+  );
+
   return (
     <div className="mt-4 space-y-4">
       {statuses?.map(({ text, icon, status }, idx) => (
@@ -39,6 +63,7 @@ export default function PropertyStatusCardList({
           text={text}
           icon={icon}
           href={`account/properties?category=${category}&status=${status}`}
+          count={counts[status]}
         />
       ))}
     </div>

@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getPropertiesForSales } from "@/lib/data-service";
+import { getProperties } from "@/lib/data-service";
 import Container from "./Container";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ export default async function FeaturedProperties({
   title: React.ReactNode;
   className?: string;
 }) {
-  const { data: properties } = await getPropertiesForSales({});
+  const { data: properties } = await getProperties({});
 
   return (
     <Container className={cn(className)}>
@@ -28,7 +28,7 @@ export default async function FeaturedProperties({
         <CarouselContent>
           {properties.map((property) => (
             <CarouselItem
-              key={property.url}
+              key={property.id}
               className="sm:basis-1/2 lg:basis-1/3"
             >
               <HomeCard property={property} />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { LuSearch } from "react-icons/lu";
 import CustomSelect from "./CustomSelect";
@@ -16,12 +16,14 @@ type FilterBarType = {
   params: params;
   className?: string;
   stateAddressArray?: string[];
+  category?: string | string[] | undefined;
 };
 
 export default function FilterBar({
   stateAddressArray = [],
   className,
   params,
+  category,
 }: FilterBarType) {
   const {
     bed_N,
@@ -41,6 +43,8 @@ export default function FilterBar({
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [propertyType, setPropertyType] = useState("");
+  const [priceDuration, setPriceDuration] = useState("");
+
   const router = useRouter();
 
   const bedOptions = [
@@ -71,13 +75,42 @@ export default function FilterBar({
     if (maxPrice) params.set("max_Price", String(maxPrice));
     if (propertyType) params.set("property_Type", propertyType);
     if (search) params.set("state_address", String(search));
-    if (bed || bath || minPrice || maxPrice || propertyType || search) {
-      router.push(`/search/sale?${params.toString()}`);
+    if (priceDuration) params.set("price_Duration", String(priceDuration));
+    if (
+      bed ||
+      bath ||
+      minPrice ||
+      maxPrice ||
+      propertyType ||
+      search ||
+      priceDuration
+    ) {
+      router.push(`/search/${category}?${params.toString()}`, {
+        scroll: false,
+      });
       router.refresh();
     } else {
       toast.error("Select one filter at least");
     }
   }
+
+  useEffect(() => {
+    setBed(bed_N ? String(bed_N) : "");
+    setBath(bath_N ? String(bath_N) : "");
+    setMinPrice(min_Price ? String(min_Price) : "");
+    setMaxPrice(max_Price ? String(max_Price) : "");
+    setPropertyType(property_Type ? String(property_Type) : "");
+    setPriceDuration(price_Duration ? String(price_Duration) : "");
+    setSearch(state_address ? String(state_address) : "");
+  }, [
+    bath_N,
+    bed_N,
+    max_Price,
+    min_Price,
+    price_Duration,
+    property_Type,
+    state_address,
+  ]);
 
   return (
     <>
@@ -96,6 +129,8 @@ export default function FilterBar({
         />
         <div className="hidden md:block">
           <PriceSelect
+            priceDuration={priceDuration}
+            setPriceDuration={setPriceDuration}
             setMinPrice={setMinPrice}
             setMaxPrice={setMaxPrice}
             defaultValues={{
@@ -103,6 +138,7 @@ export default function FilterBar({
               max_Price,
               price_Duration,
             }}
+            category={category}
           />
         </div>
 
@@ -133,6 +169,7 @@ export default function FilterBar({
 
         <div className="flex items-center gap-4">
           <OverlayFilter
+            category={category}
             params={params}
             bedOptions={bedOptions}
             bathOptions={bathOptions}

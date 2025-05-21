@@ -6,8 +6,9 @@ import FloorPlanAndMap from "@/components/FloorPlanAndMap";
 import PropertyDetails from "@/components/PropertyDetails";
 import ScheduleAndMortgageForms from "@/components/ScheduleAndMortgageForms";
 import { getProperty } from "@/lib/data-service";
+import { params } from "@/types/types";
 
-type Params = Promise<{ [key: string]: string | string[] | undefined }>;
+type Params = Promise<params>;
 
 export default async function page({ params }: { params: Params }) {
   const { id } = await params;
@@ -15,13 +16,15 @@ export default async function page({ params }: { params: Params }) {
 
   const {
     description,
-    Exterior,
-    Interior,
+    exterior,
+    interior,
     floor_plan,
-    state_address,
-    title_address,
-    price,
+    address,
+    title,
+    extras,
   } = property;
+
+  const { price } = extras || {};
 
   return (
     <Container className="mb-[200px] min-h-[100vh] space-y-10">
@@ -29,13 +32,13 @@ export default async function page({ params }: { params: Params }) {
       <PropertyDetails property={property} />
       <Description
         description={description}
-        exterior={Exterior}
-        interior={Interior}
+        exterior={exterior}
+        interior={interior}
       />
       <FloorPlanAndMap
         floor_plan={floor_plan}
-        state_address={state_address}
-        title_address={title_address}
+        state_address={address}
+        title_address={title}
       />
       <ScheduleAndMortgageForms
         price={price}

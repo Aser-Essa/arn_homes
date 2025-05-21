@@ -11,14 +11,17 @@ type PropertyInfoCardType = {
 
 export default function PropertyInfoCard({ property }: PropertyInfoCardType) {
   const {
-    state_address,
-    price,
+    address,
+    extras,
     property_type,
     listed_in,
-    bedNumber,
-    bathNumber,
+    bed_number,
+    bath_number,
     description,
+    category,
   } = property;
+
+  const { price, monthly_rent } = extras || {};
 
   return (
     <>
@@ -27,13 +30,15 @@ export default function PropertyInfoCard({ property }: PropertyInfoCardType) {
           <ToogleFavorite className="bg-shades-off-white" />
         </div>
         <p className={cn("!mt-0 text-[36px] font-semibold")}>
-          {formatPrice(price)}
+          {category === "rent"
+            ? `${formatPrice(Number(monthly_rent))}/Month`
+            : formatPrice(Number(price))}
         </p>
         <div className="space-y-1">
           <p className="text-[28px] font-semibold text-scooter-900">
             {property_type}
           </p>
-          <p>{state_address}</p>
+          <p>{address}</p>
         </div>
         <p className="line-clamp-2 text-wrap">{description}</p>
         <div className="flex items-center gap-1">
@@ -41,8 +46,8 @@ export default function PropertyInfoCard({ property }: PropertyInfoCardType) {
           <p className="text-sm leading-5">Listed {formatTimeAgo(listed_in)}</p>
         </div>
         <PropertyInfoStats
-          bedNumber={bedNumber}
-          bathNumber={bathNumber}
+          bedNumber={bed_number}
+          bathNumber={bath_number}
           isCard={true}
         />
       </div>

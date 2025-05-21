@@ -6,13 +6,13 @@ import Reviews from "@/components/Reviews";
 import SearchBar from "@/components/SearchBar";
 import WhyUs from "@/components/WhyUs";
 import Title from "@/components/Title";
-import { getPropertiesForSales } from "@/lib/data-service";
+import { getProperties } from "@/lib/data-service";
 
 export const revalidate = 0;
 
 export default async function Home() {
-  const { data: unFilteredData } = await getPropertiesForSales({});
-  const stateAddressArray = unFilteredData.map((el) => el.state_address);
+  const { data: unFilteredData } = await getProperties({});
+  const stateAddressArray = unFilteredData.map((el) => el.address);
 
   return (
     <>

@@ -3,6 +3,10 @@ import { params } from "@/types/types";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
 import CategorySwitch from "./CategorySwitch";
+import { auth } from "@clerk/nextjs/server";
+import { getMyProperties } from "@/lib/data-service";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 type MyPropertiesHeaderType = {
   params: params;
@@ -14,8 +18,30 @@ const categories = [
   { key: "investment", label: "For investment" },
 ];
 
-export default function MyPropertiesHeader({ params }: MyPropertiesHeaderType) {
-  const { property_category } = params;
+export default async function MyPropertiesHeader({
+  params,
+}: MyPropertiesHeaderType) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    toast.error("User not authenticated");
+    redirect("/sign-in");
+  }
+
+  const { category, status } = params;
+
+  const counts = Object.fromEntries(
+    await Promise.all(
+      categories.map(async ({ key }) => {
+        const { count } = await getMyProperties({
+          userId,
+          status: status ? String(status) : "",
+          category: key,
+        });
+        return [[key], count];
+      }),
+    ),
+  );
 
   return (
     <>
@@ -35,8 +61,9 @@ export default function MyPropertiesHeader({ params }: MyPropertiesHeaderType) {
         </Link>
         <CategorySwitch
           categories={categories}
-          category_val={property_category ? String(property_category) : "sale"}
-          category_name={"property_category"}
+          category_val={category ? String(category) : "sale"}
+          category_name={"category"}
+          counts={counts}
         />
       </div>
     </>

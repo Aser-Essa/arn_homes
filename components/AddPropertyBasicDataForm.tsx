@@ -111,7 +111,7 @@ export default function AddPropertyBasicDataForm({
             <div className="flex items-center justify-end gap-2 text-right">
               <Button
                 type="submit"
-                className="h-[50px] gap-0 px-6"
+                className="h-[50px] gap-0 px-6 text-base"
                 disabled={isLoading}
               >
                 {isLoading ? (

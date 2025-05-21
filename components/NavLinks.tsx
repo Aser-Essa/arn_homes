@@ -11,17 +11,17 @@ export default function NavLinks() {
     },
     {
       label: "For sale",
-      href: "/sale",
+      href: "/properties/sale",
       icon: "/icons/store.svg",
     },
     {
       label: "For rent",
-      href: "/rent",
+      href: "/properties/rent",
       icon: "/icons/home-activity.svg",
     },
     {
       label: "For investment",
-      href: "/investment",
+      href: "/properties/investment",
       icon: "/icons/building-coins.svg",
     },
     {

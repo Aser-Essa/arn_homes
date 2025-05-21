@@ -19,7 +19,7 @@ export default function SearchFeaturedProperties({
       </div>
       <div className="absolute right-0 top-[120px] flex w-full max-w-[calc(100vw-16px)] items-center gap-[30px] overflow-scroll p-1 md:max-w-[calc(100vw-32px)] lg:max-w-[calc(100vw-100px)]">
         {properties.map((property: Property) => (
-          <div key={property.url}>
+          <div key={property.id}>
             <HomeCard
               property={property}
               className="min-w-[calc(100vw/1.2)] bg-shades-white sm:min-w-[calc(100vw/2.5)] md:min-w-[calc(100vw/3.2)] xl:min-w-[calc(100vw/3.8)]"

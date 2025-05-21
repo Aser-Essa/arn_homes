@@ -24,7 +24,7 @@ export default function MessagesHeader({ params }: MessagesHeaderType) {
         }
         category_name={"message_category"}
       />
-      <p className="text-lg font-semibold text-scooter-700">
+      <p className="hidden text-lg font-semibold text-scooter-700 lg:block">
         {numberOfMessages} unread messages
       </p>
     </div>

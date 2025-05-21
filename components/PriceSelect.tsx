@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import {
   Select,
   SelectContent,
@@ -7,10 +5,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { formatPrice, PriceAbbreviation } from "@/lib/utils";
+import React, { useEffect, useMemo, useState } from "react";
 import CustomSelect from "./CustomSelect";
-import { PriceAbbreviation } from "@/lib/utils";
 
 type PriceSelectType = {
+  setPriceDuration: React.Dispatch<React.SetStateAction<string>>;
   setMinPrice: React.Dispatch<React.SetStateAction<string>>;
   setMaxPrice: React.Dispatch<React.SetStateAction<string>>;
   defaultValues: {
@@ -18,79 +18,83 @@ type PriceSelectType = {
     max_Price: string | string[] | undefined;
     price_Duration: string | string[] | undefined;
   };
+  priceDuration: string | string[] | undefined;
+  category: string | string[] | undefined;
 };
 
 export default function PriceSelect({
+  setPriceDuration,
   setMinPrice,
   setMaxPrice,
   defaultValues,
+  category,
+  priceDuration,
 }: PriceSelectType) {
-  let minPrice = [
-    {
-      value: "Any",
-      label: `No min`,
-    },
-    {
-      value: 10_000,
-      label: `£10,000`,
-    },
-    {
-      value: 50_000,
-      label: `£50,000`,
-    },
-    {
-      value: 100_000,
-      label: `£100,000`,
-    },
-    {
-      value: 200_000,
-      label: `£200,000`,
-    },
-    {
-      value: 500_000,
-      label: `£500,000`,
-    },
-    {
-      value: 1_000_000,
-      label: `£1,000,000`,
-    },
-  ];
-
-  let maxPrice = [
-    {
-      value: "Any",
-      label: `No max`,
-    },
-    {
-      value: 10_000,
-      label: `£10,000`,
-    },
-    {
-      value: 50_000,
-      label: `£50,000`,
-    },
-    {
-      value: 100_000,
-      label: `£100,000`,
-    },
-    {
-      value: 200_000,
-      label: `£200,000`,
-    },
-    {
-      value: 500_000,
-      label: `£500,000`,
-    },
-    {
-      value: 1_000_000,
-      label: `£1,000,000`,
-    },
-  ];
-
   const { min_Price, max_Price, price_Duration } = defaultValues;
-
   const [minPriceValue, setMinPriceValue] = useState(min_Price);
   const [maxPriceValue, setMaxPriceValue] = useState(max_Price);
+
+  const PriceOptions = useMemo(() => {
+    switch (priceDuration) {
+      case "weekly":
+        return [50, 100, 150, 200];
+      case "yearly":
+        return [5000, 10000, 15000];
+      default:
+        return [300, 500, 700, 1000];
+    }
+  }, [priceDuration]);
+
+  let minPrice = useMemo(
+    () => [
+      { value: "Any", label: `No min` },
+      ...(category === "rent"
+        ? PriceOptions.map((price) => ({
+            value: price,
+            label: formatPrice(price),
+          }))
+        : [
+            { value: 10_000, label: "£10,000" },
+            { value: 50_000, label: "£50,000" },
+            { value: 100_000, label: "£100,000" },
+            { value: 200_000, label: "£200,000" },
+            { value: 500_000, label: "£500,000" },
+            { value: 1_000_000, label: "£1,000,000" },
+          ]),
+    ],
+    [PriceOptions, category],
+  );
+
+  let maxPrice = useMemo(
+    () => [
+      { value: "Any", label: `No max` },
+      ...(category === "rent"
+        ? PriceOptions.map((price) => ({
+            value: price,
+            label: formatPrice(price),
+          }))
+        : [
+            { value: 10_000, label: "£10,000" },
+            { value: 50_000, label: "£50,000" },
+            { value: 100_000, label: "£100,000" },
+            { value: 200_000, label: "£200,000" },
+            { value: 500_000, label: "£500,000" },
+            { value: 1_000_000, label: "£1,000,000" },
+          ]),
+    ],
+    [PriceOptions, category],
+  );
+
+  const priceDurationItems = [
+    { value: "Any", label: "Any" },
+    { value: "weekly", label: "Per Week" },
+    { value: "monthly", label: "Per Month" },
+    { value: "yearly", label: "Per Year" },
+  ];
+
+  const formatedPrice =
+    (min_Price || max_Price || price_Duration) &&
+    `${min_Price !== "Any" ? PriceAbbreviation(Number(min_Price)) : "No min"} - ${max_Price !== "Any" ? PriceAbbreviation(Number(max_Price)) : "No max"}${category === "rent" ? ` - ${price_Duration || "monthly"}` : ""}`;
 
   if (maxPriceValue && maxPriceValue != "Any") {
     minPrice = minPrice.filter(
@@ -104,9 +108,33 @@ export default function PriceSelect({
     );
   }
 
-  const formatedPrice =
-    (min_Price || max_Price || price_Duration) &&
-    `${min_Price !== "Any" ? PriceAbbreviation(Number(min_Price)) : "No min"} - ${max_Price !== "Any" ? PriceAbbreviation(Number(max_Price)) : "No max"} - ${price_Duration || "Price Per Month"} `;
+  useEffect(() => {
+    const minOptionsValues = minPrice.map((el) => el.value);
+    const maxOptionsValues = maxPrice.map((el) => el.value);
+    if (
+      !minOptionsValues.includes(Number(minPriceValue)) &&
+      min_Price !== "Any"
+    ) {
+      setMinPrice("Any");
+      setMinPriceValue("Any");
+    }
+    if (
+      !maxOptionsValues.includes(Number(maxPriceValue)) &&
+      max_Price !== "Any"
+    ) {
+      setMaxPrice("Any");
+      setMaxPriceValue("Any");
+    }
+  }, [
+    maxPrice,
+    maxPriceValue,
+    max_Price,
+    minPrice,
+    minPriceValue,
+    min_Price,
+    setMaxPrice,
+    setMinPrice,
+  ]);
 
   return (
     <Select>
@@ -124,7 +152,8 @@ export default function PriceSelect({
                 setMinPrice(value);
                 setMinPriceValue(value);
               }}
-              defaultValue={min_Price}
+              defaultValue={minPriceValue}
+              value={minPriceValue ? String(minPriceValue) : ""}
             />
 
             <CustomSelect
@@ -135,34 +164,24 @@ export default function PriceSelect({
                 setMaxPrice(value);
                 setMaxPriceValue(value);
               }}
-              defaultValue={max_Price}
+              defaultValue={maxPriceValue}
+              value={maxPriceValue ? String(maxPriceValue) : ""}
             />
+
+            {category === "rent" && (
+              <CustomSelect
+                placeholder={"Price Duration"}
+                selectItems={priceDurationItems}
+                className="max-w-[170px]"
+                onValueChange={(value) => {
+                  setPriceDuration(value);
+                }}
+                defaultValue={priceDuration}
+              />
+            )}
           </div>
         </SelectGroup>
       </SelectContent>
     </Select>
   );
 }
-
-// const priceDuration = [
-//   {
-//     label: "Month",
-//     value: "month",
-//   },
-//   {
-//     label: "Week",
-//     value: "week",
-//   },
-//   {
-//     label: "Year",
-//     value: "year",
-//   },
-// ];
-
-//  <CustomSelect
-//    placeholder={"Price per month"}
-//    selectItems={priceDuration}
-//    className="w-[190px]"
-//    onValueChange={(value) => setPriceDuration(value)}
-//    defaultValue={price_Duration}
-//  />

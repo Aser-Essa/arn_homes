@@ -6,18 +6,20 @@ import { params } from "@/types/types";
 type SearchForSaleHeaderType = {
   params: params;
   numberOfProperties: number | null;
+  category?: string | string[] | undefined;
 };
 
 export default function SearchForSaleHeader({
   params,
   numberOfProperties,
+  category,
 }: SearchForSaleHeaderType) {
   const state_address = params?.state_address;
 
   return (
     <Container className="space-y-2.5">
       <p className="text-[28px] font-semibold sm:text-[36px]">
-        Properties for sale in {state_address}
+        Properties for {category} {state_address ? `in ${state_address}` : ""}
       </p>
       <div className="flex items-center justify-between">
         <p className="text-[28px] font-semibold text-scooter-900">

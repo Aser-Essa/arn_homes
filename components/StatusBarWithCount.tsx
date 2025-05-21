@@ -5,9 +5,13 @@ import { IoIosArrowBack } from "react-icons/io";
 
 type StatusBarWithCountType = {
   params: params;
+  count: number;
 };
 
-export default function StatusBarWithCount({ params }: StatusBarWithCountType) {
+export default function StatusBarWithCount({
+  params,
+  count,
+}: StatusBarWithCountType) {
   const router = useRouter();
 
   const { status } = params;
@@ -27,7 +31,7 @@ export default function StatusBarWithCount({ params }: StatusBarWithCountType) {
           <IoIosArrowBack className="h-5 w-5" />
           <p>{status ? statusParam : "Active"}</p>
         </div>
-        <p className="text-scooter-700">3 Properties</p>
+        <p className="text-scooter-700">{count} Properties</p>
       </div>
     </>
   );

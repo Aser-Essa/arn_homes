@@ -35,7 +35,7 @@ export default function FurnishedSelect({
         <div className="flex-1 space-y-2.5">
           <p className="text-lg font-medium">Furnished options</p>
           <CustomSelect
-            className="w-full"
+            className="min-w-full"
             placeholder="Furnished options"
             selectItems={furnitureOptions}
             onValueChange={(value) => setfurnitureType(value)}

@@ -16,13 +16,17 @@ export default function PropertyInfoDetail({
   card,
 }: PropertyInfoDetailType) {
   const {
-    state_address,
-    price,
+    id,
+    address,
     property_type,
     listed_in,
-    bedNumber,
-    bathNumber,
+    extras,
+    bed_number,
+    bath_number,
+    category,
   } = property;
+
+  const { price, monthly_rent } = extras || {};
 
   return (
     <>
@@ -30,7 +34,7 @@ export default function PropertyInfoDetail({
         <div className="flex h-[70px] items-center justify-between">
           <div className="flex h-[26px] w-[77px] items-center justify-center gap-1 rounded-full bg-shades-off-white p-1 pr-2">
             <div className="h-2 w-2 rounded-full bg-scooter-600"></div>
-            <p className="text-xs">For sale</p>
+            <p className="text-xs">For {category}</p>
           </div>
           <div className="flex items-center gap-5">
             <div
@@ -44,21 +48,23 @@ export default function PropertyInfoDetail({
           </div>
         </div>
         <p className={cn("text-[36px] font-semibold", card && "!mt-0")}>
-          {formatPrice(price)}
+          {category === "rent"
+            ? `${formatPrice(Number(monthly_rent))}/Month`
+            : formatPrice(Number(price))}
         </p>
         <div className="space-y-1">
           <p className="text-[28px] font-semibold text-scooter-900">
             {property_type}
           </p>
-          <p>{state_address}</p>
+          <p>{address}</p>
         </div>
         <div className="flex items-center gap-1">
           <IoCalendar className="h-4 w-4" />
           <p className="text-sm leading-5">Listed {formatTimeAgo(listed_in)}</p>
         </div>
 
-        <PropertyInfoStats bedNumber={bedNumber} bathNumber={bathNumber} />
-        <PropertyActionButtons />
+        <PropertyInfoStats bedNumber={bed_number} bathNumber={bath_number} />
+        <PropertyActionButtons property_id={id} />
       </div>
     </>
   );

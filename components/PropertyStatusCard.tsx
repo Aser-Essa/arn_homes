@@ -6,12 +6,14 @@ type PropertyStatusCardType = {
   text: string;
   icon: string;
   href: string;
+  count: number;
 };
 
 export default function PropertyStatusCard({
   text,
   icon,
   href,
+  count,
 }: PropertyStatusCardType) {
   return (
     <>
@@ -25,8 +27,12 @@ export default function PropertyStatusCard({
           </div>
           <p className="text-lg font-medium">{text}</p>
         </div>
-
-        <IoIosArrowForward className="h-6 w-6" />
+        <div className="flex items-center gap-4">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-shades-black text-sm text-shades-white">
+            {count}
+          </div>
+          <IoIosArrowForward className="h-6 w-6" />
+        </div>
       </Link>
     </>
   );

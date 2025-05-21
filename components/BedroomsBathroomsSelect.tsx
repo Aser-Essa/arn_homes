@@ -29,7 +29,7 @@ export default function BedroomsBathroomsSelect({
         <div className="flex-1 space-y-2.5">
           <p className="text-lg font-medium">Bedrooms</p>
           <CustomSelect
-            className="w-full"
+            className="min-w-full"
             placeholder="Beds"
             selectItems={bedOptions}
             onValueChange={(value) => setBed(value)}
@@ -39,7 +39,7 @@ export default function BedroomsBathroomsSelect({
         <div className="flex-1 space-y-2.5">
           <p className="text-lg font-medium">Bathrooms</p>
           <CustomSelect
-            className="w-full"
+            className="min-w-full"
             placeholder="Baths"
             selectItems={bathOptions}
             onValueChange={(value) => setBath(value)}

@@ -12,8 +12,10 @@ type UserPropertyInfoCardType = {
 export default function UserPropertyInfoCard({
   property,
 }: UserPropertyInfoCardType) {
-  const { state_address, price, property_type, bedNumber, bathNumber } =
+  const { category, title, property_type, bed_number, bath_number, extras } =
     property;
+
+  const { price, monthly_rent } = extras || {};
 
   return (
     <>
@@ -26,24 +28,28 @@ export default function UserPropertyInfoCard({
             "!mt-0 text-sm font-semibold sm:text-[36px] sm:leading-none",
           )}
         >
-          {formatPrice(price)}
+          {category == "rent"
+            ? `${monthly_rent ? formatPrice(monthly_rent) : ""} / Month`
+            : price
+              ? formatPrice(price)
+              : ""}
         </p>
         <div className="space-y-1">
           <p className="text-sm font-semibold leading-none text-scooter-900 sm:text-[28px]">
             {property_type}
           </p>
-          <p className="text-sm sm:text-base">{state_address}</p>
+          <p className="text-sm sm:text-base">{title}</p>
         </div>
         <div className="hidden sm:block">
           <PropertyInfoStats
-            bedNumber={bedNumber}
-            bathNumber={bathNumber}
+            bedNumber={bed_number}
+            bathNumber={bath_number}
             isCard={false}
           />
         </div>
         <div className="flex items-center justify-between sm:hidden">
-          <IconText icon={`/icons/blackbed.svg`} text={`${bedNumber}`} />
-          <IconText icon={`/icons/blackshower.svg`} text={`${bathNumber}`} />
+          <IconText icon={`/icons/blackbed.svg`} text={`${bed_number}`} />
+          <IconText icon={`/icons/blackshower.svg`} text={`${bath_number}`} />
           <IconText
             icon={`/icons/blackfurnished.svg`}
             text={`Semi-furnished`}

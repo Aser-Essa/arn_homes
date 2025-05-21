@@ -41,7 +41,7 @@ export default function FeatureSectionCardHeader({
           disabled={!isEditing}
           defaultValue={"Exterior Title"}
           className={cn(
-            "w-max !min-w-[0] border-none p-0 text-base font-semibold capitalize !opacity-100 shadow-none !ring-0 placeholder:text-base placeholder:text-shades-black",
+            "w-full !min-w-[0] border-none p-0 text-base font-semibold capitalize !opacity-100 shadow-none !ring-0 placeholder:text-base placeholder:text-shades-black",
             !isEditing && "!cursor-default",
           )}
         />

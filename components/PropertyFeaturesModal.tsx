@@ -29,7 +29,7 @@ export function PropertyFeaturesModal({ type }: PropertyFeaturesModalType) {
       </DialogTrigger>
 
       <DialogContent className="max-h-[calc(100vh-100px)] overflow-y-scroll">
-        <DialogHeader>
+        <DialogHeader className="w-full">
           <DialogTitle className="capitalize">Add {type}</DialogTitle>
           <DialogDescription>
             Add detailed information to enhance your property listing. Click

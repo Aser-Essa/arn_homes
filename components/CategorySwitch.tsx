@@ -6,11 +6,13 @@ type CategorySwitchType = {
   category_val: string;
   category_name: string;
   categories: { key: string; label: string }[];
+  counts?: { [key: string]: number };
 };
 export default function CategorySwitch({
   categories,
   category_val,
   category_name,
+  counts,
 }: CategorySwitchType) {
   const path = usePathname();
   const router = useRouter();
@@ -32,7 +34,15 @@ export default function CategorySwitch({
               "border-b border-scooter-700 text-scooter-700",
           )}
         >
-          <div onClick={() => handleClick(key)}>{label}</div>
+          <div
+            onClick={() => handleClick(key)}
+            className="flex items-center gap-1"
+          >
+            <p>{label}</p>
+            {counts && (
+              <p className="text-sm">{counts[key] > 0 && `(${counts[key]})`}</p>
+            )}
+          </div>
         </li>
       ))}
     </ul>

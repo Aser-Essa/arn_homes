@@ -1,7 +1,11 @@
 import React from "react";
 import BreadcrumbCustom from "./BreadcrumbCustom";
 
-export default function SearchForSaleBreadcrumb() {
+export default function SearchForSaleBreadcrumb({
+  category,
+}: {
+  category?: string | string[] | undefined;
+}) {
   const pathArray = [
     {
       path: "Home",
@@ -12,7 +16,7 @@ export default function SearchForSaleBreadcrumb() {
       href: "",
     },
     {
-      path: "For sale",
+      path: `For ${category}`,
       type: "page",
     },
   ];

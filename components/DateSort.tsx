@@ -17,8 +17,11 @@ export default function DateSort({ params, className }: DateSortType) {
 
   const dateOptions = [
     { value: "Any", label: "Anytime" },
-    { value: 7, label: "Last Week" },
-    { value: 30, label: "Last Month" },
+    { value: 1, label: "Last 24 hours" },
+    { value: 3, label: "Last 3 days" },
+    { value: 7, label: "Last 7 days" },
+    { value: 14, label: "Last 14 days" },
+    { value: 30, label: "Last 30 days" },
   ];
 
   function onValueChange(value: string) {

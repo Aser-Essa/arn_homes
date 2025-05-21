@@ -46,7 +46,6 @@ export const getCurrentTime = (): string => {
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? `0${minutes}` : `${minutes}`; // Ensuring minutes are string
-
   return `${hours}:${minutes}${ampm}`;
 };
 
@@ -63,6 +62,15 @@ export function formatTimeCounter(days: number): string {
   } else {
     return days == 1 ? "Last Day" : `Last ${days} Days`;
   }
+}
+
+export function formatTo12HourTime(isoString: string): string {
+  const date = new Date(isoString.endsWith("Z") ? isoString : isoString + "Z");
+  return date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
 }
 
 export function formatTimeAgo(dateString: string): string {
@@ -105,4 +113,25 @@ export function formatLeaseTerm(months: number): string {
       : "";
   if (yearPart && monthPart) return `${yearPart} ${monthPart}`;
   return yearPart || monthPart;
+}
+
+export function formatDateLong(isoString: string): string {
+  const date = new Date(isoString?.endsWith("Z") ? isoString : isoString + "Z");
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long", // full month name like "May"
+    day: "numeric", // no leading zero, e.g., "21"
+  });
+}
+
+export function convertToMonthly(value: number, duration: string | undefined) {
+  switch (duration) {
+    case "weekly":
+      return value * 4.33;
+    case "yearly":
+      return value / 12;
+    case "monthly":
+    default:
+      return value;
+  }
 }

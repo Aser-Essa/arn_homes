@@ -79,7 +79,6 @@ export default function RentFields() {
                 </FormItem>
               )}
             </FormFieldWrapper>
-
             <p className="text-muted-foreground mt-2.5 text-sm">
               Check if the property includes furniture like beds, sofas, or
               tables.

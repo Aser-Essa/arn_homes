@@ -2,33 +2,33 @@ import React from "react";
 import Container from "./Container";
 import Title from "./Title";
 import HomeCard from "./HomeCard";
-import { getPropertiesForSales } from "@/lib/data-service";
+import { getProperties } from "@/lib/data-service";
 import DateSort from "./DateSort";
 
 import Pagenation from "./Pagenation";
 import { params } from "@/types/types";
 
-type PropertiesForSaleType = {
+type PropertiesType = {
   params: params;
+  category?: string | string[] | undefined;
 };
 
-export default async function PropertiesForSale({
-  params,
-}: PropertiesForSaleType) {
-  const { data: PropertiesData, count } = await getPropertiesForSales({
+export default async function Properties({ params, category }: PropertiesType) {
+  const { data: PropertiesData, count } = await getProperties({
     params: { time_sort: String(params?.time_sort) },
+    category: category ? String(category) : "sale",
   });
 
   return (
     <>
       <Container className="mt-10 space-y-10 lg:mt-[15px]">
         <div className="flex items-center justify-between">
-          <Title>Properties For Sale</Title>
+          <Title>Properties For {category}</Title>
           <DateSort params={params} className={"hidden sm:flex"} />
         </div>
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(340px,1fr))] gap-8">
           {PropertiesData.map((property) => (
-            <HomeCard key={property.url} property={property} />
+            <HomeCard key={property.id} property={property} />
           ))}
         </div>
 

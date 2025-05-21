@@ -9,18 +9,20 @@ import { params } from "@/types/types";
 type SearchForSaleHeroSectionType = {
   params: params;
   stateAddressArray: string[];
+  category?: string | string[] | undefined;
 };
 
 export default async function SearchForSaleHeroSection({
   params,
   stateAddressArray,
+  category,
 }: SearchForSaleHeroSectionType) {
   const state_address = params?.state_address || "";
   const coordinates = await getCoordinates(`${state_address}`);
 
   return (
     <Container>
-      <SearchForSaleBreadcrumb />
+      <SearchForSaleBreadcrumb category={category} />
       <Map
         lat={coordinates?.lat}
         lng={coordinates?.lng}
@@ -31,6 +33,7 @@ export default async function SearchForSaleHeroSection({
         params={params}
         stateAddressArray={stateAddressArray}
         className="mb-10 mt-4 lg:mb-0 lg:mt-0"
+        category={category}
       />
     </Container>
   );

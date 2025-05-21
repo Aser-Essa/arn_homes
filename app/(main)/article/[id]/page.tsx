@@ -3,8 +3,9 @@ import ArticleParagraphs from "@/components/ArticleParagraphs";
 import RecentArticles from "@/components/RecentArticles";
 import Tags from "@/components/Tags";
 import { getArticle } from "@/lib/data-service";
+import { params } from "@/types/types";
 
-type Params = Promise<{ [key: string]: string | string[] | undefined }>;
+type Params = Promise<params>;
 
 export default async function page({ params }: { params: Params }) {
   const { id } = await params;

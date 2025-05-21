@@ -47,9 +47,9 @@ export default function PropertyFeaturesSection() {
 
   return (
     <>
-      <div className="col-span-2 w-full space-y-2">
+      <div className="w-full space-y-2 md:col-span-2">
         <p className="text-base font-medium capitalize">Add Features</p>
-        <div className="grid w-full grid-cols-2 gap-2">
+        <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2">
           <div className="w-full space-y-2">
             <PropertyFeaturesModal type={"exterior"} />
             <p className="text-[.8rem] font-medium text-red-500">

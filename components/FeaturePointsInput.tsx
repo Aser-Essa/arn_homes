@@ -35,16 +35,24 @@ export default function FeaturePointsInput({
           <div className="min-h-[100px] space-y-2">
             {fields.map((field, j) => (
               <div key={field.id} className="flex items-start gap-2">
-                <div className="space-y-1">
-                  <Input {...register(`${name}.${j}.Key`)} placeholder="Key" />
-                  <p className="text-[.8rem] font-medium text-red-500">
-                    {getError(j)}
-                  </p>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 space-y-1">
+                    <Input
+                      {...register(`${name}.${j}.Key`)}
+                      placeholder="Key"
+                    />
+                    <p className="text-[.8rem] font-medium text-red-500">
+                      {getError(j)}
+                    </p>
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <Input
+                      {...register(`${name}.${j}.Value`)}
+                      placeholder="Value"
+                      className="flex-1"
+                    />
+                  </div>
                 </div>
-                <Input
-                  {...register(`${name}.${j}.Value`)}
-                  placeholder="Value"
-                />
                 <Button
                   variant="ghost"
                   onClick={() => remove(j)}
