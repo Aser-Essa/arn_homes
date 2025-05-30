@@ -5,7 +5,7 @@ import { IoMail, IoHeart, IoNotifications } from "react-icons/io5";
 import SignOutBtn from "./SignOutBtn";
 import { MdOutlineStarHalf } from "react-icons/md";
 import { auth } from "@clerk/nextjs/server";
-import { getMyProperties } from "@/lib/data-service";
+import { getMyProperties, getUnreadMessageCount } from "@/lib/data-service";
 
 export default async function SideBar() {
   const { userId } = await auth();
@@ -15,6 +15,10 @@ export default async function SideBar() {
     category: "",
     status: "",
   });
+
+  const { unreadMessageCount } = await getUnreadMessageCount(
+    userId ? String(userId) : "",
+  );
 
   return (
     <div className="box-shadow relative h-full w-full space-y-6 px-3 py-3.5 shadow-shades-white md:w-[24vw] md:py-10 lg:px-6">
@@ -46,6 +50,7 @@ export default async function SideBar() {
         <SidebarNavLink
           href="/account/messages"
           icon={<IoMail className="h-5 w-5" />}
+          unreadMessageCount={unreadMessageCount ? unreadMessageCount : 0}
         >
           Messages
         </SidebarNavLink>

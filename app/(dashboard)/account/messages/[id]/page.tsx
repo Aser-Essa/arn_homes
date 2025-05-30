@@ -2,7 +2,12 @@ import ChatHeader from "@/components/ChatHeader";
 import Container from "@/components/Container";
 import { RealtimeChat } from "@/components/ui/realtime-chat";
 import { ChatMessage } from "@/hooks/use-realtime-chat";
-import { getChatMessages, getProperty, getUser } from "@/lib/data-service";
+import {
+  getChatMessages,
+  getProperty,
+  getUser,
+  markMessagesAsRead,
+} from "@/lib/data-service";
 import { params } from "@/types/types";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
@@ -34,6 +39,11 @@ export default async function page({ params }: { params: Params }) {
 
   const { property } = await getProperty(property_id);
   const { title, images } = property;
+
+  await markMessagesAsRead({
+    userId: userId ? String(userId) : "",
+    chatId: chatId ? String(chatId) : "",
+  });
 
   return (
     <Container className="w-full !px-4 !py-6 md:h-[946px] md:w-[76vw] md:overflow-y-scroll md:!p-10">

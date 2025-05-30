@@ -43,11 +43,11 @@ export function useRealtimeChat({
 
   useEffect(() => {
     const newChannel = supabase.channel(roomName);
-
     newChannel
       .on("broadcast", { event: EVENT_MESSAGE_TYPE }, (payload) => {
         setMessages((current) => [...current, payload.payload as ChatMessage]);
       })
+
       .subscribe(async (status) => {
         if (status === "SUBSCRIBED") {
           setIsConnected(true);
@@ -60,6 +60,14 @@ export function useRealtimeChat({
       supabase.removeChannel(newChannel);
     };
   }, [roomName, username]);
+
+  //   useEffect(() => {
+  //   if (!chatId || !id) return;
+  //   markMessagesAsRead({
+  //     userId: id ? String(id) : "",
+  //     chatId,
+  //   });
+  // }, [chatId, id]);
 
   const sendMessage = useCallback(
     async (content: string) => {

@@ -430,7 +430,118 @@ export async function createChat({
   return { chat: chatData };
 }
 
-export async function deleteChatForUser({
+// export async function deleteChatForUser({ userId }: { userId: string }) {
+//   const { data: chats, error: chatError } = await supabase
+//     .from("chats")
+//     .select("id")
+//     .or(`user_one.eq.${userId},user_two.eq.${userId}`);
+
+//   console.log(chats, "chats for user:", userId);
+
+//   if (chatError) {
+//     console.error("Error fetching chats for chat:", chatError);
+//     return false;
+//   }
+
+//   if (!chats || chats.length === 0) {
+//     return true;
+//   }
+
+//   const deletions = chats.map((m) => ({
+//     user_id: userId,
+//     chat_id: m.id,
+//   }));
+
+//   const { error: chatDeletionError } = await supabase
+//     .from("chat_deletions")
+//     .upsert(deletions, { onConflict: "user_id,chat_id" });
+
+//   if (chatDeletionError) {
+//     console.error("Error deleting chat for user:", chatDeletionError);
+//     return false;
+//   }
+
+//   return true;
+// }
+
+export async function getChatMessages({
+  userId,
+  chatId,
+}: {
+  userId: string;
+  chatId: string;
+}) {
+  const { data: chat, error: chatError } = await supabase
+    .from("chats")
+    .select("*")
+    .eq("id", chatId)
+    .single();
+
+  if (chatError && chatError.code !== "PGRST116") {
+    console.error(chatError);
+    return null;
+  }
+
+  const { data: deletedMessages } = await supabase
+    .from("message_deletions")
+    .select("message_id")
+    .eq("user_id", userId);
+
+  const deletedMessageIds = deletedMessages?.map((m) => m.message_id) ?? [];
+
+  const { data: messages, error: messagesError } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("chat_id", chatId)
+    .not("id", "in", `(${deletedMessageIds.join(",")})`)
+    .order("sent_at", { ascending: true });
+
+  if (messagesError) {
+    console.error(chatError);
+    return null;
+  }
+
+  return { chat, messages };
+}
+
+export async function sendMessage({
+  senderId,
+  receiverId,
+  propertyId,
+  content,
+}: sendMessageType) {
+  let result = await isChatExist({ senderId, receiverId, propertyId });
+
+  if (!result) {
+    result = await createChat({ senderId, receiverId, propertyId });
+  }
+
+  if (!result || !result.chat) {
+    console.error("Chat not found or could not be created.");
+    return null;
+  }
+
+  const chat = result?.chat;
+
+  const { data: newMessage, error: messageError } = await supabase
+    .from("messages")
+    .insert({
+      chat_id: chat?.id,
+      sender_id: senderId,
+      content: content,
+    })
+    .select()
+    .single();
+
+  if (messageError) {
+    console.error(messageError);
+    return null;
+  }
+
+  return newMessage;
+}
+
+export async function deleteMessagesForUser({
   userId,
   chatId,
 }: {
@@ -469,77 +580,45 @@ export async function deleteChatForUser({
   return true;
 }
 
-export async function getChatMessages({
-  userId,
+export async function markMessagesAsRead({
   chatId,
+  userId,
 }: {
-  userId: string;
   chatId: string;
+  userId: string;
 }) {
-  const { data: chat, error: chatError } = await supabase
-    .from("chats")
-    .select("*")
-    .eq("id", chatId)
-    .single();
-
-  if (chatError && chatError.code !== "PGRST116") {
-    console.error(chatError);
-    return null;
-  }
-
-  const { data: deletedMessages } = await supabase
-    .from("message_deletions")
-    .select("message_id")
-    .eq("user_id", userId);
-
-  const deletedMessageIds = deletedMessages?.map((m) => m.message_id) ?? [];
-
-  const { data: messages, error: messagesError } = await supabase
+  const { error } = await supabase
     .from("messages")
-    .select("*")
+    .update({ status: "read" })
     .eq("chat_id", chatId)
-    .not("id", "in", `(${deletedMessageIds.join(",")})`)
-    .order("sent_at", { ascending: true });
+    .neq("sender_id", userId)
+    .neq("status", "read");
 
-  if (messagesError) {
-    console.error(chatError);
-    return null;
+  if (error) {
+    console.error("Error updating message status to read:", error);
+    return false;
   }
-  return { chat, messages };
+
+  return true;
 }
 
-export async function sendMessage({
-  senderId,
-  receiverId,
-  propertyId,
-  content,
-}: sendMessageType) {
-  let result = await isChatExist({ senderId, receiverId, propertyId });
-
-  if (!result) {
-    result = await createChat({ senderId, receiverId, propertyId });
-  }
-
-  if (!result || !result.chat) {
-    console.error("Chat not found or could not be created.");
-    return null;
-  }
-
-  const chat = result?.chat;
-
-  const { data: newMessage, error: messageError } = await supabase
+export async function getUnreadMessageCount(userId: string) {
+  const {
+    data: unReadMessages,
+    error,
+    count,
+  } = await supabase
     .from("messages")
-    .insert({
-      chat_id: chat?.id,
-      sender_id: senderId,
-      content: content,
-    })
-    .select()
-    .single();
+    .select("*", { count: "exact" }) // `head: true` makes it return only the count
+    .neq("sender_id", userId) // Only count messages not sent by the user
+    .eq("status", "sent"); // Only messages that haven't been read
 
-  if (messageError) {
-    console.error(messageError);
-    return null;
+  if (error) {
+    console.error("Failed to get unread messages count:", error);
+    return { unreadMessageCount: 0, data: [] };
   }
-  return newMessage;
+
+  const unreadMessageCount: number = count ?? 0;
+
+  return { unreadMessageCount, unReadMessages };
 }

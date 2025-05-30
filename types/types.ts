@@ -64,3 +64,19 @@ export type User = {
   created_at: string; // ISO date string
   avatar: string; // URL to avatar image
 };
+
+export type chat = {
+  id: string;
+  property_id: string;
+  user_one: string;
+  user_two: string;
+};
+
+export type message = {
+  id: string; // UUID
+  chat_id: string; // UUID
+  sender_id: string; // user ID (text)
+  message: string; // content of the message
+  sent_at: string; // ISO timestamp
+  status: "sent" | "delivered" | "read"; // message status
+};

@@ -11,6 +11,7 @@ import { User } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
 import { Textarea } from "./textarea";
 import { GrAttachment } from "react-icons/gr";
+import { markMessagesAsRead } from "@/lib/data-service";
 
 interface RealtimeChatProps {
   roomName: string;
@@ -81,9 +82,13 @@ export const RealtimeChat = ({
   }, [allMessages, onMessage]);
 
   useEffect(() => {
+    markMessagesAsRead({
+      userId: id ? String(id) : "",
+      chatId,
+    });
     // Scroll to bottom whenever messages change
     scrollToBottom();
-  }, [allMessages, scrollToBottom]);
+  }, [allMessages, chatId, id, scrollToBottom]);
 
   const handleSendMessage = useCallback(
     (e: React.FormEvent) => {

@@ -1,6 +1,6 @@
 import { getChatMessages, getUser } from "@/lib/data-service";
 import { formatDateLong } from "@/lib/utils";
-import { Property } from "@/types/types";
+import { chat, message, Property } from "@/types/types";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,16 +8,16 @@ import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 type MessageCardType = {
-  chat: {
-    id: string;
-    property_id: string;
-    user_one: string;
-    user_two: string;
-  };
+  chat: chat;
   property: Property;
+  unReadMessages: message[];
 };
 
-export default async function MessageCard({ chat, property }: MessageCardType) {
+export default async function MessageCard({
+  chat,
+  property,
+  unReadMessages,
+}: MessageCardType) {
   const { images, title } = property;
   const { id, user_one, user_two } = chat;
   const senderId = user_one === user_two ? user_two : user_one;
@@ -48,10 +48,17 @@ export default async function MessageCard({ chat, property }: MessageCardType) {
 
   const hasOneMessageAtLeast = messages?.length > 0;
 
+  const containUnReadMessages = unReadMessages.some(
+    (message) => message.chat_id === chat.id,
+  );
+
   return (
     <>
       {hasOneMessageAtLeast && (
-        <Link href={`/account/messages/${id}`} className="block">
+        <Link href={`/account/messages/${id}`} className="relative block">
+          {containUnReadMessages && (
+            <div className="absolute left-2 top-2 h-2 w-2 rounded-full bg-scooter-600"></div>
+          )}
           <div className="box-shadow flex h-[102px] w-full cursor-pointer items-center gap-4 rounded-xl p-4 transition-all hover:bg-shades-off-white">
             <div className="relative min-h-16 min-w-16 overflow-hidden rounded-[8px]">
               <Image fill src={images?.at(0) || "/"} alt="" />

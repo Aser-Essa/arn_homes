@@ -1,5 +1,5 @@
 "use client";
-import { deleteChatForUser } from "@/lib/data-service";
+import { deleteMessagesForUser } from "@/lib/data-service";
 import { User } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
@@ -28,10 +28,11 @@ export default function ChatHeader({
   const { id } = user || {};
 
   async function handleClickDelete() {
-    await deleteChatForUser({
+    await deleteMessagesForUser({
       userId: id ? String(id) : "",
       chatId,
     });
+
     router.push("/account/messages");
   }
 
