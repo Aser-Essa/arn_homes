@@ -19,7 +19,6 @@ export default function NavLink({
   className,
 }: NavLinkType) {
   const path = usePathname();
-  // const isActive = "rounded-xl bg-scooter-50 p-2";
 
   const isActive =
     (href.split("/").join("").length > 0 && path.includes(href)) ||

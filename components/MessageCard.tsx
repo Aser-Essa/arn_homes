@@ -57,25 +57,25 @@ export default async function MessageCard({
       {hasOneMessageAtLeast && (
         <Link href={`/account/messages/${id}`} className="relative block">
           {containUnReadMessages && (
-            <div className="absolute left-2 top-2 h-2 w-2 rounded-full bg-scooter-600"></div>
+            <div className="absolute left-2 top-2 hidden h-2 w-2 rounded-full bg-scooter-600 sm:block"></div>
           )}
-          <div className="box-shadow flex h-[102px] w-full cursor-pointer items-center gap-4 rounded-xl p-4 transition-all hover:bg-shades-off-white">
-            <div className="relative min-h-16 min-w-16 overflow-hidden rounded-[8px]">
+          <div className="box-shadow flex w-full cursor-pointer items-center gap-2.5 rounded-xl border-b border-shades-off-white pb-2.5 pr-2.5 transition-all max-sm:shadow-none sm:h-[102px] sm:gap-4 sm:p-4 hover:sm:bg-shades-off-white">
+            <div className="relative min-h-10 min-w-10 overflow-hidden rounded-[8px] sm:min-h-16 sm:min-w-16">
               <Image fill src={images?.at(0) || "/"} alt="" />
             </div>
             <div className="flex w-full items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2.5">
-                  <p className="text-lg font-semibold text-scooter-700">
+                  <p className="text-sm font-semibold text-scooter-700 sm:text-lg">
                     {title}
                   </p>
-                  <p className="text-lg">•</p>
-                  <p className="text-sm">{lastMessageDate}</p>
+                  <p className="hidden text-lg sm:block">•</p>
+                  <p className="hidden text-sm sm:block">{lastMessageDate}</p>
                 </div>
-                <p className="text-sm font-semibold text-amber-600">
+                <p className="text-xs font-semibold text-amber-600 sm:text-sm">
                   {full_name}
                 </p>
-                <p className="max-w-[35vw] overflow-hidden text-ellipsis text-sm">
+                <p className="max-w-[35vw] overflow-hidden text-ellipsis text-xs sm:text-sm">
                   {lastMessageContent}
                 </p>
               </div>

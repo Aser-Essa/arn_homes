@@ -24,7 +24,7 @@ export default function CategorySwitch({
   }
 
   return (
-    <ul className="flex items-center gap-6 max-lg:right-0 sm:absolute lg:left-1/2 lg:-translate-x-1/2 lg:text-lg">
+    <ul className="flex items-center gap-6 text-sm max-lg:right-0 sm:absolute sm:text-lg lg:left-1/2 lg:-translate-x-1/2">
       {categories?.map(({ key, label }) => (
         <li
           key={key}

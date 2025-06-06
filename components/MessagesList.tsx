@@ -16,7 +16,7 @@ export default async function MessagesList({
 }: MessagesListType) {
   return (
     <>
-      <div className="mt-4 space-y-5">
+      <div className="mt-4 space-y-5 sm:mt-5">
         {chatCardsData?.map(({ chat, property }, idx) => (
           <MessageCard
             key={`${chat?.id} ${idx}`}

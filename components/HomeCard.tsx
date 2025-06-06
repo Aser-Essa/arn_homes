@@ -1,17 +1,18 @@
+import { isPropertySaved } from "@/lib/data-service";
 import { cn, formatPrice } from "@/lib/utils";
-import Image from "next/image";
-import React from "react";
-import ToogleFavorite from "./ToogleFavorite";
-import Link from "next/link";
 import { Property } from "@/types/types";
+import Image from "next/image";
+import Link from "next/link";
 import { BsArrowUpRight } from "react-icons/bs";
+import ToogleFavorite from "./ToogleFavorite";
+import { auth } from "@clerk/nextjs/server";
 
 type HomeCardType = {
   property: Property;
   className?: string;
 };
 
-export default function HomeCard({ property, className }: HomeCardType) {
+export default async function HomeCard({ property, className }: HomeCardType) {
   const {
     id,
     title,
@@ -24,6 +25,13 @@ export default function HomeCard({ property, className }: HomeCardType) {
   } = property;
 
   const { price, monthly_rent } = extras || {};
+
+  const { userId } = await auth();
+
+  const isSaved = await isPropertySaved({
+    user_id: userId ? String(userId) : "",
+    property_id: id,
+  });
 
   return (
     <Link href={`/property/${id}`} target="_blank">
@@ -38,7 +46,12 @@ export default function HomeCard({ property, className }: HomeCardType) {
           <p className="text-xs">For {category}</p>
         </div>
 
-        <ToogleFavorite className={"absolute right-4 top-4 z-50"} />
+        <ToogleFavorite
+          className={"absolute right-4 top-4 z-50"}
+          isSaved={isSaved}
+          property_id={id}
+          category={category}
+        />
 
         <div className="space-y-4">
           <div className="relative h-[292px] w-full">

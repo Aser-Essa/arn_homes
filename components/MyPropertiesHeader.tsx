@@ -4,12 +4,17 @@ import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
 import CategorySwitch from "./CategorySwitch";
 import { auth } from "@clerk/nextjs/server";
-import { getMyProperties } from "@/lib/data-service";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
 type MyPropertiesHeaderType = {
   params: params;
+  propertyAction: (data: {
+    userId: string;
+    status?: string;
+    category: string;
+  }) => Promise<{ count: number | null }>;
+  title: string;
 };
 
 const categories = [
@@ -20,6 +25,8 @@ const categories = [
 
 export default async function MyPropertiesHeader({
   params,
+  propertyAction,
+  title,
 }: MyPropertiesHeaderType) {
   const { userId } = await auth();
 
@@ -33,7 +40,7 @@ export default async function MyPropertiesHeader({
   const counts = Object.fromEntries(
     await Promise.all(
       categories.map(async ({ key }) => {
-        const { count } = await getMyProperties({
+        const { count } = await propertyAction({
           userId,
           status: status ? String(status) : "",
           category: key,
@@ -50,14 +57,14 @@ export default async function MyPropertiesHeader({
           <p>Dashboard</p>
         </div>
         <p className="hidden text-[24px] font-semibold sm:block lg:text-[28px]">
-          My properties
+          {title}
         </p>
         <Link
           href={"/account"}
           className="flex items-center gap-2 font-semibold sm:hidden"
         >
           <IoIosArrowBack />
-          <p>My properties</p>
+          <p>{title}</p>
         </Link>
         <CategorySwitch
           categories={categories}

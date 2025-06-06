@@ -2,11 +2,12 @@ import React from "react";
 import Container from "./Container";
 import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
+import { cn } from "@/lib/utils";
 
-export default function CompleteProfileBanner() {
+export default function CompleteProfileBanner({className}: { className?: string }) {
   return (
     <>
-      <Container className="relative h-[248px] w-full overflow-hidden bg-scooter-50 !px-4 !py-6 font-exo md:h-[214px] md:rounded-xl md:!p-6">
+      <Container className={cn("relative h-[248px] w-full overflow-hidden bg-scooter-50 !px-4 !py-6 font-exo md:h-[214px] md:rounded-xl md:!p-6", className)}>
         <div className="mb-6 flex h-[22px] w-fit cursor-pointer items-center gap-2 rounded-[8px] border-l-[5px] border-amber-600 bg-gray-900 py-[2px] pl-[11px] pr-4 font-exo text-xs text-shades-white transition-all hover:text-scooter-600 md:hidden md:rounded-xl">
           <p>Dashboard</p>
         </div>

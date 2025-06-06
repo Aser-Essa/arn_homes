@@ -5,12 +5,18 @@ import { IoMail, IoHeart, IoNotifications } from "react-icons/io5";
 import SignOutBtn from "./SignOutBtn";
 import { MdOutlineStarHalf } from "react-icons/md";
 import { auth } from "@clerk/nextjs/server";
-import { getMyProperties, getUnreadMessageCount } from "@/lib/data-service";
+import {
+  getMyProperties,
+  getSavedProperties,
+  getUnreadMessageCount,
+} from "@/lib/data-service";
 
 export default async function SideBar() {
   const { userId } = await auth();
 
-  const { count } = await getMyProperties({
+  const category = ["sale", "rent", "investment"];
+
+  const { count: myPropertiesCount } = await getMyProperties({
     userId: userId ? String(userId) : "",
     category: "",
     status: "",
@@ -18,6 +24,21 @@ export default async function SideBar() {
 
   const { unreadMessageCount } = await getUnreadMessageCount(
     userId ? String(userId) : "",
+  );
+
+  const savedPropertiesCountArray: number[] = await Promise.all(
+    category.map(async (cat) => {
+      const { count } = await getSavedProperties({
+        userId: userId ? String(userId) : "",
+        category: cat,
+      });
+      return Number(count);
+    }),
+  );
+
+  const savedPropertiesCount = savedPropertiesCountArray.reduce(
+    (acc, curr) => acc + curr,
+    0,
   );
 
   return (
@@ -33,7 +54,7 @@ export default async function SideBar() {
       </div>
       <ul className="space-y-2.5">
         <SidebarNavLink
-          href="/account/properties"
+          href="/account"
           icon={
             <Image
               src={"/icons/small-logo.svg"}
@@ -43,14 +64,14 @@ export default async function SideBar() {
               className="relative -left-1"
             />
           }
-          numberOfNotifications={count ? count : 0}
+          numberOfNotifications={myPropertiesCount ? myPropertiesCount : 0}
         >
           My properties
         </SidebarNavLink>
         <SidebarNavLink
           href="/account/messages"
           icon={<IoMail className="h-5 w-5" />}
-          unreadMessageCount={unreadMessageCount ? unreadMessageCount : 0}
+          numberOfNotifications={unreadMessageCount ? unreadMessageCount : 0}
         >
           Messages
         </SidebarNavLink>
@@ -58,6 +79,9 @@ export default async function SideBar() {
         <SidebarNavLink
           href="/account/saved_properties"
           icon={<IoHeart className="h-5 w-5" />}
+          numberOfNotifications={
+            savedPropertiesCount ? savedPropertiesCount : 0
+          }
         >
           Saved properties
         </SidebarNavLink>

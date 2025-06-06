@@ -3,14 +3,18 @@ import { Property } from "@/types/types";
 import { IoCalendar } from "react-icons/io5";
 import ToogleFavorite from "./ToogleFavorite";
 import PropertyInfoStats from "./PropertyInfoStats";
+import { auth } from "@clerk/nextjs/server";
+import { isPropertySaved } from "@/lib/data-service";
 
 type PropertyInfoCardType = {
   property: Property;
-  isCard?: boolean;
 };
 
-export default function PropertyInfoCard({ property }: PropertyInfoCardType) {
+export default async function PropertyInfoCard({
+  property,
+}: PropertyInfoCardType) {
   const {
+    id,
     address,
     extras,
     property_type,
@@ -23,11 +27,23 @@ export default function PropertyInfoCard({ property }: PropertyInfoCardType) {
 
   const { price, monthly_rent } = extras || {};
 
+  const { userId } = await auth();
+
+  const isSaved = await isPropertySaved({
+    user_id: userId ? String(userId) : "",
+    property_id: id,
+  });
+
   return (
     <>
       <div className={cn("flex-1 space-y-5 text-nowrap p-5")}>
         <div className="absolute right-5 top-5">
-          <ToogleFavorite className="bg-shades-off-white" />
+          <ToogleFavorite
+            className="bg-shades-off-white"
+            isSaved={isSaved}
+            property_id={id}
+            category={category}
+          />
         </div>
         <p className={cn("!mt-0 text-[36px] font-semibold")}>
           {category === "rent"

@@ -5,13 +5,15 @@ import { IoCalendar } from "react-icons/io5";
 import ToogleFavorite from "./ToogleFavorite";
 import PropertyInfoStats from "./PropertyInfoStats";
 import PropertyActionButtons from "./PropertyActionButtons";
+import { isPropertySaved } from "@/lib/data-service";
+import { auth } from "@clerk/nextjs/server";
 
 type PropertyInfoDetailType = {
   property: Property;
   card?: boolean;
 };
 
-export default function PropertyInfoDetail({
+export default async function PropertyInfoDetail({
   property,
   card,
 }: PropertyInfoDetailType) {
@@ -27,6 +29,13 @@ export default function PropertyInfoDetail({
   } = property;
 
   const { price, monthly_rent } = extras || {};
+
+  const { userId } = await auth();
+
+  const isSaved = await isPropertySaved({
+    user_id: userId ? String(userId) : "",
+    property_id: id,
+  });
 
   return (
     <>
@@ -44,7 +53,12 @@ export default function PropertyInfoDetail({
             >
               <BsShareFill />
             </div>
-            <ToogleFavorite className="bg-shades-off-white" />
+            <ToogleFavorite
+              className="bg-shades-off-white"
+              isSaved={isSaved}
+              property_id={id}
+              category={category}
+            />
           </div>
         </div>
         <p className={cn("text-[36px] font-semibold", card && "!mt-0")}>

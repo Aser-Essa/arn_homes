@@ -430,40 +430,6 @@ export async function createChat({
   return { chat: chatData };
 }
 
-// export async function deleteChatForUser({ userId }: { userId: string }) {
-//   const { data: chats, error: chatError } = await supabase
-//     .from("chats")
-//     .select("id")
-//     .or(`user_one.eq.${userId},user_two.eq.${userId}`);
-
-//   console.log(chats, "chats for user:", userId);
-
-//   if (chatError) {
-//     console.error("Error fetching chats for chat:", chatError);
-//     return false;
-//   }
-
-//   if (!chats || chats.length === 0) {
-//     return true;
-//   }
-
-//   const deletions = chats.map((m) => ({
-//     user_id: userId,
-//     chat_id: m.id,
-//   }));
-
-//   const { error: chatDeletionError } = await supabase
-//     .from("chat_deletions")
-//     .upsert(deletions, { onConflict: "user_id,chat_id" });
-
-//   if (chatDeletionError) {
-//     console.error("Error deleting chat for user:", chatDeletionError);
-//     return false;
-//   }
-
-//   return true;
-// }
-
 export async function getChatMessages({
   userId,
   chatId,
@@ -621,4 +587,101 @@ export async function getUnreadMessageCount(userId: string) {
   const unreadMessageCount: number = count ?? 0;
 
   return { unreadMessageCount, unReadMessages };
+}
+
+export async function getSavedProperties({
+  userId,
+  category,
+}: {
+  category: string;
+  userId: string;
+}) {
+  const {
+    data: properties,
+    error,
+    count,
+  } = await supabase
+    .from("saved_properties")
+    .select("*, properties(*)", { count: "exact" })
+    .eq("user_id", userId)
+    .eq("category", category);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return { properties, count };
+}
+
+export async function isPropertySaved({
+  user_id,
+  property_id,
+}: {
+  user_id: string;
+  property_id: string;
+}) {
+  const { data: savedProperty, error } = await supabase
+    .from("saved_properties")
+    .select("*")
+    .eq("user_id", user_id)
+    .eq("property_id", property_id)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return !!savedProperty;
+}
+
+export async function saveProperty(data: {
+  user_id: string;
+  property_id: string;
+  category?: string;
+}) {
+  const { error } = await supabase
+    .from("saved_properties")
+    .insert(data)
+    .select();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function deleteSavedProperty({
+  user_id,
+  property_id,
+}: {
+  user_id: string;
+  property_id: string;
+}) {
+  const { error } = await supabase
+    .from("saved_properties")
+    .delete()
+    .eq("user_id", user_id)
+    .eq("property_id", property_id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function toogleFavorite({
+  user_id,
+  property_id,
+  category,
+}: {
+  user_id: string;
+  property_id: string;
+  category?: string;
+}) {
+  const isSaved = await isPropertySaved({ user_id, property_id });
+
+  if (isSaved) {
+    await deleteSavedProperty({ user_id, property_id });
+  } else {
+    await saveProperty({ user_id, property_id, category });
+  }
+  return !isSaved;
 }

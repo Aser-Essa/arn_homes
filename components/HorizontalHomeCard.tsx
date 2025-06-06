@@ -4,19 +4,22 @@ import Image from "next/image";
 import { BsCardImage } from "react-icons/bs";
 import PropertyInfoCard from "./PropertyInfoCard";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type HorizontalHomeCardType = {
   property: Property;
+  className?: string;
 };
 
 export default function HorizontalHomeCard({
   property,
+  className,
 }: HorizontalHomeCardType) {
   const { images, id } = property;
   return (
     <Link href={`/property/${id}`} target="_blank">
       <div className="box-shadow relative flex rounded-[20px]">
-        <div className="relative aspect-video w-full flex-1">
+        <div className={cn("relative aspect-video w-full flex-1", className)}>
           <Image
             src={images?.at(0) ?? "/HerosectionBG2.jpg"}
             fill

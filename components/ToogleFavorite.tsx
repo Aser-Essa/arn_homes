@@ -1,15 +1,36 @@
 "use client";
+import { toogleFavorite } from "@/lib/data-service";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import React, { useState } from "react";
 
-export default function ToogleFavorite({ className }: { className?: string }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+export default function ToogleFavorite({
+  className,
+  isSaved = false,
+  property_id,
+  category,
+}: {
+  isSaved: boolean;
+  className?: string;
+  property_id: string;
+  category: string;
+}) {
+  const [isFavorite, setIsFavorite] = useState(isSaved);
 
-  function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  const { user } = useUser();
+  if (!user) return null; // Ensure user is available
+  const { id } = user;
+
+  async function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.stopPropagation();
     e.preventDefault();
     setIsFavorite((isFavorite) => !isFavorite);
+    await toogleFavorite({
+      user_id: id ? String(id) : "",
+      property_id,
+      category,
+    });
   }
 
   return (

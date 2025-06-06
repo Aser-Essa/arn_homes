@@ -41,12 +41,12 @@ export default function ChatHeader({
       <p className="hidden text-[24px] font-semibold sm:block lg:text-[28px]">
         Messages
       </p>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         <Link href={"/account/messages"}>
-          <IoIosArrowBack className="h-6 w-6 cursor-pointer" />
+          <IoIosArrowBack className="m:w-6 h-4 w-4 cursor-pointer sm:h-6" />
         </Link>
-        <div className="flex items-start gap-4">
-          <div className="h-[50px] w-[50px] bg-shades-off-white">
+        <div className="flex items-center gap-4 sm:items-start">
+          <div className="h-10 w-10 bg-shades-off-white sm:h-[50px] sm:w-[50px]">
             {images && images.length > 0 && (
               <Image
                 width={50}
@@ -58,8 +58,12 @@ export default function ChatHeader({
             )}
           </div>
           <div className="space-y-1">
-            <p className="text-lg font-semibold text-scooter-700"> {title}</p>
-            <p className="text-sm font-semibold text-amber-600">{full_name}</p>
+            <p className="text-sm font-semibold text-scooter-700 sm:text-lg">
+              {title}
+            </p>
+            <p className="text-xs font-semibold text-amber-600 sm:text-sm">
+              {full_name}
+            </p>
           </div>
         </div>
 

@@ -11,6 +11,7 @@ type SidebarNavLinkType = {
   children: string;
   numberOfNotifications?: number;
   unreadMessageCount?: number;
+  numberOfSavedProperties?: number;
 };
 
 export default function SidebarNavLink({
@@ -18,11 +19,15 @@ export default function SidebarNavLink({
   icon,
   children,
   numberOfNotifications,
-  unreadMessageCount,
 }: SidebarNavLinkType) {
   const path = usePathname();
 
-  const isActive = path.includes(href);
+  // const isActive = path.includes(href);
+
+  const isActive =
+    (href.split("/account").join("").length > 0 && path.includes(href)) ||
+    (href === "" && path === "") ||
+    (href === "/account" && path === "/account");
 
   return (
     <>
@@ -38,11 +43,6 @@ export default function SidebarNavLink({
           {numberOfNotifications && (
             <p className="font-medium max-sm:flex max-sm:aspect-square max-sm:w-7 max-sm:items-center max-sm:justify-center max-sm:rounded-full max-sm:bg-shades-off-white lg:text-lg">
               {numberOfNotifications}
-            </p>
-          )}
-          {unreadMessageCount && unreadMessageCount > 0 && (
-            <p className="font-medium max-sm:flex max-sm:aspect-square max-sm:w-7 max-sm:items-center max-sm:justify-center max-sm:rounded-full max-sm:bg-shades-off-white lg:text-lg">
-              {unreadMessageCount}
             </p>
           )}
           <IoIosArrowForward className="ml-6 block h-5 w-5 sm:hidden" />

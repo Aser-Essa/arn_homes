@@ -1,6 +1,7 @@
 import { params } from "@/types/types";
 import PropertyStatusCardList from "./PropertyStatusCardList";
 import MyPropertiesHeader from "./MyPropertiesHeader";
+import { getMyProperties } from "@/lib/data-service";
 
 type MyPropertiesSelectionType = {
   params: params;
@@ -13,7 +14,11 @@ export default function MyPropertiesSelection({
 
   return (
     <div className="mt-10 space-y-4">
-      <MyPropertiesHeader params={params} />
+      <MyPropertiesHeader
+        params={params}
+        propertyAction={getMyProperties}
+        title={"My properties"}
+      />
       <PropertyStatusCardList category={category ? String(category) : "sale"} />
     </div>
   );

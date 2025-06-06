@@ -7,10 +7,12 @@ import IconText from "./IconText";
 
 type UserPropertyInfoCardType = {
   property: Property;
+  type?: "my_properties" | "saved_properties";
 };
 
 export default function UserPropertyInfoCard({
   property,
+  type,
 }: UserPropertyInfoCardType) {
   const { category, title, property_type, bed_number, bath_number, extras } =
     property;
@@ -22,7 +24,7 @@ export default function UserPropertyInfoCard({
       <div
         className={cn("flex-1 space-y-1 text-nowrap p-2 sm:space-y-5 sm:p-5")}
       >
-        <UserPropertyCardControl />
+        {type === "my_properties" && <UserPropertyCardControl />}
         <p
           className={cn(
             "!mt-0 text-sm font-semibold sm:text-[36px] sm:leading-none",

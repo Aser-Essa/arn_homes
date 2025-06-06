@@ -149,7 +149,7 @@ export const RealtimeChat = ({
           </div>
           <Textarea
             className={cn(
-              "h-[200px] w-full resize-none rounded-xl border-[1.5px] border-amber-100 p-4 text-start !text-base outline-none ring-0 transition-all duration-300 placeholder:text-lg placeholder:text-gray-300 focus:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]",
+              "h-fit min-h-[50px] w-full resize-none rounded-xl border-[1.5px] border-amber-100 px-4 py-3 text-start !text-base outline-none ring-0 transition-all duration-300 placeholder:text-lg placeholder:text-gray-300 focus:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2] lg:h-[200px] lg:p-4",
             )}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
