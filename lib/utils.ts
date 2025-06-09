@@ -73,6 +73,14 @@ export function formatTo12HourTime(isoString: string): string {
   });
 }
 
+export function formatTime(timeString: string) {
+  return new Date(`2000-01-01T${timeString}`).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 export function formatTimeAgo(dateString: string): string {
   const inputDate = new Date(dateString);
   const now = new Date();
@@ -121,6 +129,17 @@ export function formatDateLong(isoString: string): string {
     year: "numeric",
     month: "long", // full month name like "May"
     day: "numeric", // no leading zero, e.g., "21"
+  });
+}
+
+export function formatDateTime(dateTimeString: string) {
+  return new Date(dateTimeString).toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
   });
 }
 

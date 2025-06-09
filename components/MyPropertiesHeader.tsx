@@ -15,6 +15,7 @@ type MyPropertiesHeaderType = {
     category: string;
   }) => Promise<{ count: number | null }>;
   title: string;
+  showAllCounts?: boolean;
 };
 
 const categories = [
@@ -27,6 +28,7 @@ export default async function MyPropertiesHeader({
   params,
   propertyAction,
   title,
+  showAllCounts = true,
 }: MyPropertiesHeaderType) {
   const { userId } = await auth();
 
@@ -42,7 +44,7 @@ export default async function MyPropertiesHeader({
       categories.map(async ({ key }) => {
         const { count } = await propertyAction({
           userId,
-          status: status ? String(status) : "",
+          status: status ? String(status) : showAllCounts ? "" : "active",
           category: key,
         });
         return [[key], count];

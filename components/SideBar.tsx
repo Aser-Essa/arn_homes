@@ -1,15 +1,13 @@
-import Image from "next/image";
-import React from "react";
-import SidebarNavLink from "./SidebarNavLink";
-import { IoMail, IoHeart, IoNotifications } from "react-icons/io5";
-import SignOutBtn from "./SignOutBtn";
-import { MdOutlineStarHalf } from "react-icons/md";
-import { auth } from "@clerk/nextjs/server";
 import {
   getMyProperties,
   getSavedProperties,
-  getUnreadMessageCount,
+  getUnreadMessages,
 } from "@/lib/data-service";
+import { auth } from "@clerk/nextjs/server";
+import Image from "next/image";
+import { IoHeart, IoMail, IoNotifications } from "react-icons/io5";
+import SidebarNavLink from "./SidebarNavLink";
+import SignOutBtn from "./SignOutBtn";
 
 export default async function SideBar() {
   const { userId } = await auth();
@@ -22,7 +20,7 @@ export default async function SideBar() {
     status: "",
   });
 
-  const { unreadMessageCount } = await getUnreadMessageCount(
+  const { unreadMessageCount } = await getUnreadMessages(
     userId ? String(userId) : "",
   );
 
@@ -112,7 +110,7 @@ export default async function SideBar() {
 
       <ul className="space-y-2.5">
         <p className="px-4 py-2 text-lg font-medium text-gray-300">Settings</p>
-        <SidebarNavLink
+        {/* <SidebarNavLink
           href="/account/preferences"
           icon={
             <Image
@@ -124,7 +122,7 @@ export default async function SideBar() {
           }
         >
           preferences
-        </SidebarNavLink>
+        </SidebarNavLink> */}
         <SidebarNavLink
           href="/account/change_password"
           icon={
@@ -145,14 +143,14 @@ export default async function SideBar() {
         <SignOutBtn />
       </ul>
 
-      <ul className="space-y-2.5">
+      {/* <ul className="space-y-2.5">
         <SidebarNavLink
-          href="/account/profile"
+          href="/account/rate-us"
           icon={<MdOutlineStarHalf className="h-6 w-6" />}
         >
           Rate us
         </SidebarNavLink>
-      </ul>
+      </ul> */}
 
       <button className="bottom-10 flex cursor-pointer items-center gap-2 px-4 py-2 font-medium text-red-500 transition-all sm:absolute lg:text-lg">
         <Image src={"/icons/delete.svg"} width={24} height={24} alt="delete" />

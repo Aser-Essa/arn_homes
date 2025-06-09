@@ -4,8 +4,8 @@ import MessagesHeader from "@/components/MessagesHeader";
 import MessagesList from "@/components/MessagesList";
 import {
   getChats,
-  getProperty,
-  getUnreadMessageCount,
+  getScheduledTours,
+  getUnreadMessages,
 } from "@/lib/data-service";
 import { auth } from "@clerk/nextjs/server";
 
@@ -13,27 +13,25 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function page(props: { searchParams: SearchParams }) {
   const searchParamsValues = await props.searchParams;
+  const { message_category } = searchParamsValues;
 
-  const { userId } = await auth();
+  let { userId } = await auth();
+  userId = userId ? String(userId) : "";
 
-  const chatData = await getChats(userId ? String(userId) : "");
-
+  const chatData = await getChats(userId);
   if (!chatData) {
     return <div className="p-4 text-red-500">No chats found.</div>;
   }
 
   const { chats } = chatData;
 
-  const chatCardsData = await Promise.all(
-    chats.map(async (chat) => {
-      const { property } = await getProperty(chat.property_id);
-      return { chat, property };
-    }),
-  );
+  const { unreadMessageCount, unReadMessages } =
+    await getUnreadMessages(userId);
 
-  const { unreadMessageCount, unReadMessages } = await getUnreadMessageCount(
-    userId ? String(userId) : "",
-  );
+  let { scheduledTours } = await getScheduledTours(userId);
+  scheduledTours = scheduledTours?.sort((a, b) => {
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
 
   return (
     <Container className="mb-[1000px] p-4 pt-6 md:!p-8 lg:!p-10">
@@ -42,12 +40,18 @@ export default async function page(props: { searchParams: SearchParams }) {
         <p>Dashboard</p>
       </div>
       <MessagesHeader
-        params={searchParamsValues}
+        message_category={
+          message_category ? String(message_category) : "direct_messages"
+        }
         unreadMessageCount={unreadMessageCount}
       />
       <MessagesList
-        chatCardsData={chatCardsData}
+        chats={chats}
+        scheduledTours={scheduledTours}
         unReadMessages={unReadMessages ? unReadMessages : []}
+        message_category={
+          message_category ? String(message_category) : "direct_messages"
+        }
       />
     </Container>
   );

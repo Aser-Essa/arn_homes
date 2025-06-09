@@ -14,6 +14,7 @@ export default async function Page(props: { searchParams: SearchParams }) {
         params={searchParamsValues}
         propertyAction={getMyProperties}
         title={"My Properties"}
+        showAllCounts={false}
       />
 
       <MyPropertiesSection

@@ -1,9 +1,8 @@
-import { params } from "@/types/types";
 import CategorySwitch from "./CategorySwitch";
 import { IoIosArrowBack } from "react-icons/io";
 
 type MessagesHeaderType = {
-  params: params;
+  message_category: string;
   unreadMessageCount: number;
 };
 
@@ -13,11 +12,9 @@ const categories = [
 ];
 
 export default function MessagesHeader({
-  params,
+  message_category,
   unreadMessageCount,
 }: MessagesHeaderType) {
-  const { message_category } = params;
-
   return (
     <div className="relative mt-4 flex w-full items-center justify-between md:mt-10">
       <div className="flex w-full flex-col justify-between gap-4 sm:flex-row sm:items-center">

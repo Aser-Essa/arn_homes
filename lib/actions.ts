@@ -1,5 +1,9 @@
 "use server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import { supabase } from "./supabase";
+import { updateUserAvatar } from "./data-service";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 type ScheduleFormDataType = {
   user_id: string | undefined;
@@ -54,7 +58,7 @@ type updatePropertyType = {
 export async function scheduleTour(tour_data: ScheduleFormDataType) {
   const { data, error } = await supabase
     .from("scheduled_tours")
-    .insert([tour_data])
+    .insert(tour_data)
     .select();
 
   if (error) {
@@ -81,8 +85,6 @@ export async function updateProperty({
   updatedData,
   propertyId,
 }: updatePropertyType) {
-  console.log(updatedData, propertyId);
-
   const { data, error } = await supabase
     .from("properties")
     .update(updatedData)
@@ -93,4 +95,45 @@ export async function updateProperty({
   }
 
   return data;
+}
+
+export async function updateUserAvatarAction(imageUrl: string) {
+  let { userId } = await auth();
+  userId = userId ? String(userId) : "";
+
+  if (!userId || !imageUrl) return;
+
+  await updateUserAvatar({
+    userId,
+    avatar: imageUrl,
+  });
+
+  const client = await clerkClient();
+
+  await client.users.updateUser(userId, {
+    publicMetadata: {
+      imageUrl,
+    },
+  });
+
+  revalidatePath("/account/profile");
+}
+
+export async function updateSceduleTourStauts({
+  id,
+  status,
+}: {
+  id: string;
+  status: string;
+}) {
+  const { error } = await supabase
+    .from("scheduled_tours")
+    .upsert({ id, status })
+    .select();
+
+  if (error) {
+    throw new Error(error?.message);
+  }
+  revalidatePath("/messages/scheduled_tour");
+  redirect("/account/messages?message_category=scheduled_tours");
 }

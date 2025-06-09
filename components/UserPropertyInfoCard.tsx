@@ -4,27 +4,42 @@ import { cn, formatPrice } from "@/lib/utils";
 import PropertyInfoStats from "./PropertyInfoStats";
 import { Property } from "@/types/types";
 import IconText from "./IconText";
+import { auth } from "@clerk/nextjs/server";
 
 type UserPropertyInfoCardType = {
   property: Property;
   type?: "my_properties" | "saved_properties";
 };
 
-export default function UserPropertyInfoCard({
+export default async function UserPropertyInfoCard({
   property,
   type,
 }: UserPropertyInfoCardType) {
-  const { category, title, property_type, bed_number, bath_number, extras } =
-    property;
+  const {
+    id: propertyId,
+    category,
+    title,
+    property_type,
+    bed_number,
+    bath_number,
+    extras,
+  } = property;
 
   const { price, monthly_rent } = extras || {};
+
+  const { userId } = await auth();
 
   return (
     <>
       <div
         className={cn("flex-1 space-y-1 text-nowrap p-2 sm:space-y-5 sm:p-5")}
       >
-        {type === "my_properties" && <UserPropertyCardControl />}
+        {type === "my_properties" && (
+          <UserPropertyCardControl
+            propertyId={propertyId}
+            userId={userId ? String(userId) : ""}
+          />
+        )}
         <p
           className={cn(
             "!mt-0 text-sm font-semibold sm:text-[36px] sm:leading-none",

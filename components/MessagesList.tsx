@@ -1,30 +1,42 @@
-import React from "react";
+import { chat, message, Property, ScheduledTourData } from "@/types/types";
 import MessageCard from "./MessageCard";
-import { chat, message, Property } from "@/types/types";
+import ScheduledTourCard from "./ScheduledTourCard";
+
+type ChatWithProperty = chat & {
+  properties: Property;
+};
 
 type MessagesListType = {
-  chatCardsData: {
-    chat: chat;
-    property: Property;
-  }[];
+  chats: ChatWithProperty[];
   unReadMessages: message[];
+  message_category: string;
+  scheduledTours: ScheduledTourData[];
 };
 
 export default async function MessagesList({
-  chatCardsData,
+  chats,
   unReadMessages,
+  message_category,
+  scheduledTours,
 }: MessagesListType) {
   return (
     <>
       <div className="mt-4 space-y-5 sm:mt-5">
-        {chatCardsData?.map(({ chat, property }, idx) => (
-          <MessageCard
-            key={`${chat?.id} ${idx}`}
-            chat={chat}
-            property={property}
-            unReadMessages={unReadMessages}
-          />
-        ))}
+        {message_category === "direct_messages" ? (
+          <>
+            {chats?.map((chat, idx) => (
+              <MessageCard
+                key={`${chat?.id} ${idx}`}
+                chat={chat}
+                unReadMessages={unReadMessages}
+              />
+            ))}
+          </>
+        ) : (
+          scheduledTours?.map((tour, idx) => (
+            <ScheduledTourCard key={`${tour?.id} ${idx}`} tour={tour} />
+          ))
+        )}
       </div>
     </>
   );

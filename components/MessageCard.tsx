@@ -7,20 +7,23 @@ import Link from "next/link";
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
+type ChatWithProperty = chat & {
+  properties: Property;
+};
+
 type MessageCardType = {
-  chat: chat;
-  property: Property;
+  chat: ChatWithProperty;
   unReadMessages: message[];
 };
 
 export default async function MessageCard({
   chat,
-  property,
   unReadMessages,
 }: MessageCardType) {
-  const { images, title } = property;
-  const { id, user_one, user_two } = chat;
+  const { id, user_one, user_two, properties } = chat;
   const senderId = user_one === user_two ? user_two : user_one;
+  const property = properties;
+  const { images, title } = property;
 
   const { userId } = await auth();
 
@@ -55,7 +58,7 @@ export default async function MessageCard({
   return (
     <>
       {hasOneMessageAtLeast && (
-        <Link href={`/account/messages/${id}`} className="relative block">
+        <Link href={`/account/messages/chats/${id}`} className="relative block">
           {containUnReadMessages && (
             <div className="absolute left-2 top-2 hidden h-2 w-2 rounded-full bg-scooter-600 sm:block"></div>
           )}

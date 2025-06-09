@@ -50,80 +50,7 @@ type sendMessageType = {
   sent_at?: string;
 } & ChatDataType;
 
-// // OLD FUNCTION
-// export async function getProperties({
-//   perPage = 9,
-//   params = {},
-// }: PropertiesType) {
-//   const {
-//     bed_N,
-//     bath_N,
-//     min_Price,
-//     max_Price,
-//     property_Type,
-//     time_sort,
-//     page,
-//     state_address,
-//   } = params;
-
-//   let pageNumber = Math.max(1, Number(page) || 1);
-//   let from = (pageNumber - 1) * perPage;
-//   let to = from + perPage - 1;
-
-//   const isValid = (val?: string) =>
-//     val && val.toLowerCase() !== "any" && val.trim() !== "";
-
-//   let query = supabase.from("homes_for_sale").select("*", { count: "exact" });
-
-//   if (isValid(bed_N)) query = query.eq("bedNumber", bed_N);
-//   if (isValid(bath_N)) query = query.eq("bathNumber", bath_N);
-//   if (isValid(min_Price)) query = query.gte("price", Number(min_Price));
-//   if (isValid(max_Price)) query = query.lte("price", Number(max_Price));
-//   if (isValid(property_Type)) query = query.eq("propertytype", property_Type);
-
-//   if (isValid(time_sort)) {
-//     const days = Number(time_sort);
-//     if (!isNaN(days)) {
-//       const time = new Date();
-//       time.setDate(time.getDate() - days);
-//       query = query.gte("listed_in", time.toISOString());
-//     }
-//   }
-
-//   if (isValid(state_address)) {
-//     query = query.ilike("state_address", `%${state_address}%`);
-//   }
-
-//   const { count: totalCount, error: countError } = await query;
-//   if (countError) throw new Error(countError.message);
-
-//   const maxNumberOfPages = Math.ceil(Number(totalCount) / perPage);
-
-//   pageNumber = Math.min(pageNumber, maxNumberOfPages);
-//   from = (pageNumber - 1) * perPage;
-//   to = from + perPage - 1;
-
-//   const { data, count, error } = await query.range(from, to);
-
-//   if (error) {
-//     throw new Error(error.message);
-//   }
-
-//   return { data, count };
-// }
-
-// // OLD FUNCTION
-// export async function getProperty(id: string) {
-//   const { data: property, error } = await supabase
-//     .from("homes_for_sale")
-//     .select("*")
-//     .eq("id", id)
-//     .single();
-
-//   if (error) throw new Error(error?.message);
-
-//   return { property };
-// }
+// PROPERTIES
 
 export async function getProperties({
   category = "sale",
@@ -225,18 +152,6 @@ export async function getProperty(id: string) {
   return { property };
 }
 
-// export async function getProperty(id: string) {
-//   const { data: property, error } = await supabase
-//     .from("properties")
-//     .select("*")
-//     .eq("id", id)
-//     .single();
-
-//   if (error) throw new Error(error?.message);
-
-//   return { property };
-// }
-
 export async function getMyProperties({
   userId,
   category = "sale",
@@ -262,6 +177,24 @@ export async function getMyProperties({
   }
 
   return { properties, count };
+}
+
+export async function deleteMyProperty({
+  propertyId,
+  userId,
+}: {
+  propertyId: string;
+  userId: string;
+}) {
+  const { error } = await supabase
+    .from("properties")
+    .delete()
+    .eq("id", propertyId)
+    .eq("user_id", userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }
 
 export async function getCoordinates(
@@ -295,6 +228,8 @@ export async function getCoordinates(
     return null;
   }
 }
+
+// ARTICLES
 
 export async function getArticles({
   perPage = 9,
@@ -338,6 +273,8 @@ export async function getArticle(id: string) {
   return { article };
 }
 
+//USER
+
 export async function getUser(userId: string) {
   const { data: user, error } = await supabase
     .from("users")
@@ -363,6 +300,27 @@ export async function createUser(userData: UserDataType) {
     console.error("Unexpected error in createUser:", err);
   }
 }
+
+export async function updateUserAvatar({
+  avatar,
+  userId,
+}: {
+  avatar: string;
+  userId: string;
+}) {
+  const { data: avatarData, error } = await supabase
+    .from("users")
+    .upsert({ id: userId, avatar })
+    .select();
+
+  if (error) {
+    throw new Error(error?.message);
+  }
+
+  return { avatarData };
+}
+
+// CHATS AND MESSAGES
 
 export async function isChatExist({
   senderId,
@@ -391,7 +349,7 @@ export async function isChatExist({
 export async function getChats(userId: string) {
   const { data: chats, error: chatError } = await supabase
     .from("chats")
-    .select("*")
+    .select("*,properties(*)")
     .or(`user_one.eq.${userId},user_two.eq.${userId}`);
 
   if (chatError) {
@@ -468,6 +426,27 @@ export async function getChatMessages({
   }
 
   return { chat, messages };
+}
+
+export async function getUserMessages({ userId }: { userId: string }) {
+  const { data: deletedMessages } = await supabase
+    .from("message_deletions")
+    .select("message_id")
+    .eq("user_id", userId);
+
+  const deletedMessageIds = deletedMessages?.map((m) => m.message_id) ?? [];
+
+  const { data: messages, error: messagesError } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("sender_id", userId)
+    .not("id", "in", `(${deletedMessageIds.join(",")})`)
+    .order("sent_at", { ascending: true });
+
+  if (messagesError) {
+    throw new Error(messagesError.message);
+  }
+  return { messages };
 }
 
 export async function sendMessage({
@@ -568,7 +547,7 @@ export async function markMessagesAsRead({
   return true;
 }
 
-export async function getUnreadMessageCount(userId: string) {
+export async function getUnreadMessages(userId: string) {
   const {
     data: unReadMessages,
     error,
@@ -588,6 +567,8 @@ export async function getUnreadMessageCount(userId: string) {
 
   return { unreadMessageCount, unReadMessages };
 }
+
+// SAVED PROPERTIES
 
 export async function getSavedProperties({
   userId,
@@ -684,4 +665,33 @@ export async function toogleFavorite({
     await saveProperty({ user_id, property_id, category });
   }
   return !isSaved;
+}
+
+// Schedule Tour
+
+export async function getScheduledTours(user_id: string) {
+  const { data: scheduledTours, error } = await supabase
+    .from("scheduled_tours")
+    .select("*,properties(*)")
+    .eq("user_id", user_id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return { scheduledTours };
+}
+
+export async function getScheduledTour(id: string) {
+  const { data: scheduledTour, error } = await supabase
+    .from("scheduled_tours")
+    .select("*,properties(*)")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return { scheduledTour };
 }

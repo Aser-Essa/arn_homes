@@ -29,7 +29,8 @@ export default async function PropertyActionButtons({
       return;
     }
     const { chat } = data;
-    redirect(`/account/messages/${chat?.id}`);
+
+    redirect(`/account/messages/chats/${chat?.id}`);
   }
 
   return (

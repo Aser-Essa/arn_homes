@@ -1,14 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { UseSupabaseUploadReturn } from "@/hooks/use-supabase-upload";
 import { cn } from "@/lib/utils";
 import { CheckCircle, File, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useContext } from "react";
-import {
-  DropzoneFloorPlanContext,
-  DropzonePropertyContext,
-} from "../AddPropertyPageWrapper";
 
 export const formatBytes = (
   bytes: number,
@@ -28,20 +25,17 @@ export const formatBytes = (
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };
 
+type DropzoneContextType = React.Context<UseSupabaseUploadReturn | undefined>;
+
 type DropzoneProps = {
   className?: string;
-  contextType: "property" | "floorPlan";
+  DropzoneContext: DropzoneContextType;
   children: React.ReactNode;
 };
 
-const contexts = {
-  floorPlan: DropzoneFloorPlanContext,
-  property: DropzonePropertyContext,
-};
-
-const Dropzone = ({ className, children, contextType }: DropzoneProps) => {
+const Dropzone = ({ className, children, DropzoneContext }: DropzoneProps) => {
   const { getRootProps, getInputProps, ...restProps } =
-    useDropzoneContext(contextType);
+    useDropzoneContext(DropzoneContext);
 
   const isSuccess = restProps.isSuccess;
   const isActive = restProps.isDragActive;
@@ -54,7 +48,7 @@ const Dropzone = ({ className, children, contextType }: DropzoneProps) => {
     <div
       {...getRootProps({
         className: cn(
-          "border-2 sm:min-h-[200px] flex flex-col items-center justify-center border-gray-300 rounded-lg p-6 text-center bg-card transition-colors duration-300 text-foreground",
+          "border-2 sm:min-h-[200px] w-full flex flex-col items-center justify-center border-gray-300 rounded-lg p-6 text-center bg-card transition-colors duration-300 text-foreground",
           className,
           isSuccess ? "border-solid" : "border-dashed",
           isActive && "border-primary bg-gray-50",
@@ -69,11 +63,11 @@ const Dropzone = ({ className, children, contextType }: DropzoneProps) => {
 };
 
 const DropzoneContent = ({
-  contextType,
+  DropzoneContext,
   className,
 }: {
   className?: string;
-  contextType: "property" | "floorPlan";
+  DropzoneContext: DropzoneContextType;
 }) => {
   const {
     files,
@@ -86,7 +80,7 @@ const DropzoneContent = ({
     maxFiles,
     minFiles,
     isSuccess,
-  } = useDropzoneContext(contextType);
+  } = useDropzoneContext(DropzoneContext);
 
   const exceedMaxFiles = files.length > maxFiles;
 
@@ -232,14 +226,14 @@ const DropzoneContent = ({
 };
 
 const DropzoneEmptyState = ({
-  contextType,
+  DropzoneContext,
   className,
 }: {
   className?: string;
-  contextType: "property" | "floorPlan";
+  DropzoneContext: DropzoneContextType;
 }) => {
   const { maxFiles, minFiles, maxFileSize, inputRef, isSuccess } =
-    useDropzoneContext(contextType);
+    useDropzoneContext(DropzoneContext);
 
   if (isSuccess) {
     return null;
@@ -274,8 +268,8 @@ const DropzoneEmptyState = ({
   );
 };
 
-const useDropzoneContext = (contextType: "property" | "floorPlan") => {
-  const context = useContext(contexts[contextType]);
+const useDropzoneContext = (DropzoneContext: DropzoneContextType) => {
+  const context = useContext(DropzoneContext);
 
   if (!context) {
     throw new Error("useDropzoneContext must be used within a Dropzone");

@@ -14,7 +14,10 @@ export type Property = {
   category: string;
   listed_in: string;
   state: string;
-  extras?: {
+  status?: string;
+  user_id?: string;
+
+  extras: {
     price?: number;
     monthly_rent?: number;
     deposit_amount?: number;
@@ -76,7 +79,20 @@ export type message = {
   id: string; // UUID
   chat_id: string; // UUID
   sender_id: string; // user ID (text)
-  message: string; // content of the message
+  content: string; // content of the message
   sent_at: string; // ISO timestamp
   status: "sent" | "delivered" | "read"; // message status
 };
+
+export interface ScheduledTourData {
+  id: string;
+  user_id: string;
+  name: string;
+  phone: string;
+  scheduled_date: string;
+  scheduled_time: string;
+  created_at: string;
+  property_id: string;
+  status: "pending" | "confirmed" | "cancelled" | "completed";
+  properties: Property;
+}

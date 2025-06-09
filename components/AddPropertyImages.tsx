@@ -10,6 +10,10 @@ import { useRouter } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
 import { PropertyFormData } from "@/types/types";
 import { Loader2 } from "lucide-react";
+import {
+  DropzoneFloorPlanContext,
+  DropzonePropertyContext,
+} from "./AddPropertyPageWrapper";
 
 type AddPropertyImagesType = {
   propertyId: string;
@@ -21,13 +25,12 @@ export default function AddPropertyImages({
   propertyId,
   handlePrevStep,
 }: AddPropertyImagesType) {
-  const propertyProps = useDropzoneContext("property");
-  const floorPlanProps = useDropzoneContext("floorPlan");
+  const propertyProps = useDropzoneContext(DropzonePropertyContext);
+  const floorPlanProps = useDropzoneContext(DropzoneFloorPlanContext);
+
   const { user } = useUser();
   const router = useRouter();
   const isLoading = propertyProps?.loading || floorPlanProps?.loading;
-
-  console.log(propertyProps.files);
 
   function isDuplicatedImage() {
     const propertyFiles = propertyProps?.files.map((file) => file.name);
@@ -38,7 +41,7 @@ export default function AddPropertyImages({
   const isDuplicatedExisit = isDuplicatedImage();
 
   function extractImages() {
-    const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/${user?.id}/${propertyId}`;
+    const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/properties-images/${user?.id}/${propertyId}`;
     const images = propertyProps?.files?.map(
       (file) => `${BASE_URL}/${file?.name}`,
     );
@@ -88,8 +91,14 @@ export default function AddPropertyImages({
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="space-y-6">
-          <UploadImages contextType={"property"} title={"Images"} />
-          <UploadImages contextType={"floorPlan"} title={"Floor Image"} />
+          <UploadImages
+            DropzoneContext={DropzonePropertyContext}
+            title={"Images"}
+          />
+          <UploadImages
+            DropzoneContext={DropzoneFloorPlanContext}
+            title={"Floor Image"}
+          />
         </div>
         {isDuplicatedExisit && (
           <p className="font-font-medium text-sm text-red-500">
