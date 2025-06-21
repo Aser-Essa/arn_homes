@@ -2,7 +2,7 @@ import ArticleHeroSection from "@/components/ArticleHeroSection";
 import ArticleParagraphs from "@/components/ArticleParagraphs";
 import RecentArticles from "@/components/RecentArticles";
 import Tags from "@/components/Tags";
-import { getArticle } from "@/lib/data-service";
+import { getArticle } from "@/lib/queries/articles";
 import { params } from "@/types/types";
 
 type Params = Promise<params>;

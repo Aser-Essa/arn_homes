@@ -14,9 +14,10 @@ import CustomSelect from "./CustomSelect";
 import DateInput from "./DateInput";
 import { useForm } from "react-hook-form";
 import { useUser } from "@clerk/nextjs";
-import { scheduleTour } from "@/lib/actions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { scheduleTour } from "@/lib/actions/scheduledTours";
+import { getProperty } from "@/lib/queries/properties";
 
 const scheduleFormSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -29,6 +30,19 @@ const scheduleFormSchema = z.object({
 });
 
 type ScheduleFormDataType = z.infer<typeof scheduleFormSchema>;
+
+const timeOptions = [
+  { label: "12:00pm", value: "12:00pm" },
+  { label: "12:30pm", value: "12:30pm" },
+  { label: "1:00pm", value: "1:00pm" },
+  { label: "1:30pm", value: "1:30pm" },
+  { label: "2:00pm", value: "2:00pm" },
+  { label: "2:30pm", value: "2:30pm" },
+  { label: "3:00pm", value: "3:00pm" },
+  { label: "3:30pm", value: "3:30pm" },
+  { label: "4:00pm", value: "4:00pm" },
+  { label: "4:30pm", value: "4:30pm" },
+];
 
 export default function ScheduleForm({ property_id }: { property_id: string }) {
   const router = useRouter();
@@ -45,19 +59,6 @@ export default function ScheduleForm({ property_id }: { property_id: string }) {
     },
   });
 
-  const timeOptions = [
-    { label: "12:00pm", value: "12:00pm" },
-    { label: "12:30pm", value: "12:30pm" },
-    { label: "1:00pm", value: "1:00pm" },
-    { label: "1:30pm", value: "1:30pm" },
-    { label: "2:00pm", value: "2:00pm" },
-    { label: "2:30pm", value: "2:30pm" },
-    { label: "3:00pm", value: "3:00pm" },
-    { label: "3:30pm", value: "3:30pm" },
-    { label: "4:00pm", value: "4:00pm" },
-    { label: "4:30pm", value: "4:30pm" },
-  ];
-
   async function onSubmit(formData: ScheduleFormDataType) {
     if (!user_id) {
       toast.error("You Should Sign-in First");
@@ -66,13 +67,17 @@ export default function ScheduleForm({ property_id }: { property_id: string }) {
       }, 800);
       return;
     } else {
-      console.log(formData, "S");
-      const data = {
+      const { property } = await getProperty(property_id);
+      const extendedData = {
         ...formData,
         property_id,
         user_id,
+        propertyTitle: property?.title,
+        owner_id: property?.user_id,
+        visitorName: user?.fullName ?? "Visitor",
       };
-      const result = await scheduleTour(data);
+
+      const result = await scheduleTour(extendedData);
       if (result.error) {
         console.log(result.error);
         toast.error(result.error);
@@ -82,8 +87,6 @@ export default function ScheduleForm({ property_id }: { property_id: string }) {
       }
     }
   }
-
-  // console.log(form.getValues());
 
   return (
     <Form {...form}>

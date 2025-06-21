@@ -1,5 +1,5 @@
 "use client";
-import { deleteMessagesForUser } from "@/lib/data-service";
+import { deleteMessagesForUser } from "@/lib/actions/chats";
 import { User } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";

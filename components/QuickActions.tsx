@@ -1,7 +1,7 @@
-import { getUnreadMessages } from "@/lib/data-service";
 import { Heart, MessageCircle, Search } from "lucide-react";
 import ActionButton from "./ActionButton";
 import { currentUser } from "@clerk/nextjs/server";
+import { getUnreadMessages } from "@/lib/queries/chats";
 
 export default async function QuickActions() {
   const user = await currentUser();

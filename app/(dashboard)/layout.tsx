@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
 import SideBar from "@/components/SideBar";
+import NewNotificationToast from "@/components/NewNotificationToast";
 
 const exo = Exo({
   variable: "--font-exo",
@@ -45,6 +46,7 @@ export default function RootLayout({
               color: "#0d0e0f",
             }}
           />
+          <NewNotificationToast />
           <Header className="lg:px-10" />
           <div className="flex">
             <div className="hidden md:block">

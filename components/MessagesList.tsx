@@ -1,4 +1,4 @@
-import { chat, message, Property, ScheduledTourData } from "@/types/types";
+import { chat, Property, ScheduledTourData } from "@/types/types";
 import MessageCard from "./MessageCard";
 import ScheduledTourCard from "./ScheduledTourCard";
 
@@ -8,14 +8,12 @@ type ChatWithProperty = chat & {
 
 type MessagesListType = {
   chats: ChatWithProperty[];
-  unReadMessages: message[];
   message_category: string;
   scheduledTours: ScheduledTourData[];
 };
 
 export default async function MessagesList({
   chats,
-  unReadMessages,
   message_category,
   scheduledTours,
 }: MessagesListType) {
@@ -25,11 +23,7 @@ export default async function MessagesList({
         {message_category === "direct_messages" ? (
           <>
             {chats?.map((chat, idx) => (
-              <MessageCard
-                key={`${chat?.id} ${idx}`}
-                chat={chat}
-                unReadMessages={unReadMessages}
-              />
+              <MessageCard key={`${chat?.id} ${idx}`} chat={chat} />
             ))}
           </>
         ) : (

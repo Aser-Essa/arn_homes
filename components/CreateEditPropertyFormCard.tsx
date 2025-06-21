@@ -1,50 +1,60 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { formSchema } from "@/schemas/propertySchemas";
+import { Property, PropertyFormData } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import AddPropertyBasicDataForm from "./AddPropertyBasicDataForm";
 import AddPropertyImages from "./AddPropertyImages";
-import { PropertyFormData } from "@/types/types";
+import CreateEditPropertyBasicDataForm from "./CreateEditPropertyBasicDataForm";
 
-interface AddPropertyFormCardProps {
+interface CreateEditPropertyFormCardProps {
   propertyId: string;
+  property?: Property;
+  defaultValues?: PropertyFormData;
+  type?: "create" | "edit";
 }
 
-export default function AddPropertyFormCard({
+const initialValues = {
+  title: "",
+  address: "",
+  description: "",
+  area: 100,
+  bed_number: 1,
+  bath_number: 1,
+  property_type: "",
+  category: "sale",
+  listed_in: new Date().toISOString(),
+  state: "",
+  exterior: [],
+  interior: [],
+  extras: {
+    is_furnished: false,
+    price: 1500_000,
+    deposit_amount: 250,
+    expected_roi: 1,
+    minimum_investment: 10_000,
+    monthly_rent: 120,
+    lease_term: "6",
+    investment_term: "12",
+    investment_type: "rental_income",
+  },
+};
+
+export default function CreateEditPropertyFormCard({
   propertyId,
-}: AddPropertyFormCardProps) {
+  property = {} as Property,
+  defaultValues,
+  type,
+}: CreateEditPropertyFormCardProps) {
   const [currentStep, setCurrentStep] = useState(0);
+
+  const values = type === "edit" ? defaultValues : initialValues;
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      address: "",
-      description: "",
-      area: 100,
-      bed_number: 1,
-      bath_number: 1,
-      property_type: "",
-      category: "sale",
-      listed_in: new Date().toISOString(),
-      state: "",
-      exterior: [],
-      interior: [],
-      extras: {
-        is_furnished: false,
-        price: 1500_000,
-        deposit_amount: 250,
-        expected_roi: 1,
-        minimum_investment: 10_000,
-        monthly_rent: 120,
-        lease_term: "6",
-        investment_term: "12",
-        investment_type: "rental_income",
-      },
-    },
+    defaultValues: values,
   });
 
   function handleNextStep() {
@@ -55,14 +65,20 @@ export default function AddPropertyFormCard({
     setCurrentStep((prev) => prev - 1);
   }
 
+  if (type === "edit" && !property) {
+    return <p>Error: Property not found.</p>;
+  }
+
   const renderSteps = () => {
     switch (currentStep) {
       case 0:
         return (
-          <AddPropertyBasicDataForm
+          <CreateEditPropertyBasicDataForm
             form={form}
             propertyId={propertyId}
+            property={property}
             handleNextStep={handleNextStep}
+            type={type ?? "create"}
           />
         );
       case 1:
@@ -70,7 +86,9 @@ export default function AddPropertyFormCard({
           <AddPropertyImages
             form={form}
             propertyId={propertyId}
+            property={property}
             handlePrevStep={handlePrevStep}
+            type={type ?? "create"}
           />
         );
     }

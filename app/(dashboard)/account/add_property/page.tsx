@@ -1,14 +1,14 @@
-import AddPropertyFormCard from "@/components/AddPropertyFormCard";
-import AddPropertyPageWrapper from "@/components/AddPropertyPageWrapper";
+import CreateEditPropertyFormCard from "@/components/CreateEditPropertyFormCard";
+import CreateEditPropertyPageWrapper from "@/components/CreateEditPropertyPageWrapper";
 
 export default function AddPropertyPage() {
   const propertyId = crypto.randomUUID();
 
   return (
     <>
-      <AddPropertyPageWrapper propertyId={propertyId}>
-        <AddPropertyFormCard propertyId={propertyId} />
-      </AddPropertyPageWrapper>
+      <CreateEditPropertyPageWrapper propertyId={propertyId}>
+        <CreateEditPropertyFormCard propertyId={propertyId} type="create" />
+      </CreateEditPropertyPageWrapper>
     </>
   );
 }

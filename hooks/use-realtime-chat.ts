@@ -3,7 +3,7 @@
 import { supabase } from "@/lib/supabase";
 import { useUser } from "@clerk/nextjs";
 import { useCallback, useEffect, useState } from "react";
-import { sendMessage as sendMessageToSupabase } from "@/lib/data-service";
+import { sendMessage as sendMessageToSupabase } from "@/lib/actions/chats";
 import { User } from "@/types/types";
 
 interface UseRealtimeChatProps {

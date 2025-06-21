@@ -1,7 +1,7 @@
-import { createUser } from "@/lib/data-service";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server"; // Import NextRequest
 import type { UserJSON } from "@clerk/backend"; // Import UserJSON type explicitly
+import { createUser } from "@/lib/actions/users";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     console.log(eventType);
 
     if (eventType === "user.created") {
-      const user = evt.data as UserJSON; // 👈 safely cast to UserJSON
+      const user = evt.data as UserJSON;
 
       console.log(user);
 

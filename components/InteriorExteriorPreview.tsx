@@ -20,8 +20,12 @@ export default function InteriorExteriorPreview({
       <div className="space-y-6">
         <p className="text-[28px] font-semibold text-scooter-900">{title}</p>
         <ul>
-          {data.map(({ title, points }: dataListType) => (
-            <AccordionList key={title} title={title} points={points} />
+          {data.map(({ title, points }: dataListType, idx) => (
+            <AccordionList
+              key={`${title}-${idx}`}
+              title={title}
+              points={points}
+            />
           ))}
         </ul>
       </div>

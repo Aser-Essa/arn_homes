@@ -2,7 +2,7 @@ import { Clock, Eye } from "lucide-react";
 import LatestMessageActivity from "./LatestMessageActivity";
 import ProfileActivity from "./ProfileActivity";
 import ProfileActivitySkeleton from "./ProfileActivitySkeleton";
-import { getMyProperties } from "@/lib/data-service";
+import { getMyProperties } from "@/lib/queries/properties";
 import { auth } from "@clerk/nextjs/server";
 import { formatDateLong } from "@/lib/utils";
 

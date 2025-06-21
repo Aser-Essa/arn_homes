@@ -1,11 +1,11 @@
 import React from "react";
 import SearchForSaleHeroSection from "@/components/SearchForSaleHeroSection";
-import { getProperties } from "@/lib/data-service";
 import SearchForSaleHeader from "@/components/SearchForSaleHeader";
 import SearchFeaturedProperties from "@/components/SearchFeaturedProperties";
 import SearchProperties from "@/components/SearchProperties";
 import { params } from "@/types/types";
 import { redirect } from "next/navigation";
+import { getProperties } from "@/lib/queries/properties";
 
 type SearchPageParams = {
   searchParams: Promise<params>;

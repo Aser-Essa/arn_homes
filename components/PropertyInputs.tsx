@@ -74,7 +74,7 @@ export default function PropertyInputs() {
         {(field) => (
           <Textarea
             rows={4}
-            className="h-[180px] rounded-lg border-amber-100 !text-base shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
+            className="h-[180px] !resize-y rounded-lg border-amber-100 !text-base shadow-none !ring-0 placeholder:text-gray-300 hover:border-amber-200 focus:!ring-[2px] focus:!ring-[#FCEEC2]"
             {...field}
           />
         )}

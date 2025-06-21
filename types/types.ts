@@ -16,7 +16,7 @@ export type Property = {
   state: string;
   status?: string;
   user_id?: string;
-
+  floor_plan?: string;
   extras: {
     price?: number;
     monthly_rent?: number;
@@ -64,7 +64,7 @@ export type User = {
   id: string;
   full_name: string;
   email: string;
-  created_at: string; // ISO date string
+  created_at?: string; // ISO date string
   avatar: string; // URL to avatar image
 };
 
@@ -87,6 +87,7 @@ export type message = {
 export interface ScheduledTourData {
   id: string;
   user_id: string;
+  owner_id?: string;
   name: string;
   phone: string;
   scheduled_date: string;
@@ -95,4 +96,35 @@ export interface ScheduledTourData {
   property_id: string;
   status: "pending" | "confirmed" | "cancelled" | "completed";
   properties: Property;
+}
+
+export interface NotificationData {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string | null;
+  type:
+    | "message"
+    | "property"
+    | "tour"
+    | "mortgage"
+    | "saved_property"
+    | "system";
+  related_id: string | null;
+  is_read: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NotificationStats {
+  total: number;
+  unread: number;
+  byType: {
+    message: number;
+    property: number;
+    tour: number;
+    mortgage: number;
+    saved_property: number;
+    system: number;
+  };
 }

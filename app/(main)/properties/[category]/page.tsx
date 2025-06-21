@@ -4,10 +4,10 @@ import React from "react";
 import Properties from "@/components/Properties";
 import SignInBanner from "@/components/SignInBanner";
 import Container from "@/components/Container";
-import { getProperties } from "@/lib/data-service";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { params } from "@/types/types";
 import { redirect } from "next/navigation";
+import { getProperties } from "@/lib/queries/properties";
 
 type SearchPageParams = {
   searchParams: Promise<params>;

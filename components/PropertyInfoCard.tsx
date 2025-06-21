@@ -4,7 +4,7 @@ import { IoCalendar } from "react-icons/io5";
 import ToogleFavorite from "./ToogleFavorite";
 import PropertyInfoStats from "./PropertyInfoStats";
 import { auth } from "@clerk/nextjs/server";
-import { isPropertySaved } from "@/lib/data-service";
+import { isPropertySaved } from "@/lib/queries/favorites";
 
 type PropertyInfoCardType = {
   property: Property;

@@ -1,7 +1,7 @@
 import { params } from "@/types/types";
 import PropertyStatusCardList from "./PropertyStatusCardList";
 import MyPropertiesHeader from "./MyPropertiesHeader";
-import { getMyProperties } from "@/lib/data-service";
+import { getMyProperties } from "@/lib/queries/properties";
 
 type MyPropertiesSelectionType = {
   params: params;

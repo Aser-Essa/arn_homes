@@ -5,8 +5,8 @@ import { Property } from "@/types/types";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import PropertyInfoCards from "./PropertyInfoCards";
-import ScheduledTourCardHeader from "./ScheduledTourCardHeader";
 import { motion } from "motion/react";
+import CardHeader from "./CardHeader";
 
 export default function ScheduledTourPropertyCard({
   property,
@@ -21,7 +21,7 @@ export default function ScheduledTourPropertyCard({
     >
       <Card className="box-shadow w-full border-none p-6">
         <div className="space-y-6">
-          <ScheduledTourCardHeader
+          <CardHeader
             icon={<MapPin className="h-5 w-5 text-purple-600" />}
             title="Property Details"
             colorClass="bg-purple-50"

@@ -5,8 +5,8 @@ import { IoCalendar } from "react-icons/io5";
 import ToogleFavorite from "./ToogleFavorite";
 import PropertyInfoStats from "./PropertyInfoStats";
 import PropertyActionButtons from "./PropertyActionButtons";
-import { isPropertySaved } from "@/lib/data-service";
 import { auth } from "@clerk/nextjs/server";
+import { isPropertySaved } from "@/lib/queries/favorites";
 
 type PropertyInfoDetailType = {
   property: Property;

@@ -1,4 +1,3 @@
-import { isPropertySaved } from "@/lib/data-service";
 import { cn, formatPrice } from "@/lib/utils";
 import { Property } from "@/types/types";
 import Image from "next/image";
@@ -6,6 +5,7 @@ import Link from "next/link";
 import { BsArrowUpRight } from "react-icons/bs";
 import ToogleFavorite from "./ToogleFavorite";
 import { auth } from "@clerk/nextjs/server";
+import { isPropertySaved } from "@/lib/queries/favorites";
 
 type HomeCardType = {
   property: Property;

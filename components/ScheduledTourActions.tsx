@@ -1,54 +1,50 @@
-import { Button } from "@/components/ui/button";
-import { updateSceduleTourStauts } from "@/lib/actions";
+import { updateSceduleTourStauts } from "@/lib/actions/scheduledTours";
 import { ScheduledTourData } from "@/types/types";
 import { CheckCircle, XCircle } from "lucide-react";
-import toast from "react-hot-toast";
+import FormActionButton from "./FormActionButton";
 
 export default function ScheduledTourActions({
   scheduledTour,
+  isOwner,
 }: {
   scheduledTour: ScheduledTourData;
+  isOwner: boolean;
 }) {
-  const { id } = scheduledTour;
+  const { id, user_id, scheduled_date, properties } = scheduledTour;
+  const propertyTitle = properties?.title ?? "";
 
-  async function handleConfirmTour() {
-    try {
-      toast.success("Tour confirmed successfully");
-      await updateSceduleTourStauts({ id, status: "confirmed" });
-    } catch {
-      toast.error("Failed to confirm the tour. Please try again.");
-    }
-  }
-
-  async function handleCancleTour() {
-    try {
-      toast.success("Tour cancelled successfully");
-      await updateSceduleTourStauts({ id, status: "cancelled" });
-    } catch {
-      toast.error("Failed to cancel the tour. Please try again.");
-    }
-  }
+  if (!isOwner) return null;
 
   return (
-    <>
-      <div className="flex gap-3 border-t border-gray-100 pt-4">
-        <form action={handleConfirmTour}>
-          <Button className="flex items-center gap-2 bg-green-600 text-white hover:bg-green-700">
-            <CheckCircle className="h-4 w-4" />
-            Confirm Tour
-          </Button>
-        </form>
+    <div className="flex gap-3 border-t border-gray-100 pt-4">
+      <form action={updateSceduleTourStauts}>
+        <input type="hidden" name="id" value={id} />
+        <input type="hidden" name="visitorUserId" value={user_id} />
+        <input type="hidden" name="propertyTitle" value={propertyTitle} />
+        <input type="hidden" name="scheduledDate" value={scheduled_date} />
+        <input type="hidden" name="status" value="confirmed" />
+        <FormActionButton
+          className="flex h-[36px] items-center gap-2 !rounded-xl border-none !bg-green-600 px-4 py-2 !text-sm !text-white !shadow-none hover:!bg-green-700"
+          icon={<CheckCircle className="h-4 w-4" />}
+        >
+          Confirm Tour
+        </FormActionButton>
+      </form>
 
-        <form action={handleCancleTour}>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 border-red-200 text-red-600 hover:bg-red-50"
-          >
-            <XCircle className="h-4 w-4" />
-            Cancel Tour
-          </Button>
-        </form>
-      </div>
-    </>
+      <form action={updateSceduleTourStauts}>
+        <input type="hidden" name="id" value={id} />
+        <input type="hidden" name="visitorUserId" value={user_id} />
+        <input type="hidden" name="propertyTitle" value={propertyTitle} />
+        <input type="hidden" name="scheduledDate" value={scheduled_date} />
+        <input type="hidden" name="status" value="cancelled" />
+
+        <FormActionButton
+          className="flex h-[36px] items-center gap-2 !rounded-xl !border-red-200 px-4 py-2 !text-sm !text-red-600 !shadow-none hover:bg-red-50"
+          icon={<XCircle className="h-4 w-4" />}
+        >
+          Cancel Tour
+        </FormActionButton>
+      </form>
+    </div>
   );
 }

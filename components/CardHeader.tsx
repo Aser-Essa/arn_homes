@@ -6,7 +6,7 @@ interface SectionHeaderProps {
   colorClass?: string;
 }
 
-export default function ScheduledTourCardHeader({
+export default function CardHeader({
   icon,
   title,
   colorClass = "bg-blue-50",
@@ -15,7 +15,7 @@ export default function ScheduledTourCardHeader({
     <>
       <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
         <div className={cn(`rounded-lg p-2`, colorClass)}>{icon}</div>
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <p className="text-lg font-semibold text-gray-900">{title}</p>
       </div>
     </>
   );

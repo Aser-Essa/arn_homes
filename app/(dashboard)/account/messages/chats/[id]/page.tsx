@@ -2,12 +2,10 @@ import ChatHeader from "@/components/ChatHeader";
 import Container from "@/components/Container";
 import { RealtimeChat } from "@/components/ui/realtime-chat";
 import { ChatMessage } from "@/hooks/use-realtime-chat";
-import {
-  getChatMessages,
-  getProperty,
-  getUser,
-  markMessagesAsRead,
-} from "@/lib/data-service";
+import { markMessagesAsRead } from "@/lib/actions/chats";
+import { getChatMessages } from "@/lib/queries/chats";
+import { getProperty } from "@/lib/queries/properties";
+import { getUser } from "@/lib/queries/users";
 import { params } from "@/types/types";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";

@@ -1,10 +1,10 @@
-import { getChatMessages, getUser } from "@/lib/data-service";
+import { getChatMessages } from "@/lib/queries/chats";
+import { getUser } from "@/lib/queries/users";
 import { formatDateLong } from "@/lib/utils";
-import { chat, message, Property } from "@/types/types";
+import { chat, Property } from "@/types/types";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 type ChatWithProperty = chat & {
@@ -13,47 +13,34 @@ type ChatWithProperty = chat & {
 
 type MessageCardType = {
   chat: ChatWithProperty;
-  unReadMessages: message[];
 };
 
-export default async function MessageCard({
-  chat,
-  unReadMessages,
-}: MessageCardType) {
+export default async function MessageCard({ chat }: MessageCardType) {
   const { id, user_one, user_two, properties } = chat;
-  const senderId = user_one === user_two ? user_two : user_one;
-  const property = properties;
-  const { images, title } = property;
 
   const { userId } = await auth();
-
+  const senderId = user_one === userId ? user_two : user_one;
   const { user: sender } = await getUser(senderId);
   const { full_name } = sender;
 
-  const Data = await getChatMessages({
+  const { images, title } = properties;
+
+  const { messages } = await getChatMessages({
     userId: userId ? String(userId) : "",
     chatId: id,
   });
-  if (!Data) {
-    return <div className="p-4 text-red-500">No messages found.</div>;
-  }
-
-  const { messages } = Data;
+  const hasOneMessageAtLeast = messages?.length > 0;
 
   const sortedMessages = messages.sort((a, b) =>
     a.sent_at.localeCompare(b.sent_at),
   );
 
   const lastMessage = sortedMessages?.at(-1);
-
-  const lastMessageDate = formatDateLong(lastMessage?.sent_at);
+  const lastMessageDate = formatDateLong(lastMessage?.sent_at ?? "");
   const lastMessageContent = lastMessage?.content;
 
-  const hasOneMessageAtLeast = messages?.length > 0;
-
-  const containUnReadMessages = unReadMessages.some(
-    (message) => message.chat_id === chat.id,
-  );
+  const containUnReadMessages =
+    lastMessage?.status === "sent" && lastMessage?.sender_id !== userId;
 
   return (
     <>

@@ -1,7 +1,7 @@
 import MyPropertiesHeader from "@/components/MyPropertiesHeader";
 import MyPropertiesSection from "@/components/MyPropertiesSection";
 import Container from "@/components/Container";
-import { getSavedProperties } from "@/lib/data-service";
+import { getSavedProperties } from "@/lib/queries/favorites";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 

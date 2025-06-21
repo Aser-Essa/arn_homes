@@ -2,9 +2,10 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
 import { redirect } from "next/navigation";
-import { createChat, getProperty } from "@/lib/data-service";
 import { auth } from "@clerk/nextjs/server";
 import toast from "react-hot-toast";
+import { getProperty } from "@/lib/queries/properties";
+import { createChat } from "@/lib/actions/chats";
 
 type PropertyActionButtonsType = { property_id: string };
 

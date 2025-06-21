@@ -4,9 +4,9 @@ import { DropzoneProfileAvatarContext } from "./EditProfileImage";
 import { Button } from "./ui/button";
 import { useDropzoneContext } from "./ui/Dropzone";
 import UploadImages from "./UploadImages";
-import { updateUserAvatarAction } from "@/lib/actions";
 import { DialogClose } from "./ui/dialog";
 import toast from "react-hot-toast";
+import { updateUserAvatarAction } from "@/lib/actions/users";
 
 export default function ProfileAvatarDropzone() {
   const ProfileAvatarProps = useDropzoneContext(DropzoneProfileAvatarContext);

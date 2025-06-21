@@ -8,9 +8,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getProperties } from "@/lib/data-service";
 import Container from "./Container";
 import { cn } from "@/lib/utils";
+import { getProperties } from "@/lib/queries/properties";
 
 export default async function FeaturedProperties({
   title,

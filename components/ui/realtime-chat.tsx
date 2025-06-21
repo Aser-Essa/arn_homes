@@ -11,7 +11,7 @@ import { User } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
 import { Textarea } from "./textarea";
 import { GrAttachment } from "react-icons/gr";
-import { markMessagesAsRead } from "@/lib/data-service";
+import { markMessagesAsRead } from "@/lib/actions/chats";
 
 interface RealtimeChatProps {
   roomName: string;

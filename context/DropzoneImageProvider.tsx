@@ -28,6 +28,7 @@ export default function DropzoneImageProvider({
     maxFiles,
     minFiles,
     maxFileSize,
+    upsert: true,
   });
 
   return (

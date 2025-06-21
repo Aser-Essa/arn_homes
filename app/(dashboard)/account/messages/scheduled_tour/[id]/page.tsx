@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import ScheduledTourHeader from "@/components/ScheduledTourHeader";
 import ScheduledTourPropertyCard from "@/components/ScheduledTourPropertyCard";
 import VisitorDetailsCard from "@/components/VisitorDetailsCard";
-import { getScheduledTour } from "@/lib/data-service";
+import { getScheduledTour } from "@/lib/queries/scheduledTours";
 import { params } from "@/types/types";
 
 type Params = Promise<params>;

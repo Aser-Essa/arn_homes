@@ -1,40 +1,41 @@
-"use client";
 import React from "react";
 import { IoTrash } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa6";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { deleteMyProperty } from "@/lib/data-service";
+import FormActionButton from "./FormActionButton";
+import { deleteMyProperty, updateProperty } from "@/lib/actions/properties";
+import Link from "next/link";
 
 type UserPropertyCardControlType = {
-  userId: string;
   propertyId: string;
+  status: string | undefined;
 };
 
 export default function UserPropertyCardControl({
-  userId,
   propertyId,
+  status,
 }: UserPropertyCardControlType) {
-  async function handleDeleteClick() {
-    await deleteMyProperty({
-      userId,
-      propertyId,
-    });
-  }
+  const canDeactivate = status === "active";
+  const canReactivate = status === "inactive";
+
+  const updatedData = {
+    status: canDeactivate ? "inactive" : "active",
+  };
 
   return (
     <>
       <div className="absolute right-5 top-5 flex items-center gap-4">
-        <div
+        <Link
+          href={`/account/edit_property/${propertyId}`}
           className={cn(
             "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white xl:flex",
           )}
         >
           <Image src={"/icons/edit.svg"} width={24} height={24} alt="edit" />
-        </div>
-
-        <div
+        </Link>
+        {/* <div
           className={cn(
             "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white xl:flex",
           )}
@@ -45,25 +46,44 @@ export default function UserPropertyCardControl({
             height={24}
             alt="insight"
           />
-        </div>
-
-        <div
-          className={cn(
-            "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white xl:flex",
-          )}
-        >
-          <FaPowerOff className="h-4 w-4" />
-        </div>
-
-        <div
-          className={cn(
-            "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white xl:flex",
-          )}
-          onClick={handleDeleteClick}
-        >
-          <IoTrash className="h-5 w-5 text-red-500" />
-        </div>
-
+        </div> */}
+        {(canReactivate || canDeactivate) && (
+          <form action={updateProperty}>
+            <input type="hidden" name="propertyId" value={propertyId} />
+            <input
+              type="hidden"
+              name="updatedData"
+              value={JSON.stringify(updatedData)}
+            />
+            <FormActionButton type="icon">
+              <div
+                className={cn(
+                  "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white xl:flex",
+                )}
+              >
+                <FaPowerOff
+                  className={cn(
+                    "h-4 w-4",
+                    canDeactivate ? "text-green-600" : "",
+                    canReactivate ? "text-shades-black" : "",
+                  )}
+                />
+              </div>
+            </FormActionButton>
+          </form>
+        )}
+        <form action={deleteMyProperty}>
+          <input type="hidden" name="propertyId" value={propertyId} />
+          <FormActionButton type="icon">
+            <div
+              className={cn(
+                "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white xl:flex",
+              )}
+            >
+              <IoTrash className="h-5 w-5 text-red-500" />
+            </div>
+          </FormActionButton>
+        </form>
         <div
           className={cn(
             "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white sm:flex xl:hidden",

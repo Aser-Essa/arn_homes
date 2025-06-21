@@ -2,11 +2,11 @@ import React from "react";
 import Container from "./Container";
 import Title from "./Title";
 import HomeCard from "./HomeCard";
-import { getProperties } from "@/lib/data-service";
 import DateSort from "./DateSort";
 
 import Pagenation from "./Pagenation";
 import { params } from "@/types/types";
+import { getProperties } from "@/lib/queries/properties";
 
 type PropertiesType = {
   params: params;

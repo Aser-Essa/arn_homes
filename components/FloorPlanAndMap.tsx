@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Map from "./Map";
-import { getCoordinates } from "@/lib/data-service";
+import { getCoordinates } from "@/lib/queries/utils";
 
 type FloorPlanAndMapType = {
   floor_plan: string;

@@ -1,3 +1,10 @@
+import {
+  commonFields,
+  investmentFields,
+  rentFields,
+  saleFields,
+} from "@/components/PropertyInputs";
+import { features, PropertyFormData } from "@/types/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -153,4 +160,151 @@ export function convertToMonthly(value: number, duration: string | undefined) {
     default:
       return value;
   }
+}
+
+export function transformPropertyDataForSubmit({
+  data,
+  category,
+  userId,
+  propertyId,
+}: {
+  data: PropertyFormData;
+  category: string;
+  userId: string;
+  propertyId: string;
+}) {
+  const allFields = {
+    common: commonFields,
+    sale: saleFields,
+    rent: rentFields,
+    investment: investmentFields,
+  };
+
+  type CategoryKey = keyof typeof allFields;
+  const isCategory = (key: string): key is CategoryKey => key in allFields;
+  const selectedFields = isCategory(category) ? allFields[category] : [];
+
+  // Format features
+  const formatFeatures = (features: features) =>
+    features.map((section) => ({
+      title: section.title,
+      points: section.points.map((p) => `${p.Key}:${p.Value}`),
+    }));
+
+  // Filter extras
+  const extrasObject = data.extras ?? {};
+  const filteredExtras = Object.fromEntries(
+    Object.entries(extrasObject).filter(([key]) =>
+      selectedFields.includes(key),
+    ),
+  );
+
+  // Final formatted data
+  return {
+    ...data,
+    extras: filteredExtras,
+    interior: formatFeatures(data.interior),
+    exterior: formatFeatures(data.exterior),
+    user_id: userId,
+    id: propertyId,
+    status: "reviewing",
+  };
+}
+
+type RawSection = {
+  title: string;
+  points: string[];
+};
+
+const defaultExtras = {
+  is_furnished: false,
+  price: 1_500_000,
+  deposit_amount: 250,
+  expected_roi: 1,
+  minimum_investment: 10_000,
+  monthly_rent: 120,
+  lease_term: "6",
+  investment_term: "12",
+  investment_type: "rental_income",
+};
+
+export function reverseTransformedPropertyData({
+  property,
+}: {
+  property: Omit<PropertyFormData, "interior" | "exterior"> & {
+    interior: RawSection[];
+    exterior: RawSection[];
+  };
+}): PropertyFormData {
+  const parseSections = (
+    sections: RawSection[],
+  ): PropertyFormData["interior"] => {
+    const parsed = sections.map((section) => ({
+      title: section.title,
+      isOpen: false,
+      points: section.points.map((p) => {
+        const [Key, Value] = p.split(":");
+        return {
+          Key: Key?.trim() ?? "",
+          Value: Value?.trim() ?? "",
+        };
+      }),
+    }));
+
+    if (parsed.length === 0) {
+      return [
+        {
+          title: "",
+          isOpen: false,
+          points: [],
+        },
+      ];
+    }
+
+    return parsed as PropertyFormData["interior"];
+  };
+
+  return {
+    title: property.title || "",
+    address: property.address || "",
+    description: property.description || "",
+    area: property.area || 100,
+    bed_number: property.bed_number || 1,
+    bath_number: property.bath_number || 1,
+    property_type: property.property_type || "",
+    category: property.category || "sale",
+    listed_in: property.listed_in || new Date().toISOString(),
+    state: property.state || "",
+    interior: parseSections(property.interior),
+    exterior: parseSections(property.exterior),
+    extras: {
+      is_furnished: property.extras?.is_furnished ?? defaultExtras.is_furnished,
+      price: property.extras?.price ?? defaultExtras.price,
+      deposit_amount:
+        property.extras?.deposit_amount ?? defaultExtras.deposit_amount,
+      expected_roi: property.extras?.expected_roi ?? defaultExtras.expected_roi,
+      minimum_investment:
+        property.extras?.minimum_investment ?? defaultExtras.minimum_investment,
+      monthly_rent: property.extras?.monthly_rent ?? defaultExtras.monthly_rent,
+      lease_term: property.extras?.lease_term ?? defaultExtras.lease_term,
+      investment_term:
+        property.extras?.investment_term ?? defaultExtras.investment_term,
+      investment_type:
+        property.extras?.investment_type ?? defaultExtras.investment_type,
+    },
+  };
+}
+
+export async function urlToFile(url: string, fileName: string): Promise<File> {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const mimeType = blob.type || "image/jpeg";
+  return new File([blob], fileName, { type: mimeType });
+}
+
+export function fileToDropzoneFormat(file: File) {
+  return Object.assign(file, {
+    preview: URL.createObjectURL(file),
+    errors: [],
+  });
 }

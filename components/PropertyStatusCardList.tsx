@@ -1,6 +1,6 @@
 import React from "react";
 import PropertyStatusCard from "./PropertyStatusCard";
-import { getMyProperties } from "@/lib/data-service";
+import { getMyProperties } from "@/lib/queries/properties";
 import { auth } from "@clerk/nextjs/server";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
@@ -62,7 +62,7 @@ export default async function PropertyStatusCardList({
           key={`${text} ${idx}`}
           text={text}
           icon={icon}
-          href={`account/properties?category=${category}&status=${status}`}
+          href={`/account/properties?category=${category}&status=${status}`}
           count={counts[status]}
         />
       ))}

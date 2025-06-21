@@ -2,9 +2,9 @@ import React from "react";
 import FilterBar from "@/components/FilterBar";
 import Container from "./Container";
 import Map from "./Map";
-import { getCoordinates } from "@/lib/data-service";
 import SearchForSaleBreadcrumb from "./SearchForSaleBreadcrumb";
 import { params } from "@/types/types";
+import { getCoordinates } from "@/lib/queries/utils";
 
 type SearchForSaleHeroSectionType = {
   params: params;

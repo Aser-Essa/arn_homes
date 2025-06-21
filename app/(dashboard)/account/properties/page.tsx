@@ -1,7 +1,7 @@
 import MyPropertiesHeader from "@/components/MyPropertiesHeader";
 import MyPropertiesSection from "@/components/MyPropertiesSection";
 import Container from "@/components/Container";
-import { getMyProperties } from "@/lib/data-service";
+import { getMyProperties } from "@/lib/queries/properties";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -16,7 +16,6 @@ export default async function Page(props: { searchParams: SearchParams }) {
         title={"My Properties"}
         showAllCounts={false}
       />
-
       <MyPropertiesSection
         params={searchParamsValues}
         propertyAction={getMyProperties}

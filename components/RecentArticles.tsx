@@ -1,7 +1,7 @@
-import { getArticles } from "@/lib/data-service";
 import React from "react";
 import Container from "./Container";
 import RecentArticleCard from "./RecentArticleCard";
+import { getArticles } from "@/lib/queries/articles";
 
 export default async function RecentArticles() {
   const { articles } = await getArticles({ params: { page: "1" }, perPage: 4 });
@@ -24,18 +24,4 @@ export default async function RecentArticles() {
       </div>
     </Container>
   );
-}
-
-{
-  /* <div className="grid grid-cols-2 gap-[30px]">
-{articles.map(({ id, image, title, paragraphs }, idx) => (
-  <RecentArticleCard
-    key={`${id}-${idx}`}
-    id={id}
-    image={image}
-    title={title}
-    paragraphs={paragraphs}
-  />
-))}
-</div> */
 }

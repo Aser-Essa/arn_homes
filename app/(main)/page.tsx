@@ -6,7 +6,7 @@ import Reviews from "@/components/Reviews";
 import SearchBar from "@/components/SearchBar";
 import WhyUs from "@/components/WhyUs";
 import Title from "@/components/Title";
-import { getProperties } from "@/lib/data-service";
+import { getProperties } from "@/lib/queries/properties";
 
 export const revalidate = 0;
 

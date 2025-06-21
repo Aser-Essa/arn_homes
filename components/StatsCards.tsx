@@ -1,11 +1,9 @@
 import React from "react";
 import StatsCard from "./StatsCard";
 import { Calendar, Heart, Home, MessageCircle } from "lucide-react";
-import {
-  getMyProperties,
-  getSavedProperties,
-  getUnreadMessages,
-} from "@/lib/data-service";
+import { getMyProperties } from "@/lib/queries/properties";
+import { getUnreadMessages } from "@/lib/queries/chats";
+import { getSavedProperties } from "@/lib/queries/favorites";
 
 type StatsCards = {
   userId: string;

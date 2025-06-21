@@ -8,7 +8,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { getArticles } from "@/lib/data-service";
+import { getArticles } from "@/lib/queries/articles";
 
 export default async function Blog() {
   const { articles } = await getArticles({

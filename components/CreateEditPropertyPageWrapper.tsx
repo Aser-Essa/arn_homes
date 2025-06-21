@@ -5,7 +5,7 @@ import { type UseSupabaseUploadReturn } from "@/hooks/use-supabase-upload";
 import { useUser } from "@clerk/nextjs";
 import React, { createContext } from "react";
 
-type AddPropertyPageWrapperType = {
+type CreateEditPropertyPageWrapperType = {
   children: React.ReactNode;
   propertyId: string;
 };
@@ -20,10 +20,10 @@ export const DropzoneFloorPlanContext = createContext<
   DropzoneContextType | undefined
 >(undefined);
 
-export default function AddPropertyPageWrapper({
+export default function CreateEditPropertyPageWrapper({
   children,
   propertyId,
-}: AddPropertyPageWrapperType) {
+}: CreateEditPropertyPageWrapperType) {
   const { user } = useUser();
 
   return (

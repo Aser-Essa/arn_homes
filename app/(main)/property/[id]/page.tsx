@@ -5,7 +5,7 @@ import FeaturedProperties from "@/components/FeaturedProperties";
 import FloorPlanAndMap from "@/components/FloorPlanAndMap";
 import PropertyDetails from "@/components/PropertyDetails";
 import ScheduleAndMortgageForms from "@/components/ScheduleAndMortgageForms";
-import { getProperty } from "@/lib/data-service";
+import { getProperty } from "@/lib/queries/properties";
 import { params } from "@/types/types";
 
 type Params = Promise<params>;

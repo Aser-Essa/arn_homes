@@ -1,13 +1,11 @@
-import {
-  getMyProperties,
-  getSavedProperties,
-  getUnreadMessages,
-} from "@/lib/data-service";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { IoHeart, IoMail, IoNotifications } from "react-icons/io5";
 import SidebarNavLink from "./SidebarNavLink";
 import SignOutBtn from "./SignOutBtn";
+import { getMyProperties } from "@/lib/queries/properties";
+import { getUnreadMessages } from "@/lib/queries/chats";
+import { getSavedProperties } from "@/lib/queries/favorites";
 
 export default async function SideBar() {
   const { userId } = await auth();
@@ -40,7 +38,7 @@ export default async function SideBar() {
   );
 
   return (
-    <div className="box-shadow relative h-full w-full space-y-6 px-3 py-3.5 shadow-shades-white md:w-[24vw] md:py-10 lg:px-6">
+    <div className="box-shadow relative h-full min-h-[825px] w-full space-y-6 px-3 py-3.5 shadow-shades-white md:w-[24vw] md:py-10 lg:px-6">
       <div className="hidden h-12 w-full cursor-pointer items-center gap-2 rounded-xl border-l-[5px] border-amber-600 bg-gray-900 px-6 pl-[11px] pr-4 font-exo text-shades-white transition-all hover:text-scooter-600 md:flex md:text-lg lg:text-xl">
         <Image
           src={"/icons/dashboard.svg"}

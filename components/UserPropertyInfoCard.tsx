@@ -1,10 +1,8 @@
-import React from "react";
-import UserPropertyCardControl from "./UserPropertyCardControl";
 import { cn, formatPrice } from "@/lib/utils";
-import PropertyInfoStats from "./PropertyInfoStats";
 import { Property } from "@/types/types";
 import IconText from "./IconText";
-import { auth } from "@clerk/nextjs/server";
+import PropertyInfoStats from "./PropertyInfoStats";
+import UserPropertyCardControl from "./UserPropertyCardControl";
 
 type UserPropertyInfoCardType = {
   property: Property;
@@ -23,11 +21,10 @@ export default async function UserPropertyInfoCard({
     bed_number,
     bath_number,
     extras,
+    status,
   } = property;
 
   const { price, monthly_rent } = extras || {};
-
-  const { userId } = await auth();
 
   return (
     <>
@@ -35,10 +32,7 @@ export default async function UserPropertyInfoCard({
         className={cn("flex-1 space-y-1 text-nowrap p-2 sm:space-y-5 sm:p-5")}
       >
         {type === "my_properties" && (
-          <UserPropertyCardControl
-            propertyId={propertyId}
-            userId={userId ? String(userId) : ""}
-          />
+          <UserPropertyCardControl propertyId={propertyId} status={status} />
         )}
         <p
           className={cn(

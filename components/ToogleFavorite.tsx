@@ -1,5 +1,5 @@
 "use client";
-import { toogleFavorite } from "@/lib/data-service";
+import { toogleFavorite } from "@/lib/actions/favorites";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
@@ -16,7 +16,7 @@ export default function ToogleFavorite({
   property_id: string;
   category: string;
 }) {
-  const [isFavorite, setIsFavorite] = useState(isSaved);
+  const [isFavorite, setIsFavorite] = useState(isSaved ?? false);
 
   const { user } = useUser();
   if (!user) return null; // Ensure user is available

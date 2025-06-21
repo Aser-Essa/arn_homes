@@ -2,7 +2,7 @@ import ArticlesCards from "@/components/ArticlesCards";
 import FirstArticle from "@/components/FirstArticle";
 import HeroSection from "@/components/HeroSection";
 import SearchBlogs from "@/components/SearchBlogs";
-import { getArticles } from "@/lib/data-service";
+import { getArticles } from "@/lib/queries/articles";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 

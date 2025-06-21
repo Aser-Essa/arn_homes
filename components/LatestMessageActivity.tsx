@@ -1,4 +1,4 @@
-import { getChats, getUserMessages } from "@/lib/data-service";
+import { getChats, getUserMessages } from "@/lib/queries/chats";
 import { formatTimeAgo } from "@/lib/utils";
 import { message } from "@/types/types";
 import { auth } from "@clerk/nextjs/server";

@@ -15,13 +15,13 @@
 // import { formSchema } from "@/schemas/propertySchemas";
 // import { features, PropertyFormData } from "@/types/types";
 
-// interface AddPropertyFormCardProps {
+// interface CreateEditPropertyFormCardProps {
 //   propertyId?: string;
 // }
 
-// export default function AddPropertyFormCard({
+// export default function CreateEditPropertyFormCard({
 //   propertyId,
-// }: AddPropertyFormCardProps) {
+// }: CreateEditPropertyFormCardProps) {
 //   const { user } = useUser();
 //   const propertyProps = useDropzoneContext("property");
 //   const floorPlanProps = useDropzoneContext("floorPlan");
