@@ -33,6 +33,7 @@ export default function FilterBar({
     price_Duration,
     property_Type,
     state_address,
+    furniture_type,
   } = params;
 
   const [search, setSearch] = useState(
@@ -44,6 +45,7 @@ export default function FilterBar({
   const [maxPrice, setMaxPrice] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [priceDuration, setPriceDuration] = useState("");
+  const [furnitureType, setFurnitureType] = useState("");
 
   const router = useRouter();
 
@@ -66,25 +68,32 @@ export default function FilterBar({
     { value: 5, label: "5 Baths" },
     { value: 6, label: "6 Baths" },
   ];
-
   function handleClick() {
     const params = new URLSearchParams(window.location.search);
-    if (bed) params.set("bed_N", bed);
-    if (bath) params.set("bath_N", bath);
-    if (minPrice) params.set("min_Price", String(minPrice));
-    if (maxPrice) params.set("max_Price", String(maxPrice));
-    if (propertyType) params.set("property_Type", propertyType);
-    if (search) params.set("state_address", String(search));
-    if (priceDuration) params.set("price_Duration", String(priceDuration));
-    if (
-      bed ||
-      bath ||
-      minPrice ||
-      maxPrice ||
-      propertyType ||
-      search ||
-      priceDuration
-    ) {
+
+    const filters = {
+      bed_N: bed,
+      bath_N: bath,
+      min_Price: minPrice,
+      max_Price: maxPrice,
+      property_Type: propertyType,
+      state_address: search,
+      price_Duration: priceDuration,
+      furniture_type: furnitureType,
+    };
+
+    let hasValidFilter = false;
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value && value.toLowerCase() !== "any") {
+        params.set(key, String(value));
+        hasValidFilter = true;
+      } else {
+        params.delete(key);
+      }
+    });
+
+    if (hasValidFilter) {
       router.push(`/search/${category}?${params.toString()}`, {
         scroll: false,
       });
@@ -102,6 +111,7 @@ export default function FilterBar({
     setPropertyType(property_Type ? String(property_Type) : "");
     setPriceDuration(price_Duration ? String(price_Duration) : "");
     setSearch(state_address ? String(state_address) : "");
+    setFurnitureType(furniture_type ? String(furniture_type) : "");
   }, [
     bath_N,
     bed_N,
@@ -110,6 +120,7 @@ export default function FilterBar({
     price_Duration,
     property_Type,
     state_address,
+    furniture_type,
   ]);
 
   return (

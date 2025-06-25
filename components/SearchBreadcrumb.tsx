@@ -1,7 +1,7 @@
 import React from "react";
 import BreadcrumbCustom from "./BreadcrumbCustom";
 
-export default function SearchForSaleBreadcrumb({
+export default function SearchBreadcrumb({
   category,
 }: {
   category?: string | string[] | undefined;

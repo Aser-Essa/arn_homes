@@ -1,12 +1,11 @@
-import React from "react";
-import { IoTrash } from "react-icons/io5";
-import { FaPowerOff } from "react-icons/fa6";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import FormActionButton from "./FormActionButton";
 import { deleteMyProperty, updateProperty } from "@/lib/actions/properties";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
+import { FaPowerOff } from "react-icons/fa6";
+import { IoTrash } from "react-icons/io5";
+import DotsActionsButton from "./DotsActionsButton";
+import FormActionButton from "./FormActionButton";
 
 type UserPropertyCardControlType = {
   propertyId: string;
@@ -84,13 +83,7 @@ export default function UserPropertyCardControl({
             </div>
           </FormActionButton>
         </form>
-        <div
-          className={cn(
-            "hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white sm:flex xl:hidden",
-          )}
-        >
-          <HiOutlineDotsVertical className="h-5 w-5" />
-        </div>
+        <DotsActionsButton propertyId={propertyId} />
       </div>
     </>
   );

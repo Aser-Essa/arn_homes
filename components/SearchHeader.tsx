@@ -3,17 +3,17 @@ import Container from "./Container";
 import DateSort from "./DateSort";
 import { params } from "@/types/types";
 
-type SearchForSaleHeaderType = {
+type SearchHeaderType = {
   params: params;
   numberOfProperties: number | null;
   category?: string | string[] | undefined;
 };
 
-export default function SearchForSaleHeader({
+export default function SearchHeader({
   params,
   numberOfProperties,
   category,
-}: SearchForSaleHeaderType) {
+}: SearchHeaderType) {
   const state_address = params?.state_address;
 
   return (

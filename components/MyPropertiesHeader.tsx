@@ -1,11 +1,11 @@
-import React from "react";
 import { params } from "@/types/types";
+import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 import { IoIosArrowBack } from "react-icons/io";
 import CategorySwitch from "./CategorySwitch";
-import { auth } from "@clerk/nextjs/server";
-import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
+import StatusesSelector from "./StatusesSelector";
 
 type MyPropertiesHeaderType = {
   params: params;
@@ -56,18 +56,21 @@ export default async function MyPropertiesHeader({
     <>
       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center">
         <div className="flex h-[22px] w-fit cursor-pointer items-center gap-2 rounded-[8px] border-l-[5px] border-amber-600 bg-gray-900 py-[2px] pl-[11px] pr-4 font-exo text-xs text-shades-white transition-all hover:text-scooter-600 sm:hidden md:hidden md:rounded-xl">
-          <p>Dashboard</p>
+          <Link href={"/account"}>Dashboard</Link>
         </div>
         <p className="hidden text-[24px] font-semibold sm:block lg:text-[28px]">
           {title}
         </p>
-        <Link
-          href={"/account"}
-          className="flex items-center gap-2 font-semibold sm:hidden"
-        >
-          <IoIosArrowBack />
-          <p>{title}</p>
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link
+            href={"/account"}
+            className="flex items-center gap-2 font-semibold sm:hidden"
+          >
+            <IoIosArrowBack />
+            <p>{title}</p>
+          </Link>
+          <StatusesSelector defaultValue={status ? String(status) : "active"} />
+        </div>
         <CategorySwitch
           categories={categories}
           category_val={category ? String(category) : "sale"}

@@ -8,7 +8,7 @@ export default function PropertyInfoCards({
   property: Property;
 }) {
   const { property_type, bed_number, bath_number, area, extras } = property;
-  const { monthly_rent, is_furnished } = extras;
+  const { monthly_rent, furniture_type } = extras;
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -17,7 +17,7 @@ export default function PropertyInfoCards({
         <InfoCard label="Bathrooms" value={bath_number} />
         <InfoCard label="Area" value={`${area} sq ft`} />
         <InfoCard label="Monthly Rent" value={`$${monthly_rent}`} />
-        <InfoCard label="Furnished" value={is_furnished ? "Yes" : "No"} />
+        <InfoCard label="Furniture Type" value={furniture_type} />
       </div>
     </>
   );

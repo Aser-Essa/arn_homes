@@ -4,11 +4,15 @@ import PropertySelect from "./PropertySelect";
 type PropertyTypeSelectType = {
   property_Type: string | string[] | undefined;
   setPropertyType: React.Dispatch<React.SetStateAction<string>>;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export default function PropertyTypeSelect({
   property_Type,
   setPropertyType,
+  open,
+  onOpenChange,
 }: PropertyTypeSelectType) {
   return (
     <>
@@ -19,6 +23,8 @@ export default function PropertyTypeSelect({
             className="sm:w-full"
             onValueChange={(value) => setPropertyType(value)}
             defaultValue={property_Type && String(property_Type)}
+            open={open}
+            onOpenChange={onOpenChange}
           />
         </div>
       </div>

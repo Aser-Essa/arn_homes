@@ -50,14 +50,12 @@ const getNotificationLink = (notification: NotificationData): string | null => {
       return "/account/messages";
     case "property":
       return notification.related_id
-        ? `/properties/${notification.related_id}`
-        : "/account/properties";
+        ? `/properties/sale/${notification.related_id}`
+        : "/properties/sale";
     case "tour":
-      return notification.related_id
-        ? `/account/scheduled-tours/${notification.related_id}`
-        : "/account/scheduled-tours";
+      return "/account/messages?message_category=scheduled_tours";
     case "saved_property":
-      return "/account/saved-properties";
+      return "/account/saved_properties";
     default:
       return null;
   }

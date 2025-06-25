@@ -4,6 +4,7 @@ import Container from "./Container";
 import { formatTimestamptzToReadable } from "@/lib/utils";
 import { Article } from "@/types/types";
 import Link from "next/link";
+import { BsArrowUpRight } from "react-icons/bs";
 
 type FirstArticleType = {
   article: Article;
@@ -14,9 +15,14 @@ export default function FirstArticle({ article }: FirstArticleType) {
 
   return (
     <Container>
-      <Link href={`article/${id}`}>
+      <Link href={`article/${id}`} className="group" target="_blank">
         <div className="box-shadow relative mt-1.5 hidden rounded-[20px] md:flex">
           <div className="relative w-full flex-1">
+            <div className="absolute inset-0 z-[10] flex items-center justify-center rounded-l-[20px] bg-[#0d0e0f66] opacity-0 transition-all group-hover:opacity-100">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-shades-white">
+                <BsArrowUpRight className="h-6 w-6" />
+              </div>
+            </div>
             <Image src={image} fill alt="image" className="rounded-l-[20px]" />
           </div>
           <div className={"flex-1 space-y-5 p-6"}>

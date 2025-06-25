@@ -7,7 +7,7 @@ type ParamsType = {
   max_Price?: string;
   price_Duration?: string;
   property_Type?: string;
-  furniture_Type?: string;
+  furniture_type?: string;
   time_sort?: string | undefined;
   page?: string | undefined;
   state_address?: string;

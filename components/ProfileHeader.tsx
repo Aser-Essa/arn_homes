@@ -6,7 +6,6 @@ type ProfileHeaderType = { user: User };
 
 export default async function ProfileHeader({ user }: ProfileHeaderType) {
   const firstName = user.firstName || user.fullName?.split(" ")[0] || "User";
-  const userType = "Buyer";
 
   const userAvatar =
     user?.publicMetadata?.imageUrl || user.imageUrl || "/default-avatar.png";
@@ -35,9 +34,7 @@ export default async function ProfileHeader({ user }: ProfileHeaderType) {
                 <p className="text-gray-600">
                   {user.primaryEmailAddress?.emailAddress}
                 </p>
-                <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
-                  {userType}
-                </span>
+
                 <div className="flex items-center text-green-600">
                   <CheckCircle size={16} className="mr-1" />
                   <span className="text-sm">Verified</span>

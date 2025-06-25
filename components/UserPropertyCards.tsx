@@ -1,10 +1,10 @@
 import { params, Property } from "@/types/types";
 import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import toast from "react-hot-toast";
 import UserPropertyCard from "./UserPropertyCard";
-import Link from "next/link";
 
 type SavedProperty = {
   id: string;
@@ -62,10 +62,22 @@ export default async function UserPropertyCards({
         return (
           <Fragment key={`${actualProperty.id}${idx}`}>
             {type === "my_properties" ? (
-              <UserPropertyCard property={actualProperty} type={type} />
+              <UserPropertyCard
+                property={actualProperty}
+                type={type}
+                showCenterButtonIcon={false}
+              />
             ) : (
-              <Link href={`/property/${actualProperty?.id}`} target="_blank">
-                <UserPropertyCard property={actualProperty} type={type} />
+              <Link
+                href={`/property/${actualProperty?.id}`}
+                target="_blank"
+                className="relative inline-block"
+              >
+                <UserPropertyCard
+                  property={actualProperty}
+                  type={type}
+                  showCenterButtonIcon={true}
+                />
               </Link>
             )}
           </Fragment>

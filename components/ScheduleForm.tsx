@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { scheduleTour } from "@/lib/actions/scheduledTours";
 import { getProperty } from "@/lib/queries/properties";
+import { normalizeDate } from "@/lib/utils";
 
 const scheduleFormSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -32,16 +33,22 @@ const scheduleFormSchema = z.object({
 type ScheduleFormDataType = z.infer<typeof scheduleFormSchema>;
 
 const timeOptions = [
+  { label: "9:00am", value: "09:00am" },
+  { label: "9:30am", value: "09:30am" },
+  { label: "10:00am", value: "10:00am" },
+  { label: "10:30am", value: "10:30am" },
+  { label: "11:00am", value: "11:00am" },
+  { label: "11:30am", value: "11:30am" },
   { label: "12:00pm", value: "12:00pm" },
   { label: "12:30pm", value: "12:30pm" },
-  { label: "1:00pm", value: "1:00pm" },
-  { label: "1:30pm", value: "1:30pm" },
-  { label: "2:00pm", value: "2:00pm" },
-  { label: "2:30pm", value: "2:30pm" },
-  { label: "3:00pm", value: "3:00pm" },
-  { label: "3:30pm", value: "3:30pm" },
-  { label: "4:00pm", value: "4:00pm" },
-  { label: "4:30pm", value: "4:30pm" },
+  { label: "1:00pm", value: "01:00pm" },
+  { label: "1:30pm", value: "01:30pm" },
+  { label: "2:00pm", value: "02:00pm" },
+  { label: "2:30pm", value: "02:30pm" },
+  { label: "3:00pm", value: "03:00pm" },
+  { label: "3:30pm", value: "03:30pm" },
+  { label: "4:00pm", value: "04:00pm" },
+  { label: "4:30pm", value: "04:30pm" },
 ];
 
 export default function ScheduleForm({ property_id }: { property_id: string }) {
@@ -68,8 +75,10 @@ export default function ScheduleForm({ property_id }: { property_id: string }) {
       return;
     } else {
       const { property } = await getProperty(property_id);
+
       const extendedData = {
         ...formData,
+        scheduled_date: normalizeDate(formData.scheduled_date),
         property_id,
         user_id,
         propertyTitle: property?.title,

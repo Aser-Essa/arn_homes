@@ -12,6 +12,8 @@ type PriceRangeSelectType = {
   setPriceDuration: React.Dispatch<React.SetStateAction<string>>;
   priceDurationState: string | string[] | undefined;
   category: string | string[] | undefined;
+  openKey: string;
+  handleOpenChange: (key: string) => (open: boolean) => void;
 };
 
 export default function PriceRangeSelect({
@@ -24,6 +26,8 @@ export default function PriceRangeSelect({
   setPriceDuration,
   priceDurationState,
   category,
+  openKey,
+  handleOpenChange,
 }: PriceRangeSelectType) {
   const PriceOptions = useMemo(() => {
     switch (priceDurationState) {
@@ -130,6 +134,8 @@ export default function PriceRangeSelect({
               }}
               defaultValue={min_Price}
               value={minPriceState ? String(minPriceState) : ""}
+              open={openKey === "min_Price"}
+              onOpenChange={handleOpenChange("min_Price")}
             />
           </div>
           <div className="flex-1 space-y-2.5">
@@ -143,6 +149,8 @@ export default function PriceRangeSelect({
               }}
               defaultValue={max_Price}
               value={maxPriceState ? String(maxPriceState) : ""}
+              open={openKey === "max_Price"}
+              onOpenChange={handleOpenChange("max_Price")}
             />
           </div>
         </div>
@@ -158,6 +166,8 @@ export default function PriceRangeSelect({
                 setPriceDuration(value);
               }}
               defaultValue={priceDurationState}
+              open={openKey === "Price_Duration"}
+              onOpenChange={handleOpenChange("Price_Duration")}
             />
           </div>
         )}

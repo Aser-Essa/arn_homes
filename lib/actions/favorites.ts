@@ -1,6 +1,7 @@
 "use server";
-import { supabase } from "../supabase";
+import { revalidatePath } from "next/cache";
 import { isPropertySaved } from "../queries/favorites";
+import { supabase } from "../supabase";
 
 export async function saveProperty(data: {
   user_id: string;
@@ -51,5 +52,10 @@ export async function toogleFavorite({
   } else {
     await saveProperty({ user_id, property_id, category });
   }
+
   return !isSaved;
+}
+
+export async function refresh() {
+  revalidatePath("/");
 }

@@ -14,6 +14,16 @@ export default function SearchProperties({
   count,
   properties,
 }: SearchPropertiesType) {
+  if (count === 0) {
+    return (
+      <div className="flex h-[200px] w-full items-center justify-center">
+        <p className="text-shades-gray-500 text-lg font-semibold">
+          No properties found
+        </p>
+      </div>
+    );
+  }
+
   return (
     <Container className="mb-[200px] mt-10 space-y-10">
       {properties.map((property) => (

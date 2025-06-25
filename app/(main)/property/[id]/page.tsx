@@ -4,6 +4,7 @@ import Description from "@/components/Description";
 import FeaturedProperties from "@/components/FeaturedProperties";
 import FloorPlanAndMap from "@/components/FloorPlanAndMap";
 import PropertyDetails from "@/components/PropertyDetails";
+import PropertyExtras from "@/components/PropertyExtras";
 import ScheduleAndMortgageForms from "@/components/ScheduleAndMortgageForms";
 import { getProperty } from "@/lib/queries/properties";
 import { params } from "@/types/types";
@@ -30,6 +31,7 @@ export default async function page({ params }: { params: Params }) {
     <Container className="mb-[200px] min-h-[100vh] space-y-10">
       <BackButton />
       <PropertyDetails property={property} />
+      <PropertyExtras extras={property?.extras} category={property.category} />
       <Description
         description={description}
         exterior={exterior}

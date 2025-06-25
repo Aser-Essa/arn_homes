@@ -15,12 +15,15 @@ type PropertySelectType = {
   onValueChange: (formattedValue: string) => void;
   defaultValue: string | undefined;
   className?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
-
 export default function PropertySelect({
   className,
   onValueChange,
   defaultValue,
+  open,
+  onOpenChange,
 }: PropertySelectType) {
   const propertyTypes = [
     { label: "Show all", id: "all", value: "all" },
@@ -47,7 +50,7 @@ export default function PropertySelect({
   }
 
   return (
-    <Select>
+    <Select open={open} onOpenChange={onOpenChange}>
       <SelectTrigger
         className={cn(
           "h-[50px] w-full rounded-xl border-[1.5px] border-amber-100 font-exo text-lg text-shades-black ring-0 hover:border-amber-200 data-[placeholder]:text-shades-black data-[state=open]:ring-[2px] data-[state=open]:ring-[#FCEEC2] sm:w-[218px]",

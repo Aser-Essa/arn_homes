@@ -11,7 +11,7 @@ export default function Feature({ icon, title, description }: FeatureType) {
   return (
     <>
       <div
-        className="flex h-fit items-center gap-4 rounded-xl bg-white p-4 sm:h-[140px]"
+        className="flex h-fit cursor-pointer items-center gap-4 rounded-xl bg-white p-4 transition-all hover:bg-shades-off-white sm:h-[140px]"
         style={{
           boxShadow: "0 20px 24px -4px #ffecb30a, 0 8px 11px -4px #2d364323",
         }}

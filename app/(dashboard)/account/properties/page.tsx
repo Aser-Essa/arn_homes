@@ -2,8 +2,9 @@ import MyPropertiesHeader from "@/components/MyPropertiesHeader";
 import MyPropertiesSection from "@/components/MyPropertiesSection";
 import Container from "@/components/Container";
 import { getMyProperties } from "@/lib/queries/properties";
+import { params } from "@/types/types";
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+type SearchParams = Promise<params>;
 
 export default async function Page(props: { searchParams: SearchParams }) {
   const searchParamsValues = await props.searchParams;

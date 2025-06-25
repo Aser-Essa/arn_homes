@@ -52,7 +52,7 @@ export default function RootLayout({
             <div className="hidden md:block">
               <SideBar />
             </div>
-            <div className="mb-[200px] w-full md:flex-1">{children}</div>
+            <div className="w-full sm:mb-[200px] md:flex-1">{children}</div>
           </div>
           <Footer />
         </body>

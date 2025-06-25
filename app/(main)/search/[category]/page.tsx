@@ -1,6 +1,6 @@
 import React from "react";
-import SearchForSaleHeroSection from "@/components/SearchForSaleHeroSection";
-import SearchForSaleHeader from "@/components/SearchForSaleHeader";
+import SearchHeroSection from "@/components/SearchHeroSection";
+import SearchHeader from "@/components/SearchHeader";
 import SearchFeaturedProperties from "@/components/SearchFeaturedProperties";
 import SearchProperties from "@/components/SearchProperties";
 import { params } from "@/types/types";
@@ -37,12 +37,12 @@ export default async function page({ params, searchParams }: SearchPageParams) {
     <>
       {categories.includes(String(category)) && (
         <>
-          <SearchForSaleHeroSection
+          <SearchHeroSection
             params={searchParamsValues}
             stateAddressArray={stateAddressArray}
             category={category}
           />
-          <SearchForSaleHeader
+          <SearchHeader
             params={searchParamsValues}
             numberOfProperties={count}
             category={category}

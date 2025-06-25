@@ -24,7 +24,7 @@ export default function HeroSection({
       />
       <div className="relative z-[1000] w-[95%] space-y-10 pb-20 sm:w-[90%]">
         <BreadcrumbCustom pathArray={pathArray} />
-        <div className="space-y-2">
+        <div className="space-y-5">
           <p className="text-[clamp(38px,6vw,64px)] font-bold leading-none">
             {title}
           </p>

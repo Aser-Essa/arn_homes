@@ -37,7 +37,7 @@ export default async function HomeCard({ property, className }: HomeCardType) {
     <Link href={`/property/${id}`} target="_blank">
       <div
         className={cn(
-          "box-shadow relative overflow-hidden rounded-xl",
+          "box-shadow group relative overflow-hidden rounded-xl",
           className,
         )}
       >
@@ -55,7 +55,7 @@ export default async function HomeCard({ property, className }: HomeCardType) {
 
         <div className="space-y-4">
           <div className="relative h-[292px] w-full">
-            <div className="absolute inset-0 z-[10] flex items-center justify-center bg-[#0d0e0f66] opacity-0 transition-all hover:opacity-100">
+            <div className="absolute inset-0 z-[10] flex items-center justify-center bg-[#0d0e0f66] opacity-0 transition-all group-hover:opacity-100">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-shades-white">
                 <BsArrowUpRight className="h-6 w-6" />
               </div>

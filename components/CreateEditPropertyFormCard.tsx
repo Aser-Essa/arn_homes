@@ -30,7 +30,7 @@ const initialValues = {
   exterior: [],
   interior: [],
   extras: {
-    is_furnished: false,
+    furniture_type: "furnished",
     price: 1500_000,
     deposit_amount: 250,
     expected_roi: 1,

@@ -14,7 +14,7 @@ type ParamsType = {
   max_Price?: string;
   price_Duration?: string;
   property_Type?: string;
-  furniture_Type?: string;
+  furniture_type?: string;
   time_sort?: string | undefined;
   page?: string | undefined;
   state_address?: string;
@@ -41,6 +41,7 @@ export async function getProperties({
     page,
     state_address,
     price_Duration,
+    furniture_type,
   } = params;
 
   let pageNumber = Math.max(1, Number(page) || 1);
@@ -74,6 +75,7 @@ export async function getProperties({
         convertToMonthly(Number(min_Price), price_Duration),
       );
     }
+
     if (isValid(max_Price)) {
       query = query.lte(
         "extras->>monthly_rent",
@@ -95,6 +97,10 @@ export async function getProperties({
 
   if (isValid(state_address)) {
     query = query.ilike("address", `%${state_address}%`);
+  }
+
+  if (isValid(furniture_type)) {
+    query = query.eq("extras->>furniture_type", furniture_type);
   }
 
   const { count: totalCount, error: countError } = await query;

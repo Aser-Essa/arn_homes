@@ -1,71 +1,39 @@
-"use client";
-import React from "react";
+import { getReviews } from "@/lib/queries/reviews";
+import { params } from "@/types/types";
 import Container from "./Container";
-import Title from "./Title";
-import { Button } from "./ui/button";
+import Pagenation from "./Pagenation";
 import ReviewCard from "./ReviewCard";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
+export default async function Reviews({ params }: { params: params }) {
+  const { reviews, count } = await getReviews({
+    perPage: 10,
+    params,
+  });
 
-export default function Reviews() {
   return (
     <>
-      <Container className="h-[614px] space-y-10 overflow-x-hidden bg-scooter-50 pt-14 font-exo">
-        <div className="space-y-2 sm:space-y-5">
-          <div className="flex items-center justify-between">
-            <Title>Customer Reviews</Title>
-            <Button className="hidden h-full bg-scooter-600 hover:bg-scooter-500 sm:block">
-              See all reviews
-            </Button>
-          </div>
-          <p className="text-lg font-medium">
-            See what our client’s are saying
-          </p>
-          <Button className="h-12 bg-scooter-600 hover:bg-scooter-500 sm:hidden">
-            See all reviews
-          </Button>
+      <Container className="mb-[200px] mt-14 space-y-5 font-exo sm:space-y-10">
+        <p className="text-4xl font-semibold">Recent Reviews</p>
+
+        <div className="grid gap-[30px] sm:grid-cols-[repeat(auto-fill,_minmax(450px,1fr))]">
+          {count > 0 ? (
+            <>
+              {reviews?.map((reviewData, idx) => (
+                <ReviewCard
+                  key={`${reviewData?.id}-${idx}`}
+                  reviewData={reviewData}
+                />
+              ))}
+            </>
+          ) : (
+            <div className="col-span-2 flex h-[200px] w-full items-center justify-center">
+              <p className="text-shades-gray-500 text-lg font-semibold">
+                No Reviews found
+              </p>
+            </div>
+          )}
         </div>
-
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-            duration: 6000,
-            watchDrag: false,
-          }}
-          plugins={[
-            Autoplay({
-              delay: 0,
-            }),
-          ]}
-        >
-          <CarouselContent className="overflow-visible">
-            <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <ReviewCard />
-            </CarouselItem>
-
-            <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <ReviewCard />
-            </CarouselItem>
-
-            <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <ReviewCard />
-            </CarouselItem>
-
-            <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <ReviewCard />
-            </CarouselItem>
-
-            <CarouselItem className="sm:basis-[47%] lg:basis-[32%]">
-              <ReviewCard />
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
+        <Pagenation count={count} perPage={10} />
       </Container>
     </>
   );

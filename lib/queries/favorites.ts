@@ -4,18 +4,19 @@ export async function getSavedProperties({
   userId,
   category,
 }: {
-  category: string;
+  category?: string;
   userId: string;
 }) {
-  const {
-    data: properties,
-    error,
-    count,
-  } = await supabase
+  let query = supabase
     .from("saved_properties")
     .select("*, properties(*)", { count: "exact" })
-    .eq("user_id", userId)
-    .eq("category", category);
+    .eq("user_id", userId);
+
+  if (category) {
+    query = query.eq("category", category);
+  }
+
+  const { data: properties, error, count } = await query;
 
   if (error) {
     throw new Error(error.message);

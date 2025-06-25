@@ -1,3 +1,4 @@
+import { changeEmailSchema } from "@/schemas/changeEmailSchema";
 import { formSchema, sectionSchema } from "@/schemas/propertySchemas";
 import { z } from "zod";
 
@@ -26,7 +27,7 @@ export type Property = {
     minimum_investment?: number;
     investment_term?: string;
     investment_type?: string;
-    is_furnished?: boolean;
+    furniture_type?: string;
   };
   exterior: Section[];
   interior: Section[];
@@ -41,6 +42,14 @@ export interface Paragraph {
   title: string;
   paragraph: string;
 }
+
+export type Review = {
+  id: string;
+  name: string;
+  date: string;
+  review: string;
+  rating: number;
+};
 
 export interface Article {
   id: number;
@@ -128,3 +137,5 @@ export interface NotificationStats {
     system: number;
   };
 }
+
+export type ChangeEmailFormData = z.infer<typeof changeEmailSchema>;

@@ -23,6 +23,8 @@ type CustomSelectType = {
   defaultValue?: number | string | string[] | undefined;
   value?: string;
   onValueChange: (value: string) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export default function CustomSelect({
@@ -32,12 +34,16 @@ export default function CustomSelect({
   onValueChange,
   defaultValue,
   value,
+  open,
+  onOpenChange,
 }: CustomSelectType) {
   return (
     <Select
       onValueChange={(value) => onValueChange(value)}
       defaultValue={defaultValue ? String(defaultValue) : ""}
       value={value}
+      open={open}
+      onOpenChange={onOpenChange}
     >
       <SelectTrigger
         className={cn(
@@ -47,7 +53,7 @@ export default function CustomSelect({
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="rounded-xl font-exo">
+      <SelectContent className="rounded-xl font-exo" portal={false}>
         <SelectGroup>
           {selectItems.map(({ value, label }) => (
             <SelectItem key={label} value={String(value)}>

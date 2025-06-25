@@ -4,9 +4,10 @@ import {
   rentFields,
   saleFields,
 } from "@/components/PropertyInputs";
-import { features, PropertyFormData } from "@/types/types";
+import { features, PropertyFormData, ScheduledTourData } from "@/types/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { format, isAfter, isBefore, isToday, isTomorrow } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -162,6 +163,13 @@ export function convertToMonthly(value: number, duration: string | undefined) {
   }
 }
 
+export function normalizeDate(date: Date) {
+  const normalized = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
+  return normalized;
+}
+
 export function transformPropertyDataForSubmit({
   data,
   category,
@@ -193,6 +201,7 @@ export function transformPropertyDataForSubmit({
 
   // Filter extras
   const extrasObject = data.extras ?? {};
+
   const filteredExtras = Object.fromEntries(
     Object.entries(extrasObject).filter(([key]) =>
       selectedFields.includes(key),
@@ -211,13 +220,52 @@ export function transformPropertyDataForSubmit({
   };
 }
 
+export function getUpcomingConfirmedTours({
+  scheduledTours,
+  beforeDate,
+}: {
+  scheduledTours: ScheduledTourData[];
+  beforeDate: Date;
+}): ScheduledTourData[] {
+  const now = new Date();
+
+  const upcomingConfirmedTours = scheduledTours.filter((tour) => {
+    const fullDateTime = new Date(
+      `${tour.scheduled_date}T${tour.scheduled_time}`,
+    );
+    return (
+      tour.status === "confirmed" &&
+      (isAfter(fullDateTime, now) ||
+        (isToday(fullDateTime) && isBefore(fullDateTime, beforeDate)))
+    );
+  });
+
+  return upcomingConfirmedTours;
+}
+
+export function formatScheduledTour(date: string, time: string): string {
+  const fullDateTime = new Date(`${date}T${time}`);
+
+  const formattedTime = format(fullDateTime, "h:mm a");
+
+  let dayLabel = format(fullDateTime, "EEEE, MMMM d"); // fallback to "Monday, July 1"
+
+  if (isToday(fullDateTime)) {
+    dayLabel = "Today";
+  } else if (isTomorrow(fullDateTime)) {
+    dayLabel = "Tomorrow";
+  }
+
+  return `${dayLabel} at ${formattedTime}`;
+}
+
 type RawSection = {
   title: string;
   points: string[];
 };
 
 const defaultExtras = {
-  is_furnished: false,
+  furniture_type: "",
   price: 1_500_000,
   deposit_amount: 250,
   expected_roi: 1,
@@ -278,7 +326,8 @@ export function reverseTransformedPropertyData({
     interior: parseSections(property.interior),
     exterior: parseSections(property.exterior),
     extras: {
-      is_furnished: property.extras?.is_furnished ?? defaultExtras.is_furnished,
+      furniture_type:
+        property.extras?.furniture_type ?? defaultExtras.furniture_type,
       price: property.extras?.price ?? defaultExtras.price,
       deposit_amount:
         property.extras?.deposit_amount ?? defaultExtras.deposit_amount,

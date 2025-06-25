@@ -75,7 +75,7 @@ export const formSchema = z
 
         investment_type: z.string().optional(),
 
-        is_furnished: z.boolean().default(false).optional(),
+        furniture_type: z.string().optional(),
       })
       .optional(),
 

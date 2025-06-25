@@ -1,8 +1,8 @@
 "use client";
-import Image from "next/image";
 import { useRef, useState } from "react";
+import ImagesSlider from "./ImagesSlider";
 import ScrollImagesSelector from "./ScrollImagesSelector";
-import { BsCardImage } from "react-icons/bs";
+import ShowImageModal from "./ShowImageModal";
 
 type PropertyImagePreviewType = {
   images: string[];
@@ -14,22 +14,29 @@ export default function PropertyImagePreview({
   const [selectedImage, setSelectedImage] = useState(0);
   const mainImageRef = useRef<HTMLDivElement>(null);
 
+  console.log(images?.at(selectedImage));
+
   return (
-    <div className="flex h-full max-w-full flex-1 flex-wrap gap-5 lg:flex-nowrap">
+    <div className="flex max-w-full flex-1 flex-wrap gap-5 lg:flex-nowrap">
       <div
-        className="relative aspect-video w-full flex-1 sm:min-h-[403px] lg:max-h-[450px]"
+        className="relative aspect-video w-full sm:min-h-[403px] lg:max-h-[450px] lg:w-[calc(100%-100px)]"
         ref={mainImageRef}
       >
-        <Image
-          src={images?.at(selectedImage) ?? "/HerosectionBG2.jpg"}
-          fill
-          alt="image"
-          className="rounded-[20px]"
+        <ImagesSlider
+          images={images}
+          className="w-full flex-1 rounded-[20px]"
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+          centerButtonIcon={
+            <ShowImageModal
+              imageUrl={
+                images?.at(selectedImage)
+                  ? String(images?.at(selectedImage))
+                  : "/"
+              }
+            />
+          }
         />
-        <div className="absolute bottom-4 right-4 z-[1000] flex h-[32px] items-center justify-center gap-1 rounded-xl bg-shades-white px-2 py-1 text-sm">
-          <BsCardImage />
-          {selectedImage + 1}/{images?.length}
-        </div>
       </div>
 
       <ScrollImagesSelector

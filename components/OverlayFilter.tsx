@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,12 +13,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { params } from "@/types/types";
+import { VscSettings } from "react-icons/vsc";
 import BedroomsBathroomsSelect from "./BedroomsBathroomsSelect";
 import FurnishedSelect from "./FurnishedSelect";
 import PriceRangeSelect from "./PriceRangeSelect";
 import PropertyTypeSelect from "./PropertyTypeSelect";
 import SortOrder from "./SortOrder";
-import { params } from "@/types/types";
 
 type selectItemObj = {
   value: string | number;
@@ -46,7 +46,7 @@ export default function OverlayFilter({
     max_Price,
     property_Type,
     price_Duration,
-    furniture_Type,
+    furniture_type,
     time_sort,
   } = params;
 
@@ -54,7 +54,7 @@ export default function OverlayFilter({
   const [bed, setBed] = useState("");
   const [bath, setBath] = useState("");
   const [propertyType, setPropertyType] = useState("");
-  const [furnitureType, setfurnitureType] = useState("");
+  const [furnitureType, setFurnitureType] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [priceDuration, setPriceDuration] = useState("");
@@ -72,14 +72,18 @@ export default function OverlayFilter({
       min_Price: minPrice,
       max_Price: maxPrice,
       property_Type: propertyType,
-      furniture_Type: furnitureType,
+      furniture_type: furnitureType,
       time_sort: timeSort,
       price_Duration: priceDuration,
     };
     Object.entries(filters).forEach(([key, value]) => {
-      if (value) params.set(key, String(value));
+      if (value && value?.toLowerCase() !== "any") {
+        params.set(key, String(value));
+      } else {
+        params.delete(key);
+      }
     });
-    router.push(`?${params.toString()}`);
+    router.push(`/search/${category}?${params.toString()}`);
   }
 
   useEffect(() => {
@@ -89,19 +93,35 @@ export default function OverlayFilter({
     setMaxPrice(max_Price ? String(max_Price) : "");
     setPropertyType(property_Type ? String(property_Type) : "");
     setPriceDuration(price_Duration ? String(price_Duration) : "");
-  }, [bath_N, bed_N, max_Price, min_Price, price_Duration, property_Type]);
+    setFurnitureType(furniture_type ? String(furniture_type) : "");
+  }, [
+    bath_N,
+    bed_N,
+    max_Price,
+    min_Price,
+    price_Duration,
+    property_Type,
+    furniture_type,
+  ]);
+
+  const [openKey, setOpenKey] = useState("");
+
+  const handleOpenChange = (key: string) => (open: boolean) => {
+    console.log(open);
+    if (open) {
+      setOpenKey(key);
+    } else {
+      setOpenKey("");
+    }
+  };
 
   return (
     <>
       <Sheet>
         <SheetTrigger asChild>
           <Button variant={"outline"} className="h-[50px] ring-0">
-            <Image
-              src={"/icons/filter.svg"}
-              width={24}
-              height={24}
-              alt="filter icon"
-            />
+            <VscSettings className="!h-5 !w-5" />
+
             <p className="hidden sm:block">Filters</p>
           </Button>
         </SheetTrigger>
@@ -119,6 +139,8 @@ export default function OverlayFilter({
               bathOptions={bathOptions}
               bed_N={bed_N}
               bath_N={bath_N}
+              openKey={openKey}
+              handleOpenChange={handleOpenChange}
             />
 
             <PriceRangeSelect
@@ -131,16 +153,22 @@ export default function OverlayFilter({
               min_Price={min_Price}
               max_Price={max_Price}
               category={category}
+              openKey={openKey}
+              handleOpenChange={handleOpenChange}
             />
 
             <PropertyTypeSelect
               property_Type={property_Type}
               setPropertyType={setPropertyType}
+              open={openKey === "property_type"}
+              onOpenChange={handleOpenChange("property_type")}
             />
 
             <FurnishedSelect
-              furniture_Type={furniture_Type}
-              setfurnitureType={setfurnitureType}
+              furniture_type={furniture_type}
+              setFurnitureType={setFurnitureType}
+              open={openKey === "furnished_type"}
+              onOpenChange={handleOpenChange("furnished_type")}
             />
 
             <SortOrder time_sort={time_sort} setTimeSort={setTimeSort} />

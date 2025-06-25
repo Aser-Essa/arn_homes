@@ -84,7 +84,21 @@ export default function ArticleHeroSection({
             <SlSocialLinkedin className="h-5 w-5" />
           </Link>
 
-          <CopyLinkButton />
+          <CopyLinkButton
+            className={
+              "flex h-10 items-center justify-center gap-2 rounded-full bg-shades-white px-4 py-[7px] font-medium"
+            }
+          >
+            <>
+              <Image
+                src={"/icons/chain.svg"}
+                width={24}
+                height={24}
+                alt="chain"
+              />
+              <p>Copy link</p>
+            </>
+          </CopyLinkButton>
         </div>
       </div>
     </Container>

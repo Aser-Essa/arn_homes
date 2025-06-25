@@ -32,7 +32,7 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
-function useCarousel() {
+export function useCarousel() {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
@@ -159,13 +159,15 @@ const CarouselContent = React.forwardRef<
   return (
     <div
       ref={carouselRef}
-      className={cn("w-full overflow-x-hidden p-[1px]", className)}
+      className={cn("h-full w-full overflow-x-hidden p-[1px]", className)}
     >
       <div
         ref={ref}
         className={cn(
           "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+          orientation === "horizontal"
+            ? "-ml-4 h-full"
+            : "-mt-4 h-full flex-col",
         )}
         {...props}
       />

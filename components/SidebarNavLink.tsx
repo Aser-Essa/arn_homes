@@ -22,8 +22,6 @@ export default function SidebarNavLink({
 }: SidebarNavLinkType) {
   const path = usePathname();
 
-  // const isActive = path.includes(href);
-
   const isActive =
     (href.split("/account").join("").length > 0 && path.includes(href)) ||
     (href === "" && path === "") ||
@@ -40,7 +38,7 @@ export default function SidebarNavLink({
         <Link href={href} className="flex items-center gap-2">
           <div className="block sm:hidden lg:block">{icon}</div>
           <p className="flex-1">{children}</p>
-          {numberOfNotifications && (
+          {(numberOfNotifications || numberOfNotifications === 0) && (
             <p className="font-medium max-sm:flex max-sm:aspect-square max-sm:w-7 max-sm:items-center max-sm:justify-center max-sm:rounded-full max-sm:bg-shades-off-white lg:text-lg">
               {numberOfNotifications}
             </p>

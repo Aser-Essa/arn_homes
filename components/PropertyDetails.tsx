@@ -18,7 +18,6 @@ export default function PropertyDetails({ property }: PropertyDetailsProps) {
           orientation="vertical"
           className="hidden min-h-full w-[1px] bg-gray-50 2xl:block"
         />
-
         <PropertyInfoDetail property={property} />
       </div>
     </>

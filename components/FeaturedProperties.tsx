@@ -21,25 +21,35 @@ export default async function FeaturedProperties({
 }) {
   const { data: properties } = await getProperties({});
 
+  const hasProperties = Array.isArray(properties) && properties.length > 0;
+
   return (
     <Container className={cn(className)}>
       {title}
-      <Carousel>
-        <CarouselContent>
-          {properties.map((property) => (
-            <CarouselItem
-              key={property.id}
-              className="sm:basis-1/2 lg:basis-1/3"
-            >
-              <HomeCard property={property} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <div className="mt-10 flex items-center justify-end gap-2">
-          <CarouselPrevious />
-          <CarouselNext />
+      {hasProperties ? (
+        <Carousel>
+          <CarouselContent>
+            {properties.map((property) => (
+              <CarouselItem
+                key={property.id}
+                className="sm:basis-1/2 lg:basis-1/3"
+              >
+                <HomeCard property={property} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-10 flex items-center justify-end gap-2">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
+        </Carousel>
+      ) : (
+        <div className="flex h-[200px] w-full items-center justify-center">
+          <p className="text-shades-gray-500 text-lg font-semibold">
+            No properties found
+          </p>
         </div>
-      </Carousel>
+      )}
     </Container>
   );
 }

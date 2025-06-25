@@ -3,8 +3,9 @@ import FirstArticle from "@/components/FirstArticle";
 import HeroSection from "@/components/HeroSection";
 import SearchBlogs from "@/components/SearchBlogs";
 import { getArticles } from "@/lib/queries/articles";
+import { params } from "@/types/types";
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+type SearchParams = Promise<params>;
 
 export default async function Page(props: { searchParams: SearchParams }) {
   const searchParamsValues = await props.searchParams;
@@ -33,8 +34,18 @@ export default async function Page(props: { searchParams: SearchParams }) {
         slogan={"Explore the latest trends and insights in real estate."}
       />
       <SearchBlogs />
-      <FirstArticle article={articles.at(0)} />
-      <ArticlesCards articles={articles} count={count} />
+      {(count ? Number(count) : 0) > 0 ? (
+        <>
+          <FirstArticle article={articles.at(0)} />
+          <ArticlesCards articles={articles} count={count} />
+        </>
+      ) : (
+        <div className="flex h-[calc(100vh-200px)] w-full items-center justify-center">
+          <p className="text-shades-gray-500 text-lg font-semibold">
+            No Articles found
+          </p>
+        </div>
+      )}
     </>
   );
 }

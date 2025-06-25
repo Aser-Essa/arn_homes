@@ -7,6 +7,7 @@ import FormFieldWrapper from "./FormFieldWrapper";
 import InvestmentFields from "./InvestmentFields";
 import RentFields from "./RentFields";
 import { useFormContext } from "react-hook-form";
+import CustomSelect from "./CustomSelect";
 
 export const commonFields = [
   "title",
@@ -25,13 +26,13 @@ export const commonFields = [
   "interior",
 ];
 
-export const saleFields = ["price"];
+export const saleFields = ["price", "furniture_type"];
 
 export const rentFields = [
   "monthly_rent",
   "deposit_amount",
   "lease_term",
-  "is_furnished",
+  "furniture_type",
 ];
 
 export const investmentFields = [
@@ -40,6 +41,12 @@ export const investmentFields = [
   "minimum_investment",
   "investment_term",
   "investment_type",
+];
+
+const furnishedTypeOptions = [
+  { value: "furnished", label: "Furnished" },
+  { value: "semi-furnished", label: "Semi-furnished" },
+  { value: "unfurnished", label: "Unfurnished" },
 ];
 
 export default function PropertyInputs() {
@@ -65,6 +72,21 @@ export default function PropertyInputs() {
       </FormFieldWrapper>
       <AddPropertiesTextInputFields />
       <RentFields />
+      {category != "investment" && (
+        <>
+          <FormFieldWrapper name="extras.furniture_type" label="Furnished Type">
+            {(field) => (
+              <CustomSelect
+                placeholder="Furnished Type"
+                defaultValue={field.value}
+                onValueChange={field.onChange}
+                selectItems={furnishedTypeOptions}
+                className="h-[44px] w-full max-w-full rounded-lg text-base"
+              />
+            )}
+          </FormFieldWrapper>
+        </>
+      )}
       <InvestmentFields />
       <FormFieldWrapper
         name={"description"}

@@ -1,9 +1,15 @@
 "use client";
-import Image from "next/image";
-import React from "react";
 import toast from "react-hot-toast";
 
-export default function CopyLinkButton() {
+type CopyLinkButtonType = {
+  className: string;
+  children: React.ReactNode;
+};
+
+export default function CopyLinkButton({
+  className,
+  children,
+}: CopyLinkButtonType) {
   async function copyToClipboard() {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -15,12 +21,8 @@ export default function CopyLinkButton() {
 
   return (
     <>
-      <button
-        className="flex h-10 items-center justify-center gap-2 rounded-full bg-shades-white px-4 py-[7px] font-medium"
-        onClick={copyToClipboard}
-      >
-        <Image src={"/icons/chain.svg"} width={24} height={24} alt="chain" />
-        <p>Copy link</p>
+      <button className={className} onClick={copyToClipboard}>
+        {children}
       </button>
     </>
   );

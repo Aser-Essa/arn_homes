@@ -19,6 +19,16 @@ export default async function Properties({ params, category }: PropertiesType) {
     category: category ? String(category) : "sale",
   });
 
+  if (count === 0) {
+    return (
+      <div className="flex h-[200px] w-full items-center justify-center">
+        <p className="text-shades-gray-500 text-lg font-semibold">
+          No properties found
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Container className="mt-10 space-y-10 lg:mt-[15px]">

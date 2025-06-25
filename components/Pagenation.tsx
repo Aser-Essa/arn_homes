@@ -30,12 +30,13 @@ export default function Pagenation({ count, perPage = 9 }: PagenationType) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     params.set("page", String(page));
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page, router]);
 
   return (
     <>
-      {Number(count) >= 9 && (
+      {Number(count) >= (perPage || 9) && (
         <div className="flex items-center justify-end gap-2">
           <Button
             disabled={page <= 1}

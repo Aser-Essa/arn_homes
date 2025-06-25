@@ -13,6 +13,8 @@ type BedroomsBathroomsSelectType = {
   setBath: React.Dispatch<React.SetStateAction<string>>;
   bed_N: string | string[] | undefined;
   bath_N: string | string[] | undefined;
+  openKey: string;
+  handleOpenChange: (key: string) => (open: boolean) => void;
 };
 
 export default function BedroomsBathroomsSelect({
@@ -22,6 +24,8 @@ export default function BedroomsBathroomsSelect({
   setBath,
   bed_N,
   bath_N,
+  openKey,
+  handleOpenChange,
 }: BedroomsBathroomsSelectType) {
   return (
     <>
@@ -34,6 +38,8 @@ export default function BedroomsBathroomsSelect({
             selectItems={bedOptions}
             onValueChange={(value) => setBed(value)}
             defaultValue={bed_N}
+            open={openKey === "bed"}
+            onOpenChange={handleOpenChange("bed")}
           />
         </div>
         <div className="flex-1 space-y-2.5">
@@ -44,6 +50,8 @@ export default function BedroomsBathroomsSelect({
             selectItems={bathOptions}
             onValueChange={(value) => setBath(value)}
             defaultValue={bath_N}
+            open={openKey === "bath"}
+            onOpenChange={handleOpenChange("bath")}
           />
         </div>
       </div>

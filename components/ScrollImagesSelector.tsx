@@ -65,7 +65,7 @@ export default function ScrollImagesSelector({
     <>
       <div className="relative overflow-auto">
         <div
-          className="flex min-w-20 space-x-5 space-y-0 overflow-auto lg:block lg:space-x-0 lg:space-y-5"
+          className="flex min-w-20 space-x-4 space-y-0 overflow-auto lg:block lg:space-x-0 lg:space-y-4"
           style={{ maxHeight: height }}
           ref={scrollContainerRef}
         >

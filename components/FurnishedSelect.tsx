@@ -2,19 +2,19 @@ import React from "react";
 import CustomSelect from "./CustomSelect";
 
 type FurnishedSelectType = {
-  furniture_Type: string | string[] | undefined;
-  setfurnitureType: React.Dispatch<React.SetStateAction<string>>;
+  furniture_type: string | string[] | undefined;
+  setFurnitureType: React.Dispatch<React.SetStateAction<string>>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
 export default function FurnishedSelect({
-  furniture_Type,
-  setfurnitureType,
+  furniture_type,
+  setFurnitureType,
+  open,
+  onOpenChange,
 }: FurnishedSelectType) {
   const furnitureOptions = [
-    {
-      value: "Any",
-      label: `Any`,
-    },
     {
       value: "furnished",
       label: `Furnished`,
@@ -38,8 +38,10 @@ export default function FurnishedSelect({
             className="min-w-full"
             placeholder="Furnished options"
             selectItems={furnitureOptions}
-            onValueChange={(value) => setfurnitureType(value)}
-            defaultValue={furniture_Type || "Any"}
+            onValueChange={(value) => setFurnitureType(value)}
+            defaultValue={furniture_type || "furnished"}
+            open={open}
+            onOpenChange={onOpenChange}
           />
         </div>
       </div>

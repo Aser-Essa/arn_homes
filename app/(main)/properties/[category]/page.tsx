@@ -55,7 +55,6 @@ export default async function Page({ params, searchParams }: SearchPageParams) {
         />
       </Container>
       <Properties params={searchParamsValues} category={category} />
-
       <SignedOut>
         <SignInBanner />
       </SignedOut>

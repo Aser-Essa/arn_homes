@@ -1,12 +1,13 @@
+import { isPropertySaved } from "@/lib/queries/favorites";
 import { cn, formatPrice, formatTimeAgo } from "@/lib/utils";
 import { Property } from "@/types/types";
-import { BsShareFill } from "react-icons/bs";
-import { IoCalendar } from "react-icons/io5";
-import ToogleFavorite from "./ToogleFavorite";
-import PropertyInfoStats from "./PropertyInfoStats";
-import PropertyActionButtons from "./PropertyActionButtons";
 import { auth } from "@clerk/nextjs/server";
-import { isPropertySaved } from "@/lib/queries/favorites";
+import Image from "next/image";
+import { IoCalendar } from "react-icons/io5";
+import CopyLinkButton from "./CopyLinkButton";
+import PropertyActionButtons from "./PropertyActionButtons";
+import PropertyInfoStats from "./PropertyInfoStats";
+import ToogleFavorite from "./ToogleFavorite";
 
 type PropertyInfoDetailType = {
   property: Property;
@@ -46,12 +47,16 @@ export default async function PropertyInfoDetail({
             <p className="text-xs">For {category}</p>
           </div>
           <div className="flex items-center gap-5">
-            <div
-              className={
-                "flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white"
-              }
-            >
-              <BsShareFill />
+            <div>
+              <CopyLinkButton className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-off-white">
+                <Image
+                  src={"/icons/chain.svg"}
+                  width={24}
+                  height={24}
+                  alt="chain"
+                />
+                {/* <BsShareFill /> */}
+              </CopyLinkButton>
             </div>
             <ToogleFavorite
               className="bg-shades-off-white"

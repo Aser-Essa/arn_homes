@@ -22,14 +22,36 @@ export default async function MessagesList({
       <div className="mt-4 space-y-5 sm:mt-5">
         {message_category === "direct_messages" ? (
           <>
-            {chats?.map((chat, idx) => (
-              <MessageCard key={`${chat?.id} ${idx}`} chat={chat} />
-            ))}
+            {chats?.length > 0 ? (
+              <>
+                {chats?.map((chat, idx) => (
+                  <MessageCard key={`${chat?.id} ${idx}`} chat={chat} />
+                ))}
+              </>
+            ) : (
+              <div className="flex h-[250px] w-full items-center justify-center">
+                <p className="text-shades-gray-500 text-lg font-semibold">
+                  No Messages found
+                </p>
+              </div>
+            )}
           </>
         ) : (
-          scheduledTours?.map((tour, idx) => (
-            <ScheduledTourCard key={`${tour?.id} ${idx}`} tour={tour} />
-          ))
+          <>
+            {scheduledTours?.length > 0 ? (
+              <>
+                {scheduledTours?.map((tour, idx) => (
+                  <ScheduledTourCard key={`${tour?.id} ${idx}`} tour={tour} />
+                ))}
+              </>
+            ) : (
+              <div className="flex h-[250px] w-full items-center justify-center">
+                <p className="text-shades-gray-500 text-lg font-semibold">
+                  No scheduled tours found
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

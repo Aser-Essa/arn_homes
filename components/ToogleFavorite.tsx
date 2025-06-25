@@ -1,9 +1,12 @@
 "use client";
-import { toogleFavorite } from "@/lib/actions/favorites";
+
+import { useSavedPropertiesRealtime } from "@/hooks/useSavedPropertiesRealtime";
+import { refresh, toogleFavorite } from "@/lib/actions/favorites";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function ToogleFavorite({
   className,
@@ -16,48 +19,51 @@ export default function ToogleFavorite({
   property_id: string;
   category: string;
 }) {
-  const [isFavorite, setIsFavorite] = useState(isSaved ?? false);
-
+  const [isFavorite, setIsFavorite] = useState(isSaved);
   const { user } = useUser();
-  if (!user) return null; // Ensure user is available
-  const { id } = user;
+  const userId = user?.id || "";
+
+  useEffect(() => {
+    setIsFavorite(isSaved); // Sync with new SSR value on re-render
+  }, [isSaved]);
+
+  useSavedPropertiesRealtime(userId, async ({ eventType }) => {
+    if (eventType === "INSERT") {
+      toast.success("Property Saved Successfully");
+    } else if (eventType === "DELETE") {
+      toast.success("Property Removed Successfully");
+    }
+    await refresh();
+  });
+
+  if (!userId) return null;
 
   async function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.stopPropagation();
     e.preventDefault();
-    setIsFavorite((isFavorite) => !isFavorite);
+    const newValue = !isFavorite;
+    setIsFavorite(newValue);
     await toogleFavorite({
-      user_id: id ? String(id) : "",
+      user_id: userId,
       property_id,
       category,
     });
   }
 
   return (
-    <>
-      <div
-        className={cn(
-          "flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-white",
-          className,
-        )}
-        onClick={handleClick}
-      >
-        {isFavorite ? (
-          <Image
-            src={"/icons/fillheart.svg"}
-            width={18}
-            height={18}
-            alt="heart"
-          />
-        ) : (
-          <Image
-            src={"/icons/outlineheart.svg"}
-            width={18}
-            height={18}
-            alt="heart"
-          />
-        )}
-      </div>
-    </>
+    <div
+      className={cn(
+        "flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-shades-white",
+        className,
+      )}
+      onClick={handleClick}
+    >
+      <Image
+        src={isFavorite ? "/icons/fillheart.svg" : "/icons/outlineheart.svg"}
+        width={18}
+        height={18}
+        alt="heart"
+      />
+    </div>
   );
 }

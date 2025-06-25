@@ -13,7 +13,7 @@ export default function ArticlesCards({ articles, count }: ArticlesCardsType) {
   return (
     <Container className="mb-[200px] mt-[30px] space-y-10">
       <div className="grid grid-cols-[repeat(auto-fill_,minmax(330px,1fr))] gap-[30px]">
-        <div className="block md:hidden">
+        <div className="box-shadow block overflow-hidden rounded-xl md:hidden">
           <ArticleCard article={articles?.at(0)} />
         </div>
         {articles.slice(1).map((article, idx) => (

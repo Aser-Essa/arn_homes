@@ -49,6 +49,7 @@ export default function CreateEditPropertyBasicDataForm({
         }),
         images: property?.images || [],
       };
+      console.log(transformedData);
       await createOrUpdateProperty(transformedData);
 
       toast.success("Property details saved. Proceed to upload images.");
