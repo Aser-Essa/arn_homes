@@ -25,7 +25,7 @@ export default async function PropertyInfoCard({
     category,
   } = property;
 
-  const { price, monthly_rent } = extras || {};
+  const { price, monthly_rent, furniture_type } = extras || {};
 
   const { userId } = await auth();
 
@@ -65,6 +65,9 @@ export default async function PropertyInfoCard({
           bedNumber={bed_number}
           bathNumber={bath_number}
           isCard={true}
+          furniture_type={
+            furniture_type ? String(furniture_type) : "unfurnished"
+          }
         />
       </div>
     </>

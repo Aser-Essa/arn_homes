@@ -14,8 +14,12 @@ type PropertiesType = {
 };
 
 export default async function Properties({ params, category }: PropertiesType) {
+  let { page, time_sort } = params;
+  page = page ? String(page) : "";
+  time_sort = page ? String(time_sort) : "";
+
   const { data: PropertiesData, count } = await getProperties({
-    params: { time_sort: String(params?.time_sort) },
+    params: { page, time_sort },
     category: category ? String(category) : "sale",
   });
 

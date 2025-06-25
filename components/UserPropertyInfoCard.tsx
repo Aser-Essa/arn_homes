@@ -27,7 +27,7 @@ export default async function UserPropertyInfoCard({
     status,
   } = property;
 
-  const { price, monthly_rent } = extras || {};
+  const { price, monthly_rent, furniture_type } = extras || {};
 
   let { userId } = await auth();
   userId = userId ? String(userId) : "";
@@ -77,6 +77,9 @@ export default async function UserPropertyInfoCard({
             bedNumber={bed_number}
             bathNumber={bath_number}
             isCard={false}
+            furniture_type={
+              furniture_type ? String(furniture_type) : "unfurnished"
+            }
           />
         </div>
         <div className="flex items-center justify-between sm:hidden">
@@ -84,7 +87,7 @@ export default async function UserPropertyInfoCard({
           <IconText icon={`/icons/blackshower.svg`} text={`${bath_number}`} />
           <IconText
             icon={`/icons/blackfurnished.svg`}
-            text={`Semi-furnished`}
+            text={`${furniture_type ? String(furniture_type) : "unfurnished"}`}
           />
         </div>
       </div>

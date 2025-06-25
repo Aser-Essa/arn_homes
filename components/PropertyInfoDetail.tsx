@@ -29,7 +29,7 @@ export default async function PropertyInfoDetail({
     category,
   } = property;
 
-  const { price, monthly_rent } = extras || {};
+  const { price, monthly_rent, furniture_type } = extras || {};
 
   const { userId } = await auth();
 
@@ -82,7 +82,13 @@ export default async function PropertyInfoDetail({
           <p className="text-sm leading-5">Listed {formatTimeAgo(listed_in)}</p>
         </div>
 
-        <PropertyInfoStats bedNumber={bed_number} bathNumber={bath_number} />
+        <PropertyInfoStats
+          bedNumber={bed_number}
+          bathNumber={bath_number}
+          furniture_type={
+            furniture_type ? String(furniture_type) : "unfurnished"
+          }
+        />
         <PropertyActionButtons property_id={id} />
       </div>
     </>

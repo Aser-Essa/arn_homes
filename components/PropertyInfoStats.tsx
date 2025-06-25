@@ -6,12 +6,14 @@ type PropertyInfoStatsType = {
   bedNumber: number;
   bathNumber: number;
   isCard?: boolean;
+  furniture_type: string;
 };
 
 export default function PropertyInfoStats({
   bedNumber,
   bathNumber,
   isCard,
+  furniture_type,
 }: PropertyInfoStatsType) {
   const statsMode = isCard ? "" : "black";
 
@@ -35,7 +37,7 @@ export default function PropertyInfoStats({
         />
         <IconText
           icon={`/icons/${statsMode}furnished.svg`}
-          text={`Semi-furnished`}
+          text={`${furniture_type || "unfurnished"}`}
         />
       </div>
     </>

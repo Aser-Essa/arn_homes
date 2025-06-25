@@ -15,7 +15,7 @@ type HomeCardType = {
 export default async function HomeCard({ property, className }: HomeCardType) {
   const {
     id,
-    title,
+    property_type,
     address,
     images,
     extras,
@@ -24,7 +24,7 @@ export default async function HomeCard({ property, className }: HomeCardType) {
     category,
   } = property;
 
-  const { price, monthly_rent } = extras || {};
+  const { price, monthly_rent, furniture_type } = extras || {};
 
   const { userId } = await auth();
 
@@ -69,7 +69,7 @@ export default async function HomeCard({ property, className }: HomeCardType) {
                   ? `${formatPrice(Number(monthly_rent))}/Month`
                   : formatPrice(Number(price))}
               </p>
-              <p className="font-semibold text-scooter-900">{title}</p>
+              <p className="font-semibold text-scooter-900">{property_type}</p>
               <p>{address}</p>
             </div>
             <div className="flex h-[56px] w-full items-center justify-between rounded-xl bg-shades-black p-4 text-shades-white">
@@ -99,7 +99,10 @@ export default async function HomeCard({ property, className }: HomeCardType) {
                   height={14}
                   alt="bed"
                 />
-                <p className="text-nowrap text-sm">Semi-furnished</p>
+                <p className="text-nowrap text-sm">
+                  {" "}
+                  {furniture_type || "unfurnished"}
+                </p>
               </div>
             </div>
           </div>
