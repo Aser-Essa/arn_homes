@@ -12,7 +12,7 @@ export type Property = {
   area: number;
   description: string;
   property_type: string;
-  category: "sale" | "rent" | "investment";
+  category: string;
   listed_in: string;
   state: string;
   status?: string;

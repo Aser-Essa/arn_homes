@@ -58,7 +58,7 @@ export default async function PropertyInfoDetail({
             <div
               className={cn(
                 "h-2 w-2 rounded-full",
-                `bg-${colorsBasedCategory[category]}`,
+                `bg-${colorsBasedCategory[category as keyof colorsBasedCategoryType]}`,
               )}
             ></div>
             <p className="text-xs">For {category}</p>
