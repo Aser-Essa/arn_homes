@@ -17,7 +17,10 @@ type Params = Promise<params>;
 export default async function Home({ searchParams }: { searchParams: Params }) {
   const { category } = await searchParams;
 
-  const { data: unFilteredData } = await getProperties({});
+  const { data: unFilteredData } = await getProperties({ perPage: 50 });
+
+  console.log(unFilteredData?.map((e) => e?.property_type));
+
   const stateAddressArray = unFilteredData
     ?.filter((property) => property?.category === (category || "sale"))
     .map((el) => el.address);

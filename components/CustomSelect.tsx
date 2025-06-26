@@ -53,7 +53,7 @@ export default function CustomSelect({
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="rounded-xl font-exo" portal={false}>
+      <SelectContent className="rounded-xl font-exo">
         <SelectGroup>
           {selectItems.map(({ value, label }) => (
             <SelectItem key={label} value={String(value)}>

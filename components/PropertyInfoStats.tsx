@@ -29,11 +29,11 @@ export default function PropertyInfoStats({
       >
         <IconText
           icon={`/icons/${statsMode}bed.svg`}
-          text={`${bedNumber} beds`}
+          text={`${bedNumber || 0} beds`}
         />
         <IconText
           icon={`/icons/${statsMode}shower.svg`}
-          text={`${bathNumber} baths`}
+          text={`${bathNumber || 0} baths`}
         />
         <IconText
           icon={`/icons/${statsMode}furnished.svg`}

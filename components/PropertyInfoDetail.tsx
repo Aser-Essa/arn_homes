@@ -14,6 +14,18 @@ type PropertyInfoDetailType = {
   card?: boolean;
 };
 
+type colorsBasedCategoryType = {
+  sale: string;
+  rent: string;
+  investment: string;
+};
+
+const colorsBasedCategory: colorsBasedCategoryType = {
+  sale: "scooter-600",
+  rent: "amber-600",
+  investment: "blue-600",
+};
+
 export default async function PropertyInfoDetail({
   property,
   card,
@@ -43,7 +55,12 @@ export default async function PropertyInfoDetail({
       <div className={cn("flex-1 space-y-5 text-nowrap", card && "p-5")}>
         <div className="flex h-[70px] items-center justify-between">
           <div className="flex h-[26px] w-[77px] items-center justify-center gap-1 rounded-full bg-shades-off-white p-1 pr-2">
-            <div className="h-2 w-2 rounded-full bg-scooter-600"></div>
+            <div
+              className={cn(
+                "h-2 w-2 rounded-full",
+                `bg-${colorsBasedCategory[category]}`,
+              )}
+            ></div>
             <p className="text-xs">For {category}</p>
           </div>
           <div className="flex items-center gap-5">

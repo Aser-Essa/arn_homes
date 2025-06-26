@@ -48,50 +48,37 @@ export async function getProperties({
   let from = (pageNumber - 1) * perPage;
   let to = from + perPage - 1;
 
-  const isValid = (val?: string) =>
-    val && val.toLowerCase() !== "any" && val.trim() !== "";
+  const isValid = (val?: string | number) =>
+    val !== undefined &&
+    val !== null &&
+    val !== "" &&
+    String(val).toLowerCase() !== "any" &&
+    String(val).trim() !== "";
 
   let query = supabase
     .from("properties")
     .select("*", { count: "exact" })
     .eq("category", category);
-  // .eq("status", "reviewing");
 
-  if (isValid(bed_N)) query = query.eq("bed_number", bed_N);
-  if (isValid(bath_N)) query = query.eq("bath_number", bath_N);
-
-  if (isValid(min_Price) && category !== "rent") {
-    query = query.gte("extras->>price", Number(min_Price));
+  if (isValid(bed_N)) {
+    query = query.eq("bed_number", Number(bed_N));
   }
 
-  if (isValid(max_Price) && category !== "rent") {
-    query = query.lte("extras->>price", Number(max_Price));
+  if (isValid(bath_N)) {
+    query = query.eq("bath_number", Number(bath_N));
   }
 
-  if (category === "rent" && isValid(price_Duration)) {
-    if (isValid(min_Price)) {
-      query = query.gte(
-        "extras->>monthly_rent",
-        convertToMonthly(Number(min_Price), price_Duration),
-      );
-    }
-
-    if (isValid(max_Price)) {
-      query = query.lte(
-        "extras->>monthly_rent",
-        convertToMonthly(Number(max_Price), price_Duration),
-      );
-    }
+  if (property_Type && isValid(property_Type)) {
+    const types = property_Type.split(",").map((t) => t.trim()); // ["Condo", "Single-family"]
+    query = query.in("property_type", types);
   }
-
-  if (isValid(property_Type)) query = query.eq("property_type", property_Type);
 
   if (isValid(time_sort)) {
     const days = Number(time_sort);
-    if (!isNaN(days)) {
-      const time = new Date();
-      time.setDate(time.getDate() - days);
-      query = query.gte("listed_in", time.toISOString());
+    if (!isNaN(days) && days > 0) {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days);
+      query = query.gte("listed_in", cutoffDate.toISOString());
     }
   }
 
@@ -103,21 +90,69 @@ export async function getProperties({
     query = query.eq("extras->>furniture_type", furniture_type);
   }
 
-  const { count: totalCount, error: countError } = await query;
-  if (countError) throw new Error(countError.message);
+  try {
+    const { data: allData, error } = await query;
 
-  const maxNumberOfPages = Math.ceil(Number(totalCount) / perPage);
-  pageNumber = Math.min(pageNumber, maxNumberOfPages);
-  from = (pageNumber - 1) * perPage;
-  to = from + perPage - 1;
+    if (error) {
+      console.error("Database query error:", error);
+      throw new Error(`Database query failed: ${error.message}`);
+    }
 
-  const { data, count, error } = await query.range(from, to);
+    let filteredData = allData || [];
 
-  if (error) {
-    throw new Error(error.message);
+    if (category !== "rent") {
+      if (isValid(min_Price)) {
+        const minPriceNum = Number(min_Price);
+        filteredData = filteredData.filter((property) => {
+          const price = Number(property.extras?.price);
+          return !isNaN(price) && price >= minPriceNum;
+        });
+      }
+
+      if (isValid(max_Price)) {
+        const maxPriceNum = Number(max_Price);
+        filteredData = filteredData.filter((property) => {
+          const price = Number(property.extras?.price);
+          return !isNaN(price) && price <= maxPriceNum;
+        });
+      }
+    }
+
+    if (category === "rent" && isValid(price_Duration)) {
+      if (isValid(min_Price)) {
+        const monthlyMin = convertToMonthly(Number(min_Price), price_Duration);
+        filteredData = filteredData.filter((property) => {
+          const monthlyRent = Number(property.extras?.monthly_rent);
+          return !isNaN(monthlyRent) && monthlyRent >= monthlyMin;
+        });
+      }
+
+      if (isValid(max_Price)) {
+        const monthlyMax = convertToMonthly(Number(max_Price), price_Duration);
+        filteredData = filteredData.filter((property) => {
+          const monthlyRent = Number(property.extras?.monthly_rent);
+          return !isNaN(monthlyRent) && monthlyRent <= monthlyMax;
+        });
+      }
+    }
+
+    const filteredCount = filteredData.length;
+    const maxNumberOfPages = Math.ceil(filteredCount / perPage);
+    pageNumber = Math.min(pageNumber, maxNumberOfPages || 1);
+    from = (pageNumber - 1) * perPage;
+    to = from + perPage;
+    const paginatedData = filteredData.slice(from, to);
+
+    return {
+      data: paginatedData,
+      count: filteredCount,
+      totalPages: maxNumberOfPages,
+      currentPage: pageNumber,
+    };
+  } catch (error) {
+    console.error("Database query error:", error);
+    throw error;
   }
-
-  return { data, count };
 }
 
 export async function getProperty(id: string) {

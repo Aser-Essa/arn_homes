@@ -36,7 +36,7 @@ export default function SearchProperties({
           </div>
         </Fragment>
       ))}
-      <Pagenation count={count} perPage={3} />
+      <Pagenation count={count} perPage={5} />
     </Container>
   );
 }

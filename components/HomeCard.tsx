@@ -6,10 +6,23 @@ import { BsArrowUpRight } from "react-icons/bs";
 import ToogleFavorite from "./ToogleFavorite";
 import { auth } from "@clerk/nextjs/server";
 import { isPropertySaved } from "@/lib/queries/favorites";
+import PropertyInfoStats from "./PropertyInfoStats";
 
 type HomeCardType = {
   property: Property;
   className?: string;
+};
+
+type colorsBasedCategoryType = {
+  sale: string;
+  rent: string;
+  investment: string;
+};
+
+const colorsBasedCategory: colorsBasedCategoryType = {
+  sale: "scooter-600",
+  rent: "amber-600",
+  investment: "blue-600",
 };
 
 export default async function HomeCard({ property, className }: HomeCardType) {
@@ -42,7 +55,12 @@ export default async function HomeCard({ property, className }: HomeCardType) {
         )}
       >
         <div className="absolute top-[27px] z-50 flex h-[26px] w-[73px] items-center gap-1 rounded-r-full bg-shades-white p-1 pr-2">
-          <div className="h-2 w-2 rounded-full bg-scooter-600"></div>
+          <div
+            className={cn(
+              "h-2 w-2 rounded-full",
+              `bg-${colorsBasedCategory[category]}`,
+            )}
+          ></div>
           <p className="text-xs">For {category}</p>
         </div>
 
@@ -72,39 +90,14 @@ export default async function HomeCard({ property, className }: HomeCardType) {
               <p className="font-semibold text-scooter-900">{property_type}</p>
               <p>{address}</p>
             </div>
-            <div className="flex h-[56px] w-full items-center justify-between rounded-xl bg-shades-black p-4 text-shades-white">
-              <div className="mx-1 flex items-center gap-2">
-                <Image
-                  src={"/icons/bed.svg"}
-                  width={20}
-                  height={14}
-                  alt="bed"
-                />
-                <p>{bed_number}</p>
-              </div>
-              <div className="mx-1 flex items-center gap-2">
-                <Image
-                  src={"/icons/shower.svg"}
-                  width={20}
-                  height={14}
-                  alt="bed"
-                />
-                <p>{bath_number}</p>
-              </div>
-
-              <div className="mx-1 flex items-center gap-2">
-                <Image
-                  src={"/icons/furnished.svg"}
-                  width={20}
-                  height={14}
-                  alt="bed"
-                />
-                <p className="text-nowrap text-sm">
-                  {" "}
-                  {furniture_type || "unfurnished"}
-                </p>
-              </div>
-            </div>
+            <PropertyInfoStats
+              bedNumber={bed_number}
+              bathNumber={bath_number}
+              isCard={true}
+              furniture_type={
+                furniture_type ? String(furniture_type) : "unfurnished"
+              }
+            />
           </div>
         </div>
       </div>

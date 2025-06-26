@@ -28,7 +28,7 @@ export default async function page({ params, searchParams }: SearchPageParams) {
   const { data: FilteredData, count } = await getProperties({
     category: category ? String(category) : "sale",
     params: searchParamsValues,
-    perPage: 3,
+    perPage: 5,
   });
 
   const stateAddressArray = unFilteredData.map((el) => el.address);
