@@ -62,17 +62,20 @@ export const RealtimeChat = ({
   // Merge realtime messages with initial messages
   const allMessages = useMemo(() => {
     const mergedMessages = [...initialMessages, ...realtimeMessages];
-    // Remove duplicates based on message id
+
     const uniqueMessages = mergedMessages.filter(
       (message, index, self) =>
-        index === self.findIndex((m) => m.id === message.id),
-    );
-    // Sort by creation date
-    const sortedMessages = uniqueMessages.sort((a, b) =>
-      a.sent_at.localeCompare(b.sent_at),
+        index ===
+        self.findIndex(
+          (m) =>
+            m.id === message.id ||
+            (m.content === message.content &&
+              m.sent_at === message.sent_at &&
+              m.sender_id === message.sender_id),
+        ),
     );
 
-    return sortedMessages;
+    return uniqueMessages.sort((a, b) => a.sent_at.localeCompare(b.sent_at));
   }, [initialMessages, realtimeMessages]);
 
   useEffect(() => {

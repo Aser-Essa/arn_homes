@@ -47,7 +47,6 @@ export function useRealtimeChat({
       .on("broadcast", { event: EVENT_MESSAGE_TYPE }, (payload) => {
         setMessages((current) => [...current, payload.payload as ChatMessage]);
       })
-
       .subscribe(async (status) => {
         if (status === "SUBSCRIBED") {
           setIsConnected(true);
@@ -72,23 +71,26 @@ export function useRealtimeChat({
   const sendMessage = useCallback(
     async (content: string) => {
       if (!channel || !isConnected) return;
-      const message: ChatMessage = {
-        id: crypto.randomUUID(),
-        content,
-        sender_id: id ? String(id) : "",
-        sent_at: new Date().toISOString(),
-        chatId,
-      };
 
-      // Update local state immediately for the sender
-      setMessages((current) => [...current, message]);
-
-      await sendMessageToSupabase({
-        senderId: message.sender_id,
+      // Send message to Supabase and get the real DB record
+      const dbMessage = await sendMessageToSupabase({
+        senderId: id!,
         receiverId: sender.id,
         propertyId,
-        content: content,
+        content,
       });
+
+      if (!dbMessage) return; // Optional: handle errors
+
+      const message: ChatMessage = {
+        id: dbMessage.id, // use DB-generated ID
+        content: dbMessage.content,
+        sender_id: dbMessage.sender_id,
+        sent_at: dbMessage.sent_at,
+        chatId: dbMessage.chat_id,
+      };
+
+      setMessages((current) => [...current, message]);
 
       await channel.send({
         type: "broadcast",
