@@ -29,7 +29,7 @@ export const formSchema = z
     description: z
       .string()
       .min(20, "Description must be at least 20 characters long")
-      .max(1000, "Description must be at most 1000 characters long"),
+      .max(5000, "Description must be at most 1000 characters long"),
 
     property_type: z
       .string()
