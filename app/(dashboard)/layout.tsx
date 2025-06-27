@@ -40,7 +40,7 @@ export default function RootLayout({
             position="top-center"
             reverseOrder={false}
             containerStyle={{
-              zIndex: "200000",
+              zIndex: "200000000000",
               top: "24px",
               fontWeight: "600",
               color: "#0d0e0f",
