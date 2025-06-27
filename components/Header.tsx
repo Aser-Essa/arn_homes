@@ -15,7 +15,7 @@ export default function Header({ className }: HeaderType) {
     <>
       <Container
         className={cn(
-          "box-shadow fixed left-0 top-0 z-[1000000000] flex h-[98px] w-full items-center justify-between bg-shades-white py-5 font-exo",
+          "box-shadow fixed left-0 top-0 z-[100000000] flex h-[98px] w-full items-center justify-between bg-shades-white py-5 font-exo",
           className,
         )}
       >

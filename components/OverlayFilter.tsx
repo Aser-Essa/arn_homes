@@ -124,7 +124,7 @@ export default function OverlayFilter({
             <p className="hidden sm:block">Filters</p>
           </Button>
         </SheetTrigger>
-        <SheetContent className="z-[1000000000000000000] w-[87%] overflow-y-auto text-nowrap rounded-l-xl px-4 pb-0 pt-10 font-exo sm:max-w-[60%] sm:px-8 lg:max-w-[43%] lg:px-12">
+        <SheetContent className="z-[10000000000] w-[87%] overflow-y-auto text-nowrap rounded-l-xl px-4 pb-0 pt-10 font-exo sm:max-w-[60%] sm:px-8 lg:max-w-[43%] lg:px-12">
           <SheetHeader className="mb-10">
             <SheetTitle className="text-start text-xl font-semibold sm:text-2xl">
               Filter your search results

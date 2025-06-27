@@ -48,7 +48,7 @@ export default function SideMobileMenu() {
         <SheetTrigger asChild>
           <FaBars className="h-6 w-6 cursor-pointer" />
         </SheetTrigger>
-        <SheetContent className="z-[1000000000] w-[85%] overflow-y-auto text-nowrap rounded-l-lg p-6 pt-8 font-exo">
+        <SheetContent className="z-[10000000000] w-[85%] overflow-y-auto text-nowrap rounded-l-lg p-6 pt-8 font-exo">
           <SheetHeader className="mb-10 pl-2">
             <SheetTitle className="flex items-end gap-2 text-start text-xl font-bold leading-4 sm:text-2xl">
               <p>Arn Homes</p>
