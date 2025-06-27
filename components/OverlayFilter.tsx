@@ -107,7 +107,6 @@ export default function OverlayFilter({
   const [openKey, setOpenKey] = useState("");
 
   const handleOpenChange = (key: string) => (open: boolean) => {
-    console.log(open);
     if (open) {
       setOpenKey(key);
     } else {

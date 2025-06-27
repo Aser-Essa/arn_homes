@@ -17,13 +17,11 @@ type Params = Promise<params>;
 export default async function Home({ searchParams }: { searchParams: Params }) {
   const { category } = await searchParams;
 
-  const { data: unFilteredData } = await getProperties({ perPage: 50 });
+  const { data: unFilteredData } = await getProperties({
+    category: category ? String(category) : category,
+  });
 
-  console.log(unFilteredData?.map((e) => e?.property_type));
-
-  const stateAddressArray = unFilteredData
-    ?.filter((property) => property?.category === (category || "sale"))
-    .map((el) => el.address);
+  const stateAddressArray = unFilteredData.map((el) => el.address);
 
   const { reviews } = await getReviews({});
 

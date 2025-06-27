@@ -21,7 +21,7 @@ export default function Footer() {
           alt="BuildingIllustration"
           className="z-[-10]"
         />
-        <div className="absolute left-0 top-0 z-[-1] h-full w-full bg-shades-black opacity-95"></div>
+        <div className="absolute inset-0 z-[-1] bg-shades-black opacity-95"></div>
         <SupscripeNewsLetter />
         <div className="space-y-14 py-4">
           <div className="flex flex-wrap items-start justify-between gap-[43px]">
@@ -99,7 +99,7 @@ export default function Footer() {
                 <FaInstagram className="h-5 w-5" />
               </Link>
             </div>
-            <p className="text-end font-medium leading-none text-shades-white">
+            <p className="text-end text-sm font-medium leading-none text-shades-white sm:text-base">
               &copy; 2025 Arn Homes Limited. All rights reserved.
             </p>
           </div>

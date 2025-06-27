@@ -71,7 +71,7 @@ export default async function UserPropertyCards({
               <Link
                 href={`/property/${actualProperty?.id}`}
                 target="_blank"
-                className="relative inline-block"
+                className="relative block"
               >
                 <UserPropertyCard
                   property={actualProperty}

@@ -22,12 +22,11 @@ export default async function Page({ params, searchParams }: SearchPageParams) {
 
   if (!categories.includes(String(category))) redirect("/");
 
-  const { data } = await getProperties({
-    params: searchParamsValues,
+  const { data: unFilteredProperties } = await getProperties({
     category: category ? String(category) : "sale",
   });
 
-  const stateAddressArray = data.map((el) => el.address);
+  const stateAddressArray = unFilteredProperties.map((el) => el.address);
 
   const pathArray = [
     {

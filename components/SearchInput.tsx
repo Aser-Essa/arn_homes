@@ -83,7 +83,7 @@ export default function SearchInput({
                 className="flex h-[46px] cursor-pointer select-none items-center py-1.5 pl-2 pr-8 hover:bg-shades-off-white"
                 onMouseDownCapture={() => handleClickListItem(item)}
               >
-                {item}
+                <p className="line-clamp-1">{item}</p>
               </li>
             ))
           ) : (

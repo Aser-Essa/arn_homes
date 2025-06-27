@@ -56,7 +56,7 @@ export default async function UserPropertyInfoCard({
             property_id={propertyId}
             category={category}
             isSaved={isSaved}
-            className="absolute right-5 top-5 bg-shades-off-white"
+            className="absolute right-2 top-2 bg-shades-off-white sm:right-5 sm:top-5"
           />
         )}
         <p

@@ -1,5 +1,9 @@
 "use client";
-import React from "react";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { FaBars } from "react-icons/fa6";
+import AddPropertyButton from "./AddPropertyButton";
+import Logo from "./Logo";
+import NavLink from "./NavLink";
 import {
   Sheet,
   SheetContent,
@@ -8,12 +12,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { FaBars } from "react-icons/fa6";
-import NavLink from "./NavLink";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import { Button } from "./ui/button";
-import Image from "next/image";
-import Logo from "./Logo";
 
 export default function SideMobileMenu() {
   const navLinks = [
@@ -50,7 +48,7 @@ export default function SideMobileMenu() {
         <SheetTrigger asChild>
           <FaBars className="h-6 w-6 cursor-pointer" />
         </SheetTrigger>
-        <SheetContent className="z-[100000] w-[85%] overflow-y-auto text-nowrap rounded-l-lg p-6 pt-8 font-exo">
+        <SheetContent className="z-[1000000000] w-[85%] overflow-y-auto text-nowrap rounded-l-lg p-6 pt-8 font-exo">
           <SheetHeader className="mb-10 pl-2">
             <SheetTitle className="flex items-end gap-2 text-start text-xl font-bold leading-4 sm:text-2xl">
               <p>Arn Homes</p>
@@ -69,7 +67,7 @@ export default function SideMobileMenu() {
               </NavLink>
             ))}
             <SignedOut>
-              <div className="px-2">
+              <div className="px-2 text-lg font-medium">
                 <SignInButton />
               </div>
             </SignedOut>
@@ -84,16 +82,8 @@ export default function SideMobileMenu() {
             </SignedIn>
           </ul>
 
-          <Button className="absolute bottom-6 left-6 flex h-[58px] w-[calc(100%-48px)] items-center gap-2 text-lg">
-            <Image
-              src={"/icons/home_price.svg"}
-              width={18}
-              height={18}
-              alt="home"
-              className="mt-[-4px]"
-            />
-            Add Listing
-          </Button>
+          <AddPropertyButton className="absolute bottom-6 left-6 flex h-[58px] w-[calc(100%-48px)] items-center gap-2 text-lg" />
+
           <SheetFooter></SheetFooter>
         </SheetContent>
       </Sheet>

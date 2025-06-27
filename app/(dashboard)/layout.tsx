@@ -48,11 +48,11 @@ export default function RootLayout({
           />
           <NewNotificationToast />
           <Header className="lg:px-10" />
-          <div className="flex">
+          <div className="mt-[98px] flex">
             <div className="hidden md:block">
               <SideBar />
             </div>
-            <div className="w-full sm:mb-[200px] md:flex-1">{children}</div>
+            <div className="mb-[200px] w-full md:flex-1">{children}</div>
           </div>
           <Footer />
         </body>

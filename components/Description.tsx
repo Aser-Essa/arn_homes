@@ -31,7 +31,7 @@ export default function Description({
   }
 
   return (
-    <div className="box-shadow hidden-box-shadow-on-mobile min-h-[403px] space-y-6 rounded-[20px] font-exo sm:p-6">
+    <div className="box-shadow hidden-box-shadow-on-mobile space-y-6 rounded-[20px] font-exo sm:p-6">
       <div className="space-y-5">
         <p className="text-[36px] font-semibold">Description</p>
         <div className="space-y-2.5">
@@ -54,22 +54,25 @@ export default function Description({
         </div>
       </div>
 
-      <Separator className="h-[1px] w-full bg-gray-50" />
+      {exterior?.length > 0 && interior?.length > 0 && (
+        <>
+          <Separator className="h-[1px] w-full bg-gray-50" />
+          <div className="space-y-5">
+            <p className="text-[36px] font-semibold">Property features</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2">
+              <InteriorExteriorPreview
+                data={exterior}
+                title={"Exterior Features"}
+              />
 
-      <div className="space-y-5">
-        <p className="text-[36px] font-semibold">Property features</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          <InteriorExteriorPreview
-            data={exterior}
-            title={"Exterior Features"}
-          />
-
-          <InteriorExteriorPreview
-            data={interior}
-            title={"Interior Features"}
-          />
-        </div>
-      </div>
+              <InteriorExteriorPreview
+                data={interior}
+                title={"Interior Features"}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

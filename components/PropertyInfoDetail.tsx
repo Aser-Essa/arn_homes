@@ -54,7 +54,7 @@ export default async function PropertyInfoDetail({
     <>
       <div className={cn("flex-1 space-y-5 text-nowrap", card && "p-5")}>
         <div className="flex h-[70px] items-center justify-between">
-          <div className="flex h-[26px] w-[77px] items-center justify-center gap-1 rounded-full bg-shades-off-white p-1 pr-2">
+          <div className="p flex h-[26px] items-center justify-center gap-1 rounded-full bg-shades-off-white p-2">
             <div
               className={cn(
                 "h-2 w-2 rounded-full",

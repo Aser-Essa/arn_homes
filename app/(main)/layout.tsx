@@ -47,7 +47,7 @@ export default function RootLayout({
           />
           <NewNotificationToast />
           <Header />
-          {children}
+          <div className="mt-[98px]">{children}</div>
           <Footer />
         </body>
       </html>

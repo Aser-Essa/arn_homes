@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CategorySwitch from "./CategorySwitch";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -18,12 +19,12 @@ export default function MessagesHeader({
   return (
     <div className="relative mt-4 flex w-full items-center justify-between md:mt-10">
       <div className="flex w-full flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2">
+        <Link href={"/account"} className="flex items-center gap-2">
           <IoIosArrowBack className="block sm:hidden" />
           <p className="text-base font-semibold sm:text-[24px] lg:text-[28px]">
             Messages
           </p>
-        </div>
+        </Link>
         <CategorySwitch
           categories={categories}
           category_val={

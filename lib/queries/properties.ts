@@ -28,7 +28,7 @@ type PropertiesType = {
 
 export async function getProperties({
   category = "sale",
-  perPage = 9,
+  perPage,
   params = {},
 }: PropertiesType) {
   const {
@@ -45,8 +45,8 @@ export async function getProperties({
   } = params;
 
   let pageNumber = Math.max(1, Number(page) || 1);
-  let from = (pageNumber - 1) * perPage;
-  let to = from + perPage - 1;
+  let from = (pageNumber - 1) * Number(perPage);
+  let to = from + Number(perPage) - 1;
 
   const isValid = (val?: string | number) =>
     val !== undefined &&
@@ -58,7 +58,8 @@ export async function getProperties({
   let query = supabase
     .from("properties")
     .select("*", { count: "exact" })
-    .eq("category", category);
+    .eq("category", category)
+    .eq("status", "active");
 
   if (isValid(bed_N)) {
     query = query.eq("bed_number", Number(bed_N));
@@ -69,7 +70,7 @@ export async function getProperties({
   }
 
   if (property_Type && isValid(property_Type)) {
-    const types = property_Type.split(",").map((t) => t.trim()); // ["Condo", "Single-family"]
+    const types = property_Type.split(",").map((t) => t.trim());
     query = query.in("property_type", types);
   }
 
@@ -137,10 +138,13 @@ export async function getProperties({
     }
 
     const filteredCount = filteredData.length;
-    const maxNumberOfPages = Math.ceil(filteredCount / perPage);
+    const numberOfPropertiesPerPage = perPage ? perPage : filteredData.length;
+    const maxNumberOfPages = Math.ceil(
+      filteredCount / numberOfPropertiesPerPage,
+    );
     pageNumber = Math.min(pageNumber, maxNumberOfPages || 1);
-    from = (pageNumber - 1) * perPage;
-    to = from + perPage;
+    from = (pageNumber - 1) * numberOfPropertiesPerPage;
+    to = from + numberOfPropertiesPerPage;
     const paginatedData = filteredData.slice(from, to);
 
     return {

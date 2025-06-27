@@ -15,13 +15,17 @@ export default function Header({ className }: HeaderType) {
     <>
       <Container
         className={cn(
-          "box-shadow relative z-[100000] flex h-[98px] items-center justify-between py-5 font-exo",
+          "box-shadow fixed left-0 top-0 z-[1000000000] flex h-[98px] w-full items-center justify-between bg-shades-white py-5 font-exo",
           className,
         )}
       >
         <Logo />
         <NavLinks />
-        <AddPropertyButton />
+        <AddPropertyButton
+          className={
+            "hidden h-[58px] items-center gap-2 md:px-3 md:py-2 min-[820px]:flex lg:px-6 lg:py-4"
+          }
+        />
         <SideMobileMenu />
       </Container>
     </>

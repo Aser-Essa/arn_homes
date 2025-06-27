@@ -49,6 +49,7 @@ export default async function page({ params }: { params: Params }) {
 
       <FeaturedProperties
         className="space-y-10 !px-0 font-exo"
+        category={property.category}
         title={
           <p className="text-[36px] font-semibold">Similar Properties Nearby</p>
         }

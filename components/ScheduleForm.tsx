@@ -88,7 +88,6 @@ export default function ScheduleForm({ property_id }: { property_id: string }) {
 
       const result = await scheduleTour(extendedData);
       if (result.error) {
-        console.log(result.error);
         toast.error(result.error);
       } else {
         toast.success("Tour scheduled successfully!");

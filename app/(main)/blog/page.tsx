@@ -2,7 +2,7 @@ import ArticlesCards from "@/components/ArticlesCards";
 import FirstArticle from "@/components/FirstArticle";
 import HeroSection from "@/components/HeroSection";
 import SearchBlogs from "@/components/SearchBlogs";
-import { getArticles } from "@/lib/queries/articles";
+import { getArticles, getArticlesTitles } from "@/lib/queries/articles";
 import { params } from "@/types/types";
 
 type SearchParams = Promise<params>;
@@ -14,6 +14,9 @@ export default async function Page(props: { searchParams: SearchParams }) {
     params: searchParamsValues,
     perPage: 10,
   });
+
+  const { articlesTitles } = await getArticlesTitles();
+  const titlesArray = articlesTitles?.map(({ title }) => title);
 
   const pathArray = [
     {
@@ -33,7 +36,7 @@ export default async function Page(props: { searchParams: SearchParams }) {
         title={"Blog"}
         slogan={"Explore the latest trends and insights in real estate."}
       />
-      <SearchBlogs />
+      <SearchBlogs items={titlesArray} />
       {(count ? Number(count) : 0) > 0 ? (
         <>
           <FirstArticle article={articles.at(0)} />

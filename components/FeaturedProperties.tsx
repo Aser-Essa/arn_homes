@@ -14,12 +14,14 @@ import { getProperties } from "@/lib/queries/properties";
 
 export default async function FeaturedProperties({
   title,
+  category = "sale",
   className,
 }: {
   title: React.ReactNode;
+  category?: string;
   className?: string;
 }) {
-  const { data: properties } = await getProperties({});
+  const { data: properties } = await getProperties({ category, perPage: 15 });
 
   const hasProperties = Array.isArray(properties) && properties.length > 0;
 

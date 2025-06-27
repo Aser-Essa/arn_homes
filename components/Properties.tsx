@@ -20,6 +20,7 @@ export default async function Properties({ params, category }: PropertiesType) {
 
   const { data: PropertiesData, count } = await getProperties({
     params: { page, time_sort },
+    perPage: 9,
     category: category ? String(category) : "sale",
   });
 

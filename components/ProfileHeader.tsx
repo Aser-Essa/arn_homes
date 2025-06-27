@@ -14,7 +14,7 @@ export default async function ProfileHeader({ user }: ProfileHeaderType) {
     <>
       <div className="box-shadow mb-8 rounded-xl bg-white p-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex w-full flex-col items-center space-y-4 sm:flex-row sm:space-x-4">
             <div className="relative">
               <Image
                 src={String(userAvatar)}
@@ -30,7 +30,7 @@ export default async function ProfileHeader({ user }: ProfileHeaderType) {
               <h1 className="text-3xl font-bold text-gray-900">
                 Welcome back, {firstName}!
               </h1>
-              <div className="mt-2 flex items-center space-x-4">
+              <div className="mt-2 flex items-center justify-center space-x-4 sm:justify-normal">
                 <p className="text-gray-600">
                   {user.primaryEmailAddress?.emailAddress}
                 </p>

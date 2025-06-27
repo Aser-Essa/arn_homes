@@ -19,15 +19,18 @@ export default function ShowImageModal({ imageUrl }: { imageUrl: string }) {
           </div>
         </DialogTrigger>
         <DialogContent className="aspect-video w-[calc(100vw-60px)] !max-w-full overflow-y-scroll lg:w-[80vw]">
-          <DialogHeader className="w-full">
+          <DialogHeader className="hidden w-full" hidden>
             <DialogTitle className="capitalize" hidden></DialogTitle>
-            <DialogDescription hidden>
-              Add detailed information to enhance your property listing. Click
-              save when you&apos;re done.
-            </DialogDescription>
+            <DialogDescription hidden></DialogDescription>
           </DialogHeader>
-          <div className="relative h-full w-full">
-            <Image src={imageUrl || "/"} fill alt="Property Image" />;
+          <div className="relative top-[3px] h-[calc(100%-6px)] w-[calc(100%-6px)] overflow-hidden rounded">
+            <Image
+              src={imageUrl || "/"}
+              fill
+              alt="Property Image"
+              className="bottom-0"
+            />
+            ;
           </div>
         </DialogContent>
       </Dialog>

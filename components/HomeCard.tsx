@@ -54,7 +54,7 @@ export default async function HomeCard({ property, className }: HomeCardType) {
           className,
         )}
       >
-        <div className="absolute top-[27px] z-50 flex h-[26px] w-[73px] items-center gap-1 rounded-r-full bg-shades-white p-1 pr-2">
+        <div className="absolute top-[27px] z-50 flex h-[26px] items-center gap-1 rounded-r-full bg-shades-white p-1 pr-2">
           <div
             className={cn(
               "h-2 w-2 rounded-full",

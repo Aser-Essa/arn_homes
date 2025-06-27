@@ -29,7 +29,6 @@ export default function ImagesSlider({
 }: ImagesSliderType) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  console.log(current, selectedImage);
 
   useEffect(() => {
     if (!api) {

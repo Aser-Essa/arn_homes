@@ -40,7 +40,10 @@ export default function ReviewsSection({ reviews }: ReviewsSectionType) {
           <p className="text-lg font-medium">
             See what our client’s are saying
           </p>
-          <Button className="h-12 bg-scooter-600 hover:bg-scooter-500 sm:hidden">
+          <Button
+            className="h-12 bg-scooter-600 hover:bg-scooter-500 sm:hidden"
+            onClick={handleClick}
+          >
             See all reviews
           </Button>
         </div>

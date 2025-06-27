@@ -26,7 +26,6 @@ export function useSavedPropertiesRealtime(
         },
         (payload) => {
           const { eventType } = payload;
-          console.log(eventType, "eventType");
           const data = eventType === "DELETE" ? payload.old : payload.new;
           if (!data?.id) return;
           callback({

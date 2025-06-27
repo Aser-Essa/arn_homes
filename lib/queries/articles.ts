@@ -11,6 +11,7 @@ type ParamsType = {
   time_sort?: string | undefined;
   page?: string | undefined;
   state_address?: string;
+  search?: string;
 };
 
 type PropertiesType = {
@@ -23,13 +24,17 @@ export async function getArticles({
   perPage = 9,
   params = {},
 }: PropertiesType) {
-  const { page } = params;
+  const { page, search } = params;
 
   let pageNumber = Math.max(1, Number(page) || 1);
   let from = (pageNumber - 1) * perPage;
   let to = from + perPage - 1;
 
-  const query = supabase.from("blogs").select("*", { count: "exact" });
+  let query = supabase.from("blogs").select("*", { count: "exact" });
+
+  if (search) {
+    query = query?.ilike("title", `%${search}%`);
+  }
 
   const { count: totalCount, error: countError } = await query;
   if (countError) throw new Error(countError.message);
@@ -47,6 +52,16 @@ export async function getArticles({
   }
 
   return { articles, count };
+}
+
+export async function getArticlesTitles() {
+  const { data: articlesTitles, error } = await supabase
+    .from("blogs")
+    .select("title");
+
+  if (error) throw new Error(error?.message);
+
+  return { articlesTitles };
 }
 
 export async function getArticle(id: string) {

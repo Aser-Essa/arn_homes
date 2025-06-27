@@ -3,8 +3,13 @@ import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-export default function AddPropertyButton() {
+export default function AddPropertyButton({
+  className,
+}: {
+  className: string;
+}) {
   const router = useRouter();
 
   function handleClick() {
@@ -13,10 +18,7 @@ export default function AddPropertyButton() {
 
   return (
     <>
-      <Button
-        className="hidden h-[58px] items-center gap-2 md:px-3 md:py-2 min-[820px]:flex lg:px-6 lg:py-4"
-        onClick={handleClick}
-      >
+      <Button className={cn(className)} onClick={handleClick}>
         <Image
           src={"/icons/home_price.svg"}
           width={18}
